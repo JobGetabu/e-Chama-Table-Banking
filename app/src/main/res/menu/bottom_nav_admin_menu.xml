@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home"
+        android:tint="#161616"
+        />
+    <item
+        android:id="@+id/nav_allgrouptrans"
+        android:icon="@drawable/ic_coins"
+        android:tint="#161616"
+        android:title="@string/allgrouptrans" />
+
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_settings"
+        android:tint="#161616"
+        android:title="@string/settings" />
+
+    <item
+        android:id="@+id/nav_membercontribution"
+        android:icon="@drawable/ic_addcontribution"
+        android:tint="#161616"
+        android:title="@string/add_member_contribution" />
+
+    <item
+        android:id="@+id/nav_memberfine"
+        android:icon="@drawable/ic_fine"
+        android:tint="#161616"
+        android:title="@string/add_member_fine" />
+
+    <item
+        android:id="@+id/nav_project"
+        android:icon="@drawable/ic_add_project"
+        android:tint="#161616"
+        android:title="@string/add_project" />
+
+    <item
+        android:id="@+id/nav_payment"
+        android:icon="@drawable/ic_add_pay"
+        android:tint="#161616"
+        android:title="@string/add_payment" />
+
+    <item
+        android:id="@+id/nav_createnewgroup"
+        android:icon="@drawable/ic_groups"
+        android:tint="#161616"
+        android:title="@string/create_new_chama_group" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_exit"
+        android:tint="#161616"
+        android:title="@string/logout" />
+</menu>
