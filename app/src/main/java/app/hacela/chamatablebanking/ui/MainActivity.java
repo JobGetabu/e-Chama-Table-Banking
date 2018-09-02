@@ -2,8 +2,12 @@ package app.hacela.chamatablebanking.ui;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.bottomappbar.BottomAppBar;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,11 +16,17 @@ import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
 
 import app.hacela.chamatablebanking.R;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainA";
+    @BindView(R.id.bar)
+    BottomAppBar bar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     private ExpandingList mExpandingList;
 
     @Override
@@ -25,9 +35,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setSupportActionBar(bar);
+
         mExpandingList = findViewById(R.id.expanding_list_main);
         createItems();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //getMenuInflater().inflate(R.menu.bottom_nav_drawer_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                BottomNavigationDrawerFragment bottomNavDrawerFragment = new BottomNavigationDrawerFragment();
+                bottomNavDrawerFragment.show(getSupportFragmentManager(), BottomNavigationDrawerFragment.TAG);
+                break;
+        }
+
+        return true;
     }
 
     private void createItems() {
@@ -111,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.setNegativeButton(android.R.string.cancel, null);
         builder.show();
+    }
+
+    @OnClick(R.id.fab)
+    public void onFabViewClicked() {
     }
 
     interface OnItemCreated {

@@ -2,4 +2,14 @@
     <string name="app_name">ChamaTableBanking</string>
     <string name="dashboard">Dashboard</string>
     <string name="enter_title">Enter Title</string>
+    <string name="nav_item1">Home</string>
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+    <string name="allgrouptrans">All Group Transactions</string>
+    <string name="add_member_contribution">Add Member Contribution</string>
+    <string name="add_member_fine">Add Member Fine</string>
+    <string name="add_project">Add Project</string>
+    <string name="create_new_chama_group">Create new chama group</string>
+    <string name="add_payment">Add Payment</string>
 </resources>

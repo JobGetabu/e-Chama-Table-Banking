@@ -28,9 +28,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_add" />
-                            <entry key="sourceFile" value="C:\Users\getab\Desktop\Projects\ProjectTableBanking\design\ic_acc.svg" />
+                            <entry key="outputName" value="ic_exit" />
+                            <entry key="sourceFile" value="C:\Users\getab\Desktop\Projects\ProjectTableBanking\design\ic_exit.svg" />
                           </map>
                         </option>
                       </PersistentState>
