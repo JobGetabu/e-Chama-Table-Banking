@@ -5,7 +5,11 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="yellowb">#FFC600</color>
+    <color name="orangeb">#FA9301</color>
     <color name="greenb">#4D7BF3</color>
+    <color name="greenb2">#6F26FA</color>
+    <color name="greenb3">#1CB2D7</color>
     <color name="purpleb">#8F65FF</color>
     <color name="pinkb">#F94094</color>
+
 </resources>

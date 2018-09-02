@@ -46,6 +46,9 @@ dependencies {
 
     //circular imageview
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    //expandindview
+    implementation 'com.diegodobelo.expandingview:expanding-view:0.9.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

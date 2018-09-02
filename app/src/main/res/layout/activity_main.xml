@@ -29,6 +29,10 @@
                 android:id="@+id/main_admin_dash"
                 layout="@layout/admin_dashboard" />
 
+            <include
+                android:id="@+id/main_user_dash"
+                layout="@layout/user_dashbord"
+                />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
