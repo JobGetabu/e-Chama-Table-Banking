@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ChamaTableBanking</string>
     <string name="dashboard">Dashboard</string>
+    <string name="enter_title">Enter Title</string>
 </resources>

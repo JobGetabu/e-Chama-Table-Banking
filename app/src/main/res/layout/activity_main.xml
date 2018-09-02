@@ -37,6 +37,11 @@
                 android:id="@+id/main_user_dash"
                 layout="@layout/user_dashbord"
                 />
+            <include
+               android:id="@+id/main_user_tran_list"
+                layout="@layout/user_transaction_layout"
+                />
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
