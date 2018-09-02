@@ -30,6 +30,10 @@
                 layout="@layout/admin_dashboard" />
 
             <include
+                android:id="@+id/main_admin_group_tran_list"
+                layout="@layout/admin_transaction_layout"
+                />
+            <include
                 android:id="@+id/main_user_dash"
                 layout="@layout/user_dashbord"
                 />

@@ -12,4 +12,7 @@
     <color name="purpleb">#8F65FF</color>
     <color name="pinkb">#F94094</color>
 
+    <color name="colorBackground">#241445</color>
+    <color name="separatorColor">#18102C</color>
+
 </resources>
