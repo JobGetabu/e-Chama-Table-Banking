@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorgreyish"
     tools:context=".ui.MainActivity">
 
     <android.support.v4.widget.NestedScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/mtrl_bottomappbar_height"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,6 +38,10 @@
                 layout="@layout/user_dashbord"
                 />
             <include
+                android:id="@+id/main_user_activity"
+                layout="@layout/user_activity_layout"
+                />
+            <include
                android:id="@+id/main_user_tran_list"
                 layout="@layout/user_transaction_layout"
                 />
@@ -45,4 +49,28 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-</android.support.constraint.ConstraintLayout>
+    <!-- Other components and views -->
+
+    <android.support.design.bottomappbar.BottomAppBar
+        style="@style/Widget.MaterialComponents.BottomAppBar"
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/colorwhitish"
+        app:fabAlignmentMode="center"
+        app:fabAttached="true"
+        app:navigationIcon="@drawable/ic_menu"
+        app:layout_scrollFlags="scroll|enterAlways"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="mini"
+        app:layout_anchor="@id/bar"
+        app:srcCompat="@drawable/ic_add"
+        />
+</android.support.design.widget.CoordinatorLayout>
