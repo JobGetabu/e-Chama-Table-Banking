@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "336382230863",
+    "firebase_url": "https://chamatablebanking.firebaseio.com",
+    "project_id": "chamatablebanking",
+    "storage_bucket": "chamatablebanking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336382230863:android:61bf5f5243cbc01a",
+        "android_client_info": {
+          "package_name": "app.hacela.chamatablebanking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "336382230863-e2q26vmnod6lmqnjdorcmkuvgd318phm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.hacela.chamatablebanking",
+            "certificate_hash": "08707c39ce53fa034d11722ba7cd4fd155e54ec8"
+          }
+        },
+        {
+          "client_id": "336382230863-dk25ki2t70opfefs2fbb2ofgjcrqo9af.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBONgSN6uhCQbLTrUVnt32-6aE7RapqeA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "336382230863-dk25ki2t70opfefs2fbb2ofgjcrqo9af.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
