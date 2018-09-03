@@ -16,4 +16,7 @@
     <string name="regular_contribution">Regular Contribution</string>
     <string name="sample_date">12/08/2018</string>
     <string name="sample_cash">+ Ksh 5,000</string>
+    <string name="contributions_due">Contributions Due</string>
+    <string name="group_s_dividents">Group\'s Dividents</string>
+    <string name="group_s_projects">Group\'s Projects</string>
 </resources>
