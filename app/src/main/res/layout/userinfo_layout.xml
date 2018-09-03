@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user_image"
+        android:id="@+id/user_info_image"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/user_info_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -29,39 +29,39 @@
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/imageButton"
-        app:layout_constraintStart_toEndOf="@+id/user_image"
-        app:layout_constraintTop_toTopOf="@+id/user_image" />
+        app:layout_constraintStart_toEndOf="@+id/user_info_image"
+        app:layout_constraintTop_toTopOf="@+id/user_info_image" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/user_info_role"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/nunito"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/user_image"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toEndOf="@+id/user_info_image"
+        app:layout_constraintTop_toBottomOf="@+id/user_info_username" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/user_info_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/nunito"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/user_image"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintStart_toEndOf="@+id/user_info_image"
+        app:layout_constraintTop_toBottomOf="@+id/user_info_role" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/user_info_img_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/user_image"
+        app:layout_constraintTop_toTopOf="@+id/user_info_image"
         app:srcCompat="@drawable/ic_notifications" />
 
 </android.support.constraint.ConstraintLayout>
