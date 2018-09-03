@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.diegodobelo.expandingview.ExpandingItem;
@@ -31,6 +32,7 @@ import app.hacela.chamatablebanking.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +44,16 @@ public class MainActivity extends AppCompatActivity {
     BottomAppBar bar;
     @BindView(R.id.main_fab)
     FloatingActionButton fab;
+    @BindView(R.id.user_info_username)
+    TextView userInfoUsername;
+    @BindView(R.id.user_info_role)
+    TextView userInfoRole;
+    @BindView(R.id.user_info_group)
+    TextView userInfoGroup;
+    @BindView(R.id.user_info_image)
+    CircleImageView userInfoImage;
+    @BindView(R.id.user_info_img_notification)
+    ImageButton userInfoImgNotification;
 
     //firebase
     private FirebaseAuth auth;
@@ -72,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user == null) {
                     // Sign in logic here.
                     creatingAuthIntent();
-                }else {
+                } else {
                     //play with auth user id
 
 
@@ -98,14 +110,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void creatingAuthIntent(){
+    private void creatingAuthIntent() {
 
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setLogo(R.drawable.avatar_placeholder)
                         .setTheme(R.style.AppTheme)
-                        .setIsSmartLockEnabled(false,true)
+                        .setIsSmartLockEnabled(false, true)
                         .setAvailableProviders(Arrays.asList(
                                 new AuthUI.IdpConfig.GoogleBuilder().build(),
                                 new AuthUI.IdpConfig.EmailBuilder().build()))
@@ -235,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Successfully signed in
             if (resultCode == RESULT_OK) {
-                startActivity(new Intent(this,MainActivity.class));
+                startActivity(new Intent(this, MainActivity.class));
 
                 finish();
 
@@ -259,7 +271,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showSnackbar(int text) {
-        Snackbar.make(findViewById(android.R.id.content),text,Snackbar.LENGTH_LONG).show();
+        Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void setUpUserUI() {
+        userInfoUsername.setText(auth.getCurrentUser().getDisplayName());
+
     }
 
 }

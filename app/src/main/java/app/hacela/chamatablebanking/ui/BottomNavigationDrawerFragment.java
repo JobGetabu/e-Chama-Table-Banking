@@ -60,11 +60,12 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
             int id = item.getItemId();
             switch (id){
                 case R.id.nav_home:
+                    dismiss();
                     return true;
                 case R.id.nav_logout:
                     Toast.makeText(getContext(), "Signing you out", Toast.LENGTH_SHORT).show();
                     auth.signOut();
-
+                    dismiss();
                     return true;
             }
             return false;
