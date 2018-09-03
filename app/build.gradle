@@ -13,7 +13,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         //Enabling multidex support.
-        //multiDexEnabled true
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         resConfigs "en" // And any other languages you support
     }

@@ -29,6 +29,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.Arrays;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.util.ImageProcessor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     private ExpandingList mExpandingList;
+    private ImageProcessor imageProcessor;
 
 
     @Override
@@ -76,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         mExpandingList = findViewById(R.id.expanding_list_main);
         createItems();
 
+        imageProcessor = new ImageProcessor(this);
+
         auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -87,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //play with auth user id
 
-
+                    setUpUserUI();
                 }
             }
         });
@@ -276,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpUserUI() {
         userInfoUsername.setText(auth.getCurrentUser().getDisplayName());
-
+        imageProcessor.setMyImage(userInfoImage, auth.getCurrentUser().getPhotoUrl().toString());
     }
 
 }
