@@ -61,6 +61,9 @@ dependencies {
 
     //expandindview
     implementation 'com.diegodobelo.expandingview:expanding-view:0.9.4'
+
+    //vertical stepper
+    implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
 }
 
 apply plugin: 'com.google.gms.google-services'
