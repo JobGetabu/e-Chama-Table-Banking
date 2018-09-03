@@ -25,4 +25,5 @@
     <string name="no_internet_connection">No internet Connection</string>
     <string name="unknown_error">Unknown Error</string>
     <string name="chama_create_txt">Chama Table Banking helps you easily create, track and manage your chama finances</string>
+    <string name="chama_name">Chama Name</string>
 </resources>
