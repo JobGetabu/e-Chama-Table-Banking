@@ -26,4 +26,39 @@
     <string name="unknown_error">Unknown Error</string>
     <string name="chama_create_txt">Chama Table Banking helps you easily create, track and manage your chama finances</string>
     <string name="chama_name">Chama Name</string>
+
+    <!-- Chama roles -->
+    <string-array name="chamaroles">
+        <item>Admin:ChairPerson</item>
+        <item>Admin:Secretary</item>
+        <item>Admin:Treasurer</item>
+    </string-array>
+
+    <!-- Chama cycles -->
+    <string-array name="meetingcyles">
+        <item>Once a Month</item>
+        <item>Once a Week</item>
+    </string-array>
+
+    <string-array name="monthcyles">
+        <item>Sunday of the Month</item>
+        <item>Monday of the Month</item>
+        <item>Tuesday of the Month</item>
+        <item>Wednesday of the Month</item>
+        <item>Thursday of the Month</item>
+        <item>Friday of the Month</item>
+        <item>Saturday of the Month</item>
+    </string-array>
+
+    <string-array name="weekcyles">
+        <item>Sunday of the Week</item>
+        <item>Monday of the Week</item>
+        <item>Tuesday of the Week</item>
+        <item>Wednesday of the Week</item>
+        <item>Thursday of the Week</item>
+        <item>Friday of the Week</item>
+        <item>Saturday of the Week</item>
+    </string-array>
+
+
 </resources>

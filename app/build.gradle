@@ -64,6 +64,9 @@ dependencies {
 
     //vertical stepper
     implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
+
+    //spinner
+    implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
