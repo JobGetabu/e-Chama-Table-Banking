@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/s3_image"
         android:layout_width="0dp"
         android:layout_height="120dp"
         android:layout_marginEnd="16dp"
@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/avatar_placeholder" />
 
     <android.support.design.button.MaterialButton
-        android:id="@+id/settings_password"
+        android:id="@+id/s3_btn_selectpic"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,5 +37,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/s3_image" />
 </android.support.constraint.ConstraintLayout>

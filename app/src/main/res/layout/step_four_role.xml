@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-        android:id="@+id/android_material_design_spinner"
+        android:id="@+id/st_4_role"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
