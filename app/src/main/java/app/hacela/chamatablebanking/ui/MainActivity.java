@@ -1,11 +1,15 @@
 package app.hacela.chamatablebanking.ui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +18,14 @@ import android.widget.TextView;
 
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthProvider;
+
+import java.util.Arrays;
 
 import app.hacela.chamatablebanking.R;
 import butterknife.BindView;
@@ -22,12 +34,21 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Choose an arbitrary request code value
+    private static final int RC_SIGN_IN = 123;
     private static final String TAG = "MainA";
+
     @BindView(R.id.main_bar)
     BottomAppBar bar;
     @BindView(R.id.main_fab)
     FloatingActionButton fab;
+
+    //firebase
+    private FirebaseAuth auth;
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
+
     private ExpandingList mExpandingList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +58,60 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(bar);
 
+        //firebase
+        auth = FirebaseAuth.getInstance();
+
         mExpandingList = findViewById(R.id.expanding_list_main);
         createItems();
+
+        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (user == null) {
+                    // Sign in logic here.
+                    creatingAuthIntent();
+                }else {
+                    //play with auth user id
+
+
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (user == null) {
+                    // Sign in logic here.
+                    creatingAuthIntent();
+                }
+            }
+        });
+    }
+
+    private void creatingAuthIntent(){
+
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setLogo(R.drawable.avatar_placeholder)
+                        .setTheme(R.style.AppTheme)
+                        .setIsSmartLockEnabled(false,true)
+                        .setAvailableProviders(Arrays.asList(
+                                new AuthUI.IdpConfig.GoogleBuilder().build(),
+                                new AuthUI.IdpConfig.EmailBuilder().build()))
+                        .build(),
+                RC_SIGN_IN);
+
 
     }
 
@@ -145,12 +218,48 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    @OnClick(R.id.fab)
+    @OnClick(R.id.main_fab)
     public void onFabViewClicked() {
     }
 
     interface OnItemCreated {
         void itemCreated(String title);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            // Successfully signed in
+            if (resultCode == RESULT_OK) {
+                startActivity(new Intent(this,MainActivity.class));
+
+                finish();
+
+            } else {
+                // Sign in failed
+                if (response == null) {
+                    // User pressed back button
+                    showSnackbar(R.string.sign_in_cancelled);
+                    return;
+                }
+
+                if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    showSnackbar(R.string.no_internet_connection);
+                    return;
+                }
+
+                showSnackbar(R.string.unknown_error);
+                Log.e(TAG, "Sign-in error: ", response.getError());
+            }
+        }
+    }
+
+    private void showSnackbar(int text) {
+        Snackbar.make(findViewById(android.R.id.content),text,Snackbar.LENGTH_LONG).show();
     }
 
 }

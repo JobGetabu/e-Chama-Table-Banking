@@ -21,4 +21,7 @@
     <string name="group_s_projects">Group\'s Projects</string>
     <string name="group_s_transactions">Group\'s Transactions</string>
     <string name="recent_activities">Recent Activities</string>
+    <string name="sign_in_cancelled">Sign in Cancelled</string>
+    <string name="no_internet_connection">No internet Connection</string>
+    <string name="unknown_error">Unknown Error</string>
 </resources>

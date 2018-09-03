@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import app.hacela.chamatablebanking.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,9 +24,13 @@ import butterknife.Unbinder;
 public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = "BottomNavigationDrawerFragment";
+
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
     Unbinder unbinder;
+
+    //firebase
+    private FirebaseAuth auth;
 
     @Nullable
     @Override
@@ -40,6 +46,9 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //firebase
+        auth = FirebaseAuth.getInstance();
+
         navigationView.setNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
 
@@ -54,6 +63,8 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                     return true;
                 case R.id.nav_logout:
                     Toast.makeText(getContext(), "Signing you out", Toast.LENGTH_SHORT).show();
+                    auth.signOut();
+
                     return true;
             }
             return false;
