@@ -28,7 +28,7 @@
         android:text="TextView"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/user_info_img_notification"
         app:layout_constraintStart_toEndOf="@+id/user_info_image"
         app:layout_constraintTop_toTopOf="@+id/user_info_image" />
 
