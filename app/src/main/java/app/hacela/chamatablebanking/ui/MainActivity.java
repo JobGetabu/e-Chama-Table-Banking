@@ -23,9 +23,9 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainA";
-    @BindView(R.id.bar)
+    @BindView(R.id.main_bar)
     BottomAppBar bar;
-    @BindView(R.id.fab)
+    @BindView(R.id.main_fab)
     FloatingActionButton fab;
     private ExpandingList mExpandingList;
 

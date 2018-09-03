@@ -53,7 +53,7 @@
 
     <android.support.design.bottomappbar.BottomAppBar
         style="@style/Widget.MaterialComponents.BottomAppBar"
-        android:id="@+id/bar"
+        android:id="@+id/main_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -66,11 +66,11 @@
 
     <android.support.design.widget.FloatingActionButton
         style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:id="@+id/fab"
+        android:id="@+id/main_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabSize="mini"
-        app:layout_anchor="@id/bar"
+        app:layout_anchor="@id/main_bar"
         app:srcCompat="@drawable/ic_add"
         />
 </android.support.design.widget.CoordinatorLayout>

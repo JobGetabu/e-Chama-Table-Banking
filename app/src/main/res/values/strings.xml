@@ -19,4 +19,6 @@
     <string name="contributions_due">Contributions Due</string>
     <string name="group_s_dividents">Group\'s Dividents</string>
     <string name="group_s_projects">Group\'s Projects</string>
+    <string name="group_s_transactions">Group\'s Transactions</string>
+    <string name="recent_activities">Recent Activities</string>
 </resources>
