@@ -21,6 +21,12 @@
         android:title="@string/create_new_chama_group" />
 
     <item
+        android:id="@+id/nav_invitemember"
+        android:icon="@drawable/ic_add_user"
+        android:tint="#161616"
+        android:title="@string/invite_a_member" />
+
+    <item
         android:id="@+id/nav_logout"
         android:icon="@drawable/ic_exit"
         android:tint="#161616"

@@ -4,9 +4,8 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-        android:title="@string/home"
         android:tint="#161616"
-        />
+        android:title="@string/home" />
     <item
         android:id="@+id/nav_allgrouptrans"
         android:icon="@drawable/ic_coins"
@@ -42,6 +41,12 @@
         android:icon="@drawable/ic_add_pay"
         android:tint="#161616"
         android:title="@string/add_payment" />
+
+    <item
+        android:id="@+id/nav_invitemember"
+        android:icon="@drawable/ic_add_user"
+        android:tint="#161616"
+        android:title="@string/invite_a_member" />
 
     <item
         android:id="@+id/nav_createnewgroup"
