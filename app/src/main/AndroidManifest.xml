@@ -21,7 +21,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".ui.CreateChamaActivity"></activity>
+        <activity android:name=".ui.CreateChamaActivity"
+            android:parentActivityName=".ui.MainActivity"
+            />
     </application>
 
 </manifest>

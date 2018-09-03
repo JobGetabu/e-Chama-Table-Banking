@@ -1,5 +1,6 @@
 package app.hacela.chamatablebanking.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -65,6 +66,10 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                 case R.id.nav_logout:
                     Toast.makeText(getContext(), "Signing you out", Toast.LENGTH_SHORT).show();
                     auth.signOut();
+                    dismiss();
+                    return true;
+                case R.id.nav_createnewgroup:
+                    getActivity().startActivity(new Intent(getContext(), CreateChamaActivity.class));
                     dismiss();
                     return true;
             }
