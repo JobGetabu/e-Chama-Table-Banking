@@ -15,6 +15,7 @@ android {
         //Enabling multidex support.
         //multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+        resConfigs "en" // And any other languages you support
     }
     buildTypes {
         release {
@@ -42,6 +43,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.firebase:firebase-firestore:17.1.0'
+
+    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
+
     // ButterKnife (for code brevity)
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
