@@ -5,12 +5,15 @@ import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -38,19 +41,6 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     private MaterialBetterSpinner s6Daymonth;
     private MaterialBetterSpinner s6Dayweek;
 
-    private void initStepViews(){
-        s2Name = findViewById(R.id.s2_name);
-        s3Image = findViewById(R.id.s3_image);
-        s3BtnSelectpic = findViewById(R.id.s3_btn_selectpic);
-        st4Role = findViewById(R.id.st_4_role);
-        s5Entryfee = findViewById(R.id.s5_entryfee);
-        s6RegularAmount = findViewById(R.id.s6_regular_amount);
-        s6Regular = findViewById(R.id.s6_regular);
-        s6Daymonth = findViewById(R.id.s6_daymonth);
-        s6Dayweek = findViewById(R.id.s6_dayweek);
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +64,6 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                 .displayBottomNavigation(true) // It is true by default, so in this case this line is not necessary
                 .init();
 
-        initStepViews();
 
     }
 
@@ -119,23 +108,23 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                 break;
             case 1:
                 //test
-                //verticalStepperForm.setStepAsCompleted(stepNumber);
+                stepVerification(1);
                 break;
             case 2:
                 //test
-                verticalStepperForm.setStepAsCompleted(stepNumber);
+                stepVerification(2);
                 break;
             case 3:
                 //test
-                verticalStepperForm.setStepAsCompleted(stepNumber);
+                stepVerification(3);
                 break;
             case 4:
                 //test
-                verticalStepperForm.setStepAsCompleted(stepNumber);
+                stepVerification(4);
                 break;
             case 5:
                 //test
-                verticalStepperForm.setStepAsCompleted(stepNumber);
+                stepVerification(5);
                 break;
         }
     }
@@ -161,14 +150,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         LinearLayout v2 =
                 (LinearLayout) inflater.inflate(R.layout.step_two_name, null, false);
 
-
-        Log.d(TAG, "createNameStep: " + s2Name.getEditText().getText().toString());
-
-        if (TextUtils.isEmpty(s2Name.getEditText().getText().toString())) {
-            verticalStepperForm.setActiveStepAsUncompleted("Chama name can't be empty");
-        } else {
-            verticalStepperForm.setActiveStepAsCompleted();
-        }
+        s2Name = v2.findViewById(R.id.s2_name);
 
         return v2;
     }
@@ -179,7 +161,15 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         LinearLayout v3 =
                 (LinearLayout) inflater.inflate(R.layout.step_three_photo, null, false);
 
+        s3Image = v3.findViewById(R.id.s3_image);
+        s3BtnSelectpic = v3.findViewById(R.id.s3_btn_selectpic);
 
+        s3BtnSelectpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(CreateChamaActivity.this, "Select image of your chama", Toast.LENGTH_SHORT).show();
+            }
+        });
         return v3;
     }
 
@@ -189,6 +179,12 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         LinearLayout v4 =
                 (LinearLayout) inflater.inflate(R.layout.step_four_role, null, false);
 
+        st4Role = v4.findViewById(R.id.st_4_role);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.chamaroles));
+
+        st4Role.setAdapter(arrayAdapter);
 
         return v4;
     }
@@ -199,7 +195,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         LinearLayout v5 =
                 (LinearLayout) inflater.inflate(R.layout.step_five_fee, null, false);
 
-
+        s5Entryfee = v5.findViewById(R.id.s5_entryfee);
         return v5;
     }
 
@@ -210,6 +206,94 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                 (LinearLayout) inflater.inflate(R.layout.step_six_intervals, null, false);
 
 
+
+        s6RegularAmount = v6.findViewById(R.id.s6_regular_amount);
+        s6Regular = v6.findViewById(R.id.s6_regular);
+        s6Daymonth = v6.findViewById(R.id.s6_daymonth);
+        s6Dayweek = v6.findViewById(R.id.s6_dayweek);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.chamaroles));
+
+        st4Role.setAdapter(arrayAdapter);
+
         return v6;
+    }
+
+    private void stepVerification(final int stepNumber){
+        switch (stepNumber) {
+            case 1:
+
+
+
+                s2Name.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (TextUtils.isEmpty(s2Name.getEditText().getText().toString())) {
+                            verticalStepperForm.setStepAsUncompleted(stepNumber,"Chama name can't be empty");
+                        } else {
+                            verticalStepperForm.setActiveStepAsCompleted();
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {}
+                });
+
+                break;
+            case 2:
+                //pass
+                verticalStepperForm.setStepAsCompleted(stepNumber);
+                break;
+            case 3:
+                //spinner pass
+                verticalStepperForm.setStepAsCompleted(stepNumber);
+                break;
+            case 4:
+                //test
+
+                s5Entryfee.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (TextUtils.isEmpty(s5Entryfee.getEditText().getText().toString())) {
+                            verticalStepperForm.setStepAsUncompleted(stepNumber,"Entry fee can't be empty");
+                        } else {
+                            verticalStepperForm.setActiveStepAsCompleted();
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {}
+                });
+
+                break;
+            case 5:
+                //test
+
+                s6RegularAmount.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (TextUtils.isEmpty(s6RegularAmount.getEditText().getText().toString())) {
+                            verticalStepperForm.setStepAsUncompleted(stepNumber,"Regular Contribution can't be empty");
+                        } else {
+                            verticalStepperForm.setActiveStepAsCompleted();
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {}
+                });
+
+                break;
+        }
     }
 }

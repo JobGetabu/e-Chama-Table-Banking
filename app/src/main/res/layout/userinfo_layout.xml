@@ -39,7 +39,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/nunito"
-        android:text="TextView"
+        android:text="Admin: Chairperson"
         app:layout_constraintStart_toEndOf="@+id/user_info_image"
         app:layout_constraintTop_toBottomOf="@+id/user_info_username" />
 
@@ -50,7 +50,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/nunito"
-        android:text="TextView"
+        android:text="Mavuno Self Help Group"
         app:layout_constraintStart_toEndOf="@+id/user_info_image"
         app:layout_constraintTop_toBottomOf="@+id/user_info_role" />
 

@@ -11,6 +11,7 @@
 
 
     <android.support.design.widget.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:id="@+id/s6_regular_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
