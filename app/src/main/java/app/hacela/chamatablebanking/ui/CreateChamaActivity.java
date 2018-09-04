@@ -26,6 +26,8 @@ import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 public class CreateChamaActivity extends AppCompatActivity implements VerticalStepperForm {
 
     private static final String TAG = "CreateChama";
+    private static final int PICK_IMAGE_REQUEST = 101;
+
     @BindView(R.id.vertical_stepper_form)
     VerticalStepperFormLayout verticalStepperForm;
 

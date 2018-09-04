@@ -16,9 +16,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:scaleType="fitXY"
-        android:visibility="visible"
-
-        app:srcCompat="@drawable/avatar_placeholder" />
+        android:visibility="gone"
+        />
 
     <android.support.design.button.MaterialButton
         android:id="@+id/s3_btn_selectpic"
@@ -34,5 +33,5 @@
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/darkgreyish"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
 </LinearLayout>
