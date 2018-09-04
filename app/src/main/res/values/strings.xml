@@ -26,6 +26,11 @@
     <string name="unknown_error">Unknown Error</string>
     <string name="chama_create_txt">Chama Table Banking helps you easily create, track and manage your chama finances</string>
     <string name="chama_name">Chama Name</string>
+    <string name="minimum_entry_fee_ksh">Minimum Entry Fee (Ksh)</string>
+    <string name="regular_contribution_minimum_amount_ksh">Regular Contribution minimum amount (Ksh)</string>
+    <string name="regular_contribution_time">Regular Contribution Time</string>
+    <string name="day_of_the_month">Day of the Month</string>
+    <string name="day_of_the_week">Day of the Week</string>
 
     <!-- Chama roles -->
     <string-array name="chamaroles">
@@ -60,5 +65,24 @@
         <item>Saturday of the Week</item>
     </string-array>
 
+    <!-- Step Titles -->
+    <string-array name="steps_titles">
+        <item>Create new chama</item>
+        <item>Chama name</item>
+        <item>Upload a picture(optional)</item>
+        <item>Select your role</item>
+        <item>Chama Entry Fee (Non Refundable)</item>
+        <item>Regular Meeting &amp; Contribution</item>
+    </string-array>
+
+    <!-- Step subTitles -->
+    <string-array name="steps_subtitles">
+        <item>Follow steps to form a chama</item>
+        <item>This is the name of your chama</item>
+        <item>Select chama picture (optional)</item>
+        <item>Only admins can create chamas</item>
+        <item>Minimum required for new members to join</item>
+        <item>Regular Contribution in meetings</item>
+    </string-array>
 
 </resources>
