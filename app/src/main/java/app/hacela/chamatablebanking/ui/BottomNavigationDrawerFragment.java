@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 
 import app.hacela.chamatablebanking.R;
@@ -65,8 +66,11 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                     return true;
                 case R.id.nav_logout:
                     Toast.makeText(getContext(), "Signing you out", Toast.LENGTH_SHORT).show();
+
                     auth.signOut();
+                    AuthUI.getInstance().signOut(getContext());
                     dismiss();
+
                     return true;
                 case R.id.nav_createnewgroup:
                     getActivity().startActivity(new Intent(getContext(), CreateChamaActivity.class));

@@ -1,5 +1,7 @@
 package app.hacela.chamatablebanking.ui;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +32,7 @@ import java.util.Arrays;
 
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.util.ImageProcessor;
+import app.hacela.chamatablebanking.viewmodel.MainViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     private ExpandingList mExpandingList;
     private ImageProcessor imageProcessor;
 
+    private MainViewModel mViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
         //firebase
         auth = FirebaseAuth.getInstance();
+
+        // View model
+        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         mExpandingList = findViewById(R.id.expanding_list_main);
         createItems();
@@ -128,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
                         .build(),
                 RC_SIGN_IN);
 
+        finish();
 
     }
 
@@ -253,7 +262,8 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 startActivity(new Intent(this, MainActivity.class));
 
-                finish();
+                //finish();
+
 
             } else {
                 // Sign in failed
