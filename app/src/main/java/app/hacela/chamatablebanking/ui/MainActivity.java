@@ -1,6 +1,5 @@
 package app.hacela.chamatablebanking.ui;
 
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
@@ -129,14 +129,13 @@ public class MainActivity extends AppCompatActivity {
                         .createSignInIntentBuilder()
                         .setLogo(R.drawable.avatar_placeholder)
                         .setTheme(R.style.AppTheme)
-                        .setIsSmartLockEnabled(false, true)
+                        .setIsSmartLockEnabled(false)
                         .setAvailableProviders(Arrays.asList(
                                 new AuthUI.IdpConfig.GoogleBuilder().build(),
                                 new AuthUI.IdpConfig.EmailBuilder().build()))
                         .build(),
                 RC_SIGN_IN);
 
-        finish();
 
     }
 
@@ -260,10 +259,12 @@ public class MainActivity extends AppCompatActivity {
 
             // Successfully signed in
             if (resultCode == RESULT_OK) {
-                startActivity(new Intent(this, MainActivity.class));
 
-                //finish();
-
+                Toast.makeText(this, ""+ auth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+                finish();
+                Intent intent = getIntent();
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
 
             } else {
                 // Sign in failed

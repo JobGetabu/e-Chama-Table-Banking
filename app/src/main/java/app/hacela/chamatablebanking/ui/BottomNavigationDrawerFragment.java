@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import app.hacela.chamatablebanking.R;
@@ -56,30 +58,37 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
 
     NavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             new NavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            int id = item.getItemId();
-            switch (id){
-                case R.id.nav_home:
-                    dismiss();
-                    return true;
-                case R.id.nav_logout:
-                    Toast.makeText(getContext(), "Signing you out", Toast.LENGTH_SHORT).show();
+                    int id = item.getItemId();
+                    switch (id) {
+                        case R.id.nav_home:
+                            dismiss();
+                            return true;
+                        case R.id.nav_logout:
+                            Toast.makeText(getContext(), "Signing you out", Toast.LENGTH_SHORT).show();
 
-                    auth.signOut();
-                    AuthUI.getInstance().signOut(getContext());
-                    dismiss();
+                            AuthUI.getInstance()
+                                    .signOut(getContext())
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            // user is now signed out
+                                            auth.signOut();
 
-                    return true;
-                case R.id.nav_createnewgroup:
-                    getActivity().startActivity(new Intent(getContext(), CreateChamaActivity.class));
-                    dismiss();
-                    return true;
-            }
-            return false;
-        }
-    };
+                                        }
+                                    });
+
+                            dismiss();
+                            return true;
+                        case R.id.nav_createnewgroup:
+                            getActivity().startActivity(new Intent(getContext(), CreateChamaActivity.class));
+                            dismiss();
+                            return true;
+                    }
+                    return false;
+                }
+            };
 
     @Override
     public void onDestroyView() {
