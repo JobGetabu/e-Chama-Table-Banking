@@ -303,9 +303,9 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                        if (adapterView.isSelected()){
+                        if (adapterView.isSelected()) {
                             verticalStepperForm.setStepAsUncompleted(stepNumber, "Select an option");
-                        }else {
+                        } else {
                             verticalStepperForm.setActiveStepAsCompleted();
                         }
                     }
@@ -378,10 +378,11 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
         if (requestCode == PICK_IMAGE_REQUEST) {
 
-            Uri resultUri = data.getData();
-            File imagefile = new File(resultUri.getPath());
+            if (data != null) {
+                
+                Uri resultUri = data.getData();
+                File imagefile = new File(resultUri.getPath());
 
-            if (resultUri != null) {
                 s3Image.setVisibility(View.VISIBLE);
                 mResultPhotoFile = resultUri;
                 s3Image.setImageURI(resultUri);
