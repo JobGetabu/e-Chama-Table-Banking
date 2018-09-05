@@ -26,6 +26,7 @@
 
         <activity android:name=".ui.CreateChamaActivity"
             android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"
             />
     </application>
 

@@ -1,8 +1,12 @@
 package app.hacela.chamatablebanking.ui;
 
+import android.app.ProgressDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +28,10 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 import java.io.File;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.datasource.Groups;
+import app.hacela.chamatablebanking.datasource.GroupsContributionDefault;
 import app.hacela.chamatablebanking.util.ImageProcessor;
+import app.hacela.chamatablebanking.viewmodel.CreateChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
@@ -50,6 +58,10 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
     private ImageProcessor imageProcessor;
     private Uri mResultPhotoFile;
+    private ProgressDialog progressDialog;
+    private CreateChamaViewModel chamaViewModel;
+    private Groups groups;
+    private GroupsContributionDefault groupsContributionDefault;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +70,9 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         ButterKnife.bind(this);
 
         imageProcessor = new ImageProcessor(this);
+        chamaViewModel = ViewModelProviders.of(this).get(CreateChamaViewModel.class);
+        groups= new Groups();
+        groupsContributionDefault = new GroupsContributionDefault();
 
         String[] stepsTitles = getResources().getStringArray(R.array.steps_titles);
         String[] stepsSubtitles = getResources().getStringArray(R.array.steps_subtitles);
@@ -76,6 +91,22 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                 .init();
 
 
+        //register observers
+        uiObserver();
+    }
+
+    private void uiObserver() {
+        chamaViewModel.getGroupsMediatorLiveData().observe(this, new Observer<Groups>() {
+            @Override
+            public void onChanged(@Nullable Groups groups) {
+
+                if (groups != null){
+
+                    s2Name.getEditText().setText(groups.getGroupname());
+                    Log.d(TAG, "onChanged: "+groups.toString());
+                }
+            }
+        });
     }
 
 
@@ -143,6 +174,8 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     @Override
     public void sendData() {
 
+        Log.d(TAG, "onSend Data: "+groups.toString());
+
     }
 
     private View createIntroStep() {
@@ -162,6 +195,10 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                 (LinearLayout) inflater.inflate(R.layout.step_two_name, null, false);
 
         s2Name = v2.findViewById(R.id.s2_name);
+
+        groups.setGroupname(s2Name.getEditText().getText().toString());
+        chamaViewModel.setGroupsMediatorLiveData(groups);
+
 
         return v2;
     }
@@ -284,6 +321,8 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                             verticalStepperForm.setStepAsUncompleted(stepNumber, "Chama name can't be empty");
                         } else {
                             verticalStepperForm.setActiveStepAsCompleted();
+
+
                         }
                     }
 
@@ -370,6 +409,10 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
                 break;
         }
+    }
+
+    private void formChama(){
+
     }
 
     @Override
