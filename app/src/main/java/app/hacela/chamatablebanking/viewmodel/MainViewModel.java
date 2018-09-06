@@ -14,6 +14,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import app.hacela.chamatablebanking.appexecutor.DefaultExecutorSupplier;
+import app.hacela.chamatablebanking.datasource.GroupsMembers;
 import app.hacela.chamatablebanking.datasource.Users;
 import app.hacela.chamatablebanking.repository.FirebaseDocumentLiveData;
 
@@ -43,6 +45,7 @@ public class MainViewModel extends AndroidViewModel {
 
     //mediators
     private MediatorLiveData<Users> usersMediatorLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<GroupsMembers> groupsMembersMediatorLiveData = new MediatorLiveData<>(); ;
 
     public MainViewModel(@NonNull Application application,FirebaseAuth mAuth,FirebaseFirestore mFirestore) {
         super(application);
@@ -62,17 +65,26 @@ public class MainViewModel extends AndroidViewModel {
 
         // Set up the MediatorLiveData to convert DataSnapshot objects into POJO objects
         workOnUsersLiveData();
+        workOnUsersMembers();
     }
 
     private void workOnUsersLiveData() {
 
         usersMediatorLiveData.addSource(mUserLiveData, new Observer<DocumentSnapshot>() {
             @Override
-            public void onChanged(@Nullable DocumentSnapshot documentSnapshot) {
+            public void onChanged(@Nullable final DocumentSnapshot documentSnapshot) {
 
                 if (documentSnapshot != null){
 
+                    DefaultExecutorSupplier.getInstance().forBackgroundTasks()
+                            .submit(new Runnable() {
+                                @Override
+                                public void run() {
 
+                                    usersMediatorLiveData.postValue(documentSnapshot.toObject(Users.class));
+
+                                }
+                            });
 
                 }else {
                     usersMediatorLiveData.postValue(null);
@@ -80,6 +92,18 @@ public class MainViewModel extends AndroidViewModel {
             }
         });
 
+    }
+
+    private void workOnUsersMembers(){
+
+    }
+
+    public MediatorLiveData<Users> getUsersMediatorLiveData() {
+        return usersMediatorLiveData;
+    }
+
+    public MediatorLiveData<GroupsMembers> getGroupsMembersMediatorLiveData() {
+        return groupsMembersMediatorLiveData;
     }
 
     /**
