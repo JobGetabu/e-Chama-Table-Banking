@@ -33,6 +33,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -79,7 +81,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     //firebase
     private FirebaseAuth auth;
     private FirebaseFirestore mFirestore;
-    private FirebaseStorage  storageReference;
+    private FirebaseStorage storageReference;
     private StorageReference mProfileImageReference;
 
     private ImageProcessor imageProcessor;
