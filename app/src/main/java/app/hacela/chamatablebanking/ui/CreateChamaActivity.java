@@ -23,19 +23,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.File;
+import java.util.HashMap;
 
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.datasource.Groups;
+import app.hacela.chamatablebanking.datasource.GroupsAccount;
 import app.hacela.chamatablebanking.datasource.GroupsContributionDefault;
+import app.hacela.chamatablebanking.datasource.GroupsMembers;
 import app.hacela.chamatablebanking.util.ImageProcessor;
 import app.hacela.chamatablebanking.viewmodel.CreateChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
+
+import static app.hacela.chamatablebanking.util.Constants.GROUPSCOL;
 
 public class CreateChamaActivity extends AppCompatActivity implements VerticalStepperForm {
 
@@ -52,9 +60,14 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     private MaterialBetterSpinner st4Role;
     private TextInputLayout s5Entryfee;
     private TextInputLayout s6RegularAmount;
+    private TextInputLayout s6StartDate;
     private MaterialBetterSpinner s6Regular;
     private MaterialBetterSpinner s6Daymonth;
     private MaterialBetterSpinner s6Dayweek;
+
+    //firebase
+    private FirebaseAuth auth;
+    private FirebaseFirestore mFirestore;
 
     private ImageProcessor imageProcessor;
     private Uri mResultPhotoFile;
@@ -62,6 +75,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     private CreateChamaViewModel chamaViewModel;
     private Groups groups;
     private GroupsContributionDefault groupsContributionDefault;
+    private String selectedRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +85,13 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
         imageProcessor = new ImageProcessor(this);
         chamaViewModel = ViewModelProviders.of(this).get(CreateChamaViewModel.class);
-        groups= new Groups();
+        groups = new Groups();
         groupsContributionDefault = new GroupsContributionDefault();
+
+        //firebase
+        auth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
+
 
         String[] stepsTitles = getResources().getStringArray(R.array.steps_titles);
         String[] stepsSubtitles = getResources().getStringArray(R.array.steps_subtitles);
@@ -100,10 +119,10 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
             @Override
             public void onChanged(@Nullable Groups groups) {
 
-                if (groups != null){
+                if (groups != null) {
 
                     s2Name.getEditText().setText(groups.getGroupname());
-                    Log.d(TAG, "onChanged: "+groups.toString());
+                    Log.d(TAG, "onChanged: " + groups.toString());
                 }
             }
         });
@@ -174,8 +193,9 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     @Override
     public void sendData() {
 
-        Log.d(TAG, "onSend Data: "+groups.toString());
+        Log.d(TAG, "onSend Data: " + groups.toString());
 
+        formChama();
     }
 
     private View createIntroStep() {
@@ -195,10 +215,6 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                 (LinearLayout) inflater.inflate(R.layout.step_two_name, null, false);
 
         s2Name = v2.findViewById(R.id.s2_name);
-
-        groups.setGroupname(s2Name.getEditText().getText().toString());
-        chamaViewModel.setGroupsMediatorLiveData(groups);
-
 
         return v2;
     }
@@ -267,6 +283,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         s6Regular = v6.findViewById(R.id.s6_regular);
         s6Daymonth = v6.findViewById(R.id.s6_daymonth);
         s6Dayweek = v6.findViewById(R.id.s6_dayweek);
+        s6StartDate = v6.findViewById(R.id.s6_start_date);
 
         ArrayAdapter<String> arrayAdapterMeetCycles = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.meetingcyles));
@@ -321,8 +338,6 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                             verticalStepperForm.setStepAsUncompleted(stepNumber, "Chama name can't be empty");
                         } else {
                             verticalStepperForm.setActiveStepAsCompleted();
-
-
                         }
                     }
 
@@ -346,7 +361,9 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                             verticalStepperForm.setStepAsUncompleted(stepNumber, "Select an option");
                         } else {
                             verticalStepperForm.setActiveStepAsCompleted();
+                            selectedRole = adapterView.getSelectedItem().toString();
                         }
+
                     }
                 });
                 break;
@@ -399,19 +416,111 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                        if (adapterView.getSelectedItem() == null) {
+                        if (adapterView.getSelectedItemPosition() == 0) {
+
+                            s6Daymonth.setVisibility(View.VISIBLE);
+                            s6Dayweek.setVisibility(View.GONE);
+                        }
+
+                        if (adapterView.getSelectedItemPosition() == 1) {
+
+                            s6Daymonth.setVisibility(View.GONE);
+                            s6Dayweek.setVisibility(View.VISIBLE);
+                        }
+
+                        if (adapterView.isSelected()) {
                             verticalStepperForm.setStepAsUncompleted(stepNumber, "Select an option");
                         } else {
                             verticalStepperForm.setActiveStepAsCompleted();
+                            groupsContributionDefault.setCycleintervaltype(adapterView.getSelectedItem().toString());
                         }
+
                     }
                 });
+
+                if (s6Daymonth.getVisibility() == View.VISIBLE) {
+                    s6Daymonth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            if (adapterView.isSelected()) {
+                                verticalStepperForm.setStepAsUncompleted(stepNumber, "Select a month option");
+                            } else {
+                                verticalStepperForm.setActiveStepAsCompleted();
+                                groupsContributionDefault.setDayofmonth(adapterView.getSelectedItem().toString());
+                            }
+
+                        }
+                    });
+                }
+
+                if (s6Dayweek.getVisibility() == View.VISIBLE) {
+                    s6Dayweek.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            if (adapterView.isSelected()) {
+                                verticalStepperForm.setStepAsUncompleted(stepNumber, "Select a week option");
+                            } else {
+                                verticalStepperForm.setActiveStepAsCompleted();
+                                groupsContributionDefault.setDayofweek(adapterView.getSelectedItem().toString());
+                            }
+
+                        }
+                    });
+                }
 
                 break;
         }
     }
 
-    private void formChama(){
+    private void formChama() {
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(true);
+        progressDialog.show();
+        progressDialog.setMessage(getString(R.string.creating_new_chama_group));
+
+        groups.setGroupname(s2Name.getEditText().getText().toString());
+        groupsContributionDefault.setAmount(Double.parseDouble(s6RegularAmount.getEditText().getText().toString()));
+        groupsContributionDefault.setEntryfee(Double.parseDouble(s5Entryfee.getEditText().getText().toString()));
+
+
+        String groupid = mFirestore.collection(GROUPSCOL).document().getId();
+
+        //group data
+        HashMap<String, Object> groupMap = new HashMap<>();
+        groupMap.put("groupid", groupid);
+        groupMap.put("groupname", groups.getGroupname());
+        groupMap.put("createdate", FieldValue.serverTimestamp());
+        groupMap.put("createbyid", auth.getCurrentUser().getUid());
+        groupMap.put("photourl", "");
+        groupMap.put("createbyname", auth.getCurrentUser().getDisplayName());
+
+        //Group Account
+        GroupsAccount groupsAccount = new GroupsAccount(0, 0);
+
+        //Group Members
+
+        GroupsMembers groupsMembers = new GroupsMembers(groupid, true, auth.getCurrentUser().getUid(),
+                auth.getCurrentUser().getDisplayName(), "admin", selectedRole);
+
+
+        Log.d(TAG, "formChama: " + groups.toString());
+
+        if (mResultPhotoFile != null) {
+
+            uploadWithPhoto();
+        } else {
+
+            //no photo selected
+
+        }
+
+        chamaViewModel.setGroupsMediatorLiveData(groups);
+    }
+
+    private void uploadWithPhoto() {
 
     }
 
@@ -422,7 +531,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         if (requestCode == PICK_IMAGE_REQUEST) {
 
             if (data != null) {
-                
+
                 Uri resultUri = data.getData();
                 File imagefile = new File(resultUri.getPath());
 

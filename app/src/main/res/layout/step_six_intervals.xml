@@ -72,4 +72,22 @@
         app:layout_constraintTop_toBottomOf="@+id/s6_daymonth"
         app:met_floatingLabel="normal" />
 
+    <android.support.design.widget.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlineBox.Dense"
+        android:id="@+id/s6_start_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:focusable="false"
+        >
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Starting Date/ Date for next meeting"
+            android:inputType="date" />
+    </android.support.design.widget.TextInputLayout>
+
 </LinearLayout>

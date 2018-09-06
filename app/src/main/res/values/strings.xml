@@ -11,6 +11,7 @@
     <string name="add_member_fine">Add Member Fine</string>
     <string name="add_project">Add Project</string>
     <string name="create_new_chama_group">Create new chama group</string>
+    <string name="creating_new_chama_group">Creating a new chama group</string>
     <string name="add_payment">Add Payment</string>
     <string name="invite_a_member">Invite a member</string>
     <string name="regular_contribution">Regular Contribution</string>
