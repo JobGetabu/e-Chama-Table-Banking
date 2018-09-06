@@ -36,6 +36,7 @@ import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -82,11 +83,12 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     private FirebaseAuth auth;
     private FirebaseFirestore mFirestore;
     private FirebaseStorage storageReference;
-    private StorageReference mProfileImageReference;
+    private StorageReference mImageReference;
 
     private ImageProcessor imageProcessor;
     private Uri mResultPhotoFile;
     private ProgressDialog progressDialog;
+    private ByteArrayOutputStream mBaos = new ByteArrayOutputStream();
     private CreateChamaViewModel chamaViewModel;
 
 
@@ -103,6 +105,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         //firebase
         auth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance();
 
 
         String[] stepsTitles = getResources().getStringArray(R.array.steps_titles);
@@ -120,7 +123,6 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                 .primaryDarkColor(colorPrimaryDark)
                 .displayBottomNavigation(true) // It is true by default, so in this case this line is not necessary
                 .init();
-
 
 
     }
@@ -491,44 +493,49 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         grContrDflt.setAmount(Double.parseDouble(s6RegularAmount.getEditText().getText().toString()));
         grContrDflt.setEntryfee(Double.parseDouble(s5Entryfee.getEditText().getText().toString()));
         grContrDflt.setCycleintervaltype(s6Regular.getSelectedItem().toString());
-        if (s6Dayweek.getVisibility() == View.VISIBLE){
+        if (s6Dayweek.getVisibility() == View.VISIBLE) {
             grContrDflt.setDayofweek(s6Dayweek.getSelectedItem().toString());
             grContrDflt.setDayofmonth("");
-        }else {
+        } else {
             grContrDflt.setDayofweek("");
             grContrDflt.setDayofmonth(s6Daymonth.getSelectedItem().toString());
         }
 
+
+        //no photo selected
+
+        //refs
+        DocumentReference GROUPREF = mFirestore.collection(GROUPSCOL).document(groupid);
+        DocumentReference GROUPDEFREF = mFirestore.collection(GROUPSCONTRIBUTIONDEFAULTCOL).document(groupid);
+        DocumentReference GROUPACCREF = mFirestore.collection(GROUPSACCOUNTCOL).document(groupid);
+        DocumentReference GROUPMEMBERSREF = mFirestore.collection(GROUPSMEMBERSCOL).document();
+
+        // Get a new write batch
+        WriteBatch batch = mFirestore.batch();
+        //upload the group
+        batch.set(GROUPREF, groupMap);
+        //upload group default
+        batch.set(GROUPDEFREF, grContrDflt);
+        //upload group member
+        batch.set(GROUPMEMBERSREF, groupsMembers, SetOptions.merge());
+        //upload group accounts
+        batch.set(GROUPACCREF, groupsAccount);
+
+
+
         if (mResultPhotoFile != null) {
-            uploadWithPhoto();
+
+            uploadWithPhoto(groupid, batch);
+
         } else {
-
-            //no photo selected
-
-            //refs
-            DocumentReference GROUPREF = mFirestore.collection(GROUPSCOL).document(groupid);
-            DocumentReference GROUPDEFREF = mFirestore.collection(GROUPSCONTRIBUTIONDEFAULTCOL).document(groupid);
-            DocumentReference GROUPACCREF = mFirestore.collection(GROUPSACCOUNTCOL).document(groupid);
-            DocumentReference GROUPMEMBERSREF = mFirestore.collection(GROUPSMEMBERSCOL).document();
-
-            // Get a new write batch
-            WriteBatch batch = mFirestore.batch();
-            //upload the group
-            batch.set(GROUPREF, groupMap);
-            //upload group default
-            batch.set(GROUPDEFREF, grContrDflt);
-            //upload group member
-            batch.set(GROUPMEMBERSREF, groupsMembers, SetOptions.merge());
-            //upload group accounts
-            batch.set(GROUPACCREF, groupsAccount);
 
             batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         progressDialog.dismiss();
 
-                    }else {
+                    } else {
 
                         progressDialog.setCancelable(true);
                         progressDialog.setTitle("Error Occurred");
@@ -538,13 +545,16 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                     }
                 }
             });
-
-
         }
+
 
     }
 
-    private void uploadWithPhoto() {
+    private void uploadWithPhoto(String groupid, WriteBatch batch) {
+
+        mImageReference = storageReference.getReference(groupid+"/image.jpg");
+
+
 
     }
 

@@ -1,5 +1,7 @@
 package app.hacela.chamatablebanking.datasource;
 
+import java.util.Date;
+
 /**
  * Created by Job on Wednesday : 9/5/2018.
  */
@@ -13,12 +15,13 @@ public class GroupsContributionDefault {
     private String dayofmonth;
     private String dayofweek;
     private int cycleperiod;
+    private Date startdate;
 
     public GroupsContributionDefault() {
     }
 
-    public GroupsContributionDefault(double amount, String penaltycondition, double penaltyamount,
-                                     double entryfee, String cycleintervaltype, String dayofmonth, String dayofweek, int cycleperiod) {
+    public GroupsContributionDefault(double amount, String penaltycondition, double penaltyamount, double entryfee,
+                                     String cycleintervaltype, String dayofmonth, String dayofweek, int cycleperiod, Date startdate) {
         this.amount = amount;
         this.penaltycondition = penaltycondition;
         this.penaltyamount = penaltyamount;
@@ -27,6 +30,7 @@ public class GroupsContributionDefault {
         this.dayofmonth = dayofmonth;
         this.dayofweek = dayofweek;
         this.cycleperiod = cycleperiod;
+        this.startdate = startdate;
     }
 
     public double getAmount() {
@@ -91,6 +95,14 @@ public class GroupsContributionDefault {
 
     public void setCycleperiod(int cycleperiod) {
         this.cycleperiod = cycleperiod;
+    }
+
+    public Date getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(Date startdate) {
+        this.startdate = startdate;
     }
 
     @Override
