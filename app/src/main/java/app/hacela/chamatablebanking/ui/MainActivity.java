@@ -31,7 +31,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     //firebase
     private FirebaseAuth auth;
     private FirebaseFirestore mFirestore;
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     private ExpandingList mExpandingList;
     private ImageProcessor imageProcessor;
