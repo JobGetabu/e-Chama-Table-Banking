@@ -1,5 +1,6 @@
 package app.hacela.chamatablebanking.ui;
 
+import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,19 +25,30 @@ import com.diegodobelo.expandingview.ExpandingList;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Arrays;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.datasource.Users;
 import app.hacela.chamatablebanking.util.ImageProcessor;
 import app.hacela.chamatablebanking.viewmodel.MainViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static app.hacela.chamatablebanking.util.Constants.GROUPSMEMBERSCOL;
+import static app.hacela.chamatablebanking.util.Constants.USERCOL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,12 +73,16 @@ public class MainActivity extends AppCompatActivity {
 
     //firebase
     private FirebaseAuth auth;
+    private FirebaseFirestore mFirestore;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     private ExpandingList mExpandingList;
     private ImageProcessor imageProcessor;
 
     private MainViewModel mViewModel;
+    private String mGroupId;
+    private String mUserRole;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -77,8 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(bar);
 
+
         //firebase
         auth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
 
         // View model
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -99,10 +117,157 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //play with auth user id
 
+                    firstTimeUser();
                     setUpUserUI();
+                    loadYourGroup();
                 }
             }
         });
+    }
+
+    //global var groupid
+    private void loadYourGroup() {
+        //mGroupId;
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        progressDialog.setMessage(getString(R.string.dialog_loading_group));
+
+        mFirestore.collection(GROUPSMEMBERSCOL).document(auth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull final Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+
+                            if (!document.exists()) {
+                                progressDialog.dismiss();
+
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setCancelable(false)
+                                        .setTitle(R.string.not_in_agroup)
+                                        .setMessage("Join or Create a micro savings group to continue")
+                                        .setNegativeButton("Join one", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+
+
+                                                Snackbar.make(findViewById(android.R.id.content),
+                                                        R.string.chama_link_txt,Snackbar.LENGTH_INDEFINITE)
+                                                        .setAction("Ok", new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View view) {
+                                                                finish();
+                                                            }
+                                                        })
+                                                        .show();
+
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .setPositiveButton("Create Group", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                startActivity(new Intent(MainActivity.this, CreateChamaActivity.class));
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .setNeutralButton("Later", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                dialogInterface.dismiss();
+                                                finish();
+                                            }
+                                        })
+                                        .show();
+
+                            } else {
+
+                                //chama exists
+                                mFirestore.collection(GROUPSMEMBERSCOL).document(auth.getCurrentUser().getUid())
+                                        .get()
+                                        .addOnSuccessListener(MainActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                mGroupId = documentSnapshot.getString("groupid");
+                                                mUserRole = documentSnapshot.getString("userrole");
+                                                progressDialog.dismiss();
+
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                        //handle errors
+
+                                        progressDialog.dismiss();
+
+                                        new AlertDialog.Builder(MainActivity.this)
+                                                .setCancelable(false)
+                                                .setTitle(R.string.error_occured)
+                                                .setMessage(e.getMessage())
+                                                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                                                        dialog.dismiss();
+                                                        finish();
+                                                    }
+                                                });
+                                    }
+                                });
+                            }
+                        }else {
+                            //handle errors
+
+                            progressDialog.dismiss();
+
+                            new AlertDialog.Builder(MainActivity.this)
+                                    .setCancelable(false)
+                                    .setTitle(R.string.error_occured)
+                                    .setMessage(task.getException().getMessage())
+                                    .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                                            dialog.dismiss();
+                                            finish();
+                                        }
+                                    });
+                        }
+                    }
+                });
+
+    }
+
+    private void firstTimeUser() {
+
+        mFirestore.collection(USERCOL).document(auth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Log.d(TAG, "DocumentSnapshot data: ");
+                            } else {
+                                Log.d(TAG, "No such document... creating");
+
+                                String device_token = FirebaseInstanceId.getInstance().getToken();
+                                String mCurrentUserid = auth.getCurrentUser().getUid();
+
+                                Users users = new Users(mCurrentUserid, device_token, auth.getCurrentUser().getPhotoUrl().toString());
+
+                                mFirestore.collection(USERCOL).document(auth.getCurrentUser().getUid())
+                                        .set(users);
+
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
     }
 
     @Override
@@ -260,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
             // Successfully signed in
             if (resultCode == RESULT_OK) {
 
-                Toast.makeText(this, ""+ auth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "" + auth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
                 finish();
                 Intent intent = getIntent();
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

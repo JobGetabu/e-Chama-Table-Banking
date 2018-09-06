@@ -34,7 +34,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -511,7 +510,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         DocumentReference GROUPREF = mFirestore.collection(GROUPSCOL).document(groupid);
         DocumentReference GROUPDEFREF = mFirestore.collection(GROUPSCONTRIBUTIONDEFAULTCOL).document(groupid);
         DocumentReference GROUPACCREF = mFirestore.collection(GROUPSACCOUNTCOL).document(groupid);
-        DocumentReference GROUPMEMBERSREF = mFirestore.collection(GROUPSMEMBERSCOL).document();
+        DocumentReference GROUPMEMBERSREF = mFirestore.collection(GROUPSMEMBERSCOL).document(auth.getCurrentUser().getUid());
 
         // Get a new write batch
         WriteBatch batch = mFirestore.batch();
@@ -520,7 +519,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         //upload group default
         batch.set(GROUPDEFREF, grContrDflt);
         //upload group member
-        batch.set(GROUPMEMBERSREF, groupsMembers, SetOptions.merge());
+        batch.set(GROUPMEMBERSREF, groupsMembers);
         //upload group accounts
         batch.set(GROUPACCREF, groupsAccount);
 
@@ -637,8 +636,10 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                 Uri resultUri = data.getData();
 
                 s3Image.setVisibility(View.VISIBLE);
-                mResultPhotoFile = resultUri;
                 s3Image.setImageURI(resultUri);
+                s3Image.setScaleType(ImageView.ScaleType.CENTER);
+
+                mResultPhotoFile = resultUri;
             }
         }
     }

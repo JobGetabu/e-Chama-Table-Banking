@@ -33,6 +33,9 @@
     <string name="day_of_the_month">Day of the Month</string>
     <string name="day_of_the_week">Day of the Week</string>
     <string name="error_occured">Error Occurred</string>
+    <string name="dialog_loading_group">loading your group</string>
+    <string name="not_in_agroup">You\'re not in a Group</string>
+    <string name="chama_link_txt">Join using the link sent by your chama admin</string>
 
     <!-- Chama roles -->
     <string-array name="chamaroles">
