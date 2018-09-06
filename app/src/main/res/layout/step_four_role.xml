@@ -6,9 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minWidth="400dp"
+    android:orientation="vertical"
     >
 
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+    <Spinner
         android:id="@+id/st_4_role"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,8 +17,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Your Role"
         android:textColorHint="#05ab9a"
-        app:met_floatingLabel="normal" />
+        android:minHeight="32dp"
+        />
 
 </LinearLayout>

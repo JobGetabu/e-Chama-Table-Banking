@@ -1,12 +1,11 @@
 package app.hacela.chamatablebanking.ui;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
@@ -19,17 +18,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.datasource.Groups;
@@ -57,13 +61,13 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     private TextInputLayout s2Name;
     private ImageView s3Image;
     private MaterialButton s3BtnSelectpic;
-    private MaterialBetterSpinner st4Role;
+    private Spinner st4Role;
     private TextInputLayout s5Entryfee;
     private TextInputLayout s6RegularAmount;
-    private TextInputLayout s6StartDate;
-    private MaterialBetterSpinner s6Regular;
-    private MaterialBetterSpinner s6Daymonth;
-    private MaterialBetterSpinner s6Dayweek;
+    private EditText s6StartDate;
+    private Spinner s6Regular;
+    private Spinner s6Daymonth;
+    private Spinner s6Dayweek;
 
     //firebase
     private FirebaseAuth auth;
@@ -110,24 +114,8 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                 .init();
 
 
-        //register observers
-        uiObserver();
+
     }
-
-    private void uiObserver() {
-        chamaViewModel.getGroupsMediatorLiveData().observe(this, new Observer<Groups>() {
-            @Override
-            public void onChanged(@Nullable Groups groups) {
-
-                if (groups != null) {
-
-                    s2Name.getEditText().setText(groups.getGroupname());
-                    Log.d(TAG, "onChanged: " + groups.toString());
-                }
-            }
-        });
-    }
-
 
     @Override
     public View createStepContentView(int stepNumber) {
@@ -193,7 +181,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     @Override
     public void sendData() {
 
-        Log.d(TAG, "onSend Data: " + groups.toString());
+        Log.d(TAG, "onSend Data: " + groups.toString() + groupsContributionDefault.toString());
 
         formChama();
     }
@@ -259,6 +247,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
         st4Role.setAdapter(arrayAdapter);
 
+
         return v4;
     }
 
@@ -301,10 +290,9 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         s6Daymonth.setVisibility(View.GONE);
         s6Dayweek.setVisibility(View.GONE);
 
-        s6Regular.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        s6Regular.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 if (adapterView.getSelectedItemPosition() == 0) {
                     s6Daymonth.setVisibility(View.VISIBLE);
@@ -314,10 +302,15 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                     s6Daymonth.setVisibility(View.GONE);
                     s6Dayweek.setVisibility(View.VISIBLE);
                 }
+                Toast.makeText(CreateChamaActivity.this, adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
+            }
 
-                String cycleintervaltype = adapterView.getItemAtPosition(i).toString();
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
+
 
         return v6;
     }
@@ -353,19 +346,10 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                 break;
             case 3:
                 //spinner pass
-                st4Role.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                        if (adapterView.isSelected()) {
-                            verticalStepperForm.setStepAsUncompleted(stepNumber, "Select an option");
-                        } else {
-                            verticalStepperForm.setActiveStepAsCompleted();
-                            selectedRole = adapterView.getSelectedItem().toString();
-                        }
+                verticalStepperForm.setStepAsCompleted(stepNumber);
 
-                    }
-                });
+
                 break;
             case 4:
                 //test
@@ -393,6 +377,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
             case 5:
                 //test
 
+
                 s6RegularAmount.getEditText().addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -412,63 +397,56 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                     }
                 });
 
-                s6Regular.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                final Calendar myCalendar = Calendar.getInstance();
+
+
+                final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        // TODO Auto-generated method stub
+                        myCalendar.set(Calendar.YEAR, year);
+                        myCalendar.set(Calendar.MONTH, monthOfYear);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                        if (adapterView.getSelectedItemPosition() == 0) {
 
-                            s6Daymonth.setVisibility(View.VISIBLE);
-                            s6Dayweek.setVisibility(View.GONE);
-                        }
+                        String myFormat = "MM/dd/yy"; //In which you need put here
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
 
-                        if (adapterView.getSelectedItemPosition() == 1) {
+                        s6StartDate.setText(sdf.format(myCalendar.getTime()));
+                    }
+                };
 
-                            s6Daymonth.setVisibility(View.GONE);
-                            s6Dayweek.setVisibility(View.VISIBLE);
-                        }
-
-                        if (adapterView.isSelected()) {
-                            verticalStepperForm.setStepAsUncompleted(stepNumber, "Select an option");
-                        } else {
-                            verticalStepperForm.setActiveStepAsCompleted();
-                            groupsContributionDefault.setCycleintervaltype(adapterView.getSelectedItem().toString());
-                        }
-
+                s6StartDate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // TODO Auto-generated method stub
+                        new DatePickerDialog(CreateChamaActivity.this, date, myCalendar
+                                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                     }
                 });
 
-                if (s6Daymonth.getVisibility() == View.VISIBLE) {
-                    s6Daymonth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                s6StartDate.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
 
-                            if (adapterView.isSelected()) {
-                                verticalStepperForm.setStepAsUncompleted(stepNumber, "Select a month option");
-                            } else {
-                                verticalStepperForm.setActiveStepAsCompleted();
-                                groupsContributionDefault.setDayofmonth(adapterView.getSelectedItem().toString());
-                            }
-
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (TextUtils.isEmpty(s6StartDate.getText().toString())) {
+                            verticalStepperForm.setStepAsUncompleted(stepNumber, "Select a date for next meeting");
+                        } else {
+                            verticalStepperForm.setActiveStepAsCompleted();
                         }
-                    });
-                }
+                    }
 
-                if (s6Dayweek.getVisibility() == View.VISIBLE) {
-                    s6Dayweek.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                            if (adapterView.isSelected()) {
-                                verticalStepperForm.setStepAsUncompleted(stepNumber, "Select a week option");
-                            } else {
-                                verticalStepperForm.setActiveStepAsCompleted();
-                                groupsContributionDefault.setDayofweek(adapterView.getSelectedItem().toString());
-                            }
-
-                        }
-                    });
-                }
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                    }
+                });
 
                 break;
         }
@@ -501,9 +479,10 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         GroupsAccount groupsAccount = new GroupsAccount(0, 0);
 
         //Group Members
-
         GroupsMembers groupsMembers = new GroupsMembers(groupid, true, auth.getCurrentUser().getUid(),
                 auth.getCurrentUser().getDisplayName(), "admin", selectedRole);
+
+        //group contribution default
 
 
         Log.d(TAG, "formChama: " + groups.toString());

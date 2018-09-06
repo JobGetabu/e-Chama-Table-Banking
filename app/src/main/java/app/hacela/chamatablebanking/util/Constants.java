@@ -10,4 +10,7 @@ public class Constants {
     public static final String GROUPSCONTRIBUTIONDEFAULT = "GroupsContributionDefault";
     public static final String GROUPSMEMBERS = "GroupsMembers";
     public static final String USERSTRANSACTIONS = "UsersTransactions";
+
+    public static final String ROLEADMIN = "Admin";
+    public static final String ROLEMEMBER = "Member";
 }

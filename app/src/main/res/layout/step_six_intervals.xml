@@ -28,7 +28,7 @@
             android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+    <Spinner
         android:id="@+id/s6_regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,12 +37,10 @@
         android:layout_marginTop="16dp"
         android:hint="@string/regular_contribution_time"
         android:textColorHint="#05ab9a"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/s6_regular_amount"
-        app:met_floatingLabel="normal" />
+        android:minHeight="32dp"
+        />
 
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+    <Spinner
         android:id="@+id/s6_daymonth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,12 +49,10 @@
         android:layout_marginTop="16dp"
         android:hint="@string/day_of_the_month"
         android:textColorHint="#05ab9a"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/s6_regular"
-        app:met_floatingLabel="normal" />
+        android:minHeight="32dp"
+        />
 
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+    <Spinner
         android:id="@+id/s6_dayweek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,28 +62,19 @@
         android:layout_marginTop="16dp"
         android:hint="@string/day_of_the_week"
         android:textColorHint="#05ab9a"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/s6_daymonth"
-        app:met_floatingLabel="normal" />
+        android:minHeight="32dp"
+        />
 
-    <android.support.design.widget.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlineBox.Dense"
-        android:id="@+id/s6_start_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:focusable="false"
-        >
-
-        <android.support.design.widget.TextInputEditText
+        <EditText
+            android:id="@+id/s6_start_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:focusable="false"
             android:hint="Starting Date/ Date for next meeting"
             android:inputType="date" />
-    </android.support.design.widget.TextInputLayout>
+
 
 </LinearLayout>
