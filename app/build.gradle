@@ -27,6 +27,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0-alpha1'
     implementation 'com.android.support:support-vector-drawable:28.0.0-alpha1'
     implementation 'com.android.support:support-v4:28.0.0-alpha1'
@@ -43,6 +44,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.firebase:firebase-firestore:17.1.0'
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
 
     // FirebaseUI for Auth
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
@@ -65,11 +67,6 @@ dependencies {
     //vertical stepper
     implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
 
-    //spinner
-    implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
-
-    //spinner
-    implementation 'com.github.ganfra:material-spinner:2.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
@@ -13,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,9 +25,14 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -36,7 +41,6 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import app.hacela.chamatablebanking.R;
-import app.hacela.chamatablebanking.datasource.Groups;
 import app.hacela.chamatablebanking.datasource.GroupsAccount;
 import app.hacela.chamatablebanking.datasource.GroupsContributionDefault;
 import app.hacela.chamatablebanking.datasource.GroupsMembers;
@@ -47,7 +51,10 @@ import butterknife.ButterKnife;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
+import static app.hacela.chamatablebanking.util.Constants.GROUPSACCOUNTCOL;
 import static app.hacela.chamatablebanking.util.Constants.GROUPSCOL;
+import static app.hacela.chamatablebanking.util.Constants.GROUPSCONTRIBUTIONDEFAULTCOL;
+import static app.hacela.chamatablebanking.util.Constants.GROUPSMEMBERSCOL;
 
 public class CreateChamaActivity extends AppCompatActivity implements VerticalStepperForm {
 
@@ -72,14 +79,14 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     //firebase
     private FirebaseAuth auth;
     private FirebaseFirestore mFirestore;
+    private FirebaseStorage  storageReference;
+    private StorageReference mProfileImageReference;
 
     private ImageProcessor imageProcessor;
     private Uri mResultPhotoFile;
     private ProgressDialog progressDialog;
     private CreateChamaViewModel chamaViewModel;
-    private Groups groups;
-    private GroupsContributionDefault groupsContributionDefault;
-    private String selectedRole;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +96,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
         imageProcessor = new ImageProcessor(this);
         chamaViewModel = ViewModelProviders.of(this).get(CreateChamaViewModel.class);
-        groups = new Groups();
-        groupsContributionDefault = new GroupsContributionDefault();
+
 
         //firebase
         auth = FirebaseAuth.getInstance();
@@ -180,8 +186,6 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
     @Override
     public void sendData() {
-
-        Log.d(TAG, "onSend Data: " + groups.toString() + groupsContributionDefault.toString());
 
         formChama();
     }
@@ -454,14 +458,12 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
     private void formChama() {
 
+        //TODO : check net
+
         progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(true);
+        progressDialog.setCancelable(false);
         progressDialog.show();
         progressDialog.setMessage(getString(R.string.creating_new_chama_group));
-
-        groups.setGroupname(s2Name.getEditText().getText().toString());
-        groupsContributionDefault.setAmount(Double.parseDouble(s6RegularAmount.getEditText().getText().toString()));
-        groupsContributionDefault.setEntryfee(Double.parseDouble(s5Entryfee.getEditText().getText().toString()));
 
 
         String groupid = mFirestore.collection(GROUPSCOL).document().getId();
@@ -469,7 +471,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         //group data
         HashMap<String, Object> groupMap = new HashMap<>();
         groupMap.put("groupid", groupid);
-        groupMap.put("groupname", groups.getGroupname());
+        groupMap.put("groupname", s2Name.getEditText().getText().toString());
         groupMap.put("createdate", FieldValue.serverTimestamp());
         groupMap.put("createbyid", auth.getCurrentUser().getUid());
         groupMap.put("photourl", "");
@@ -480,23 +482,64 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
         //Group Members
         GroupsMembers groupsMembers = new GroupsMembers(groupid, true, auth.getCurrentUser().getUid(),
-                auth.getCurrentUser().getDisplayName(), "admin", selectedRole);
+                auth.getCurrentUser().getDisplayName(), "admin", st4Role.getSelectedItem().toString());
 
         //group contribution default
-
-
-        Log.d(TAG, "formChama: " + groups.toString());
+        GroupsContributionDefault grContrDflt = new GroupsContributionDefault();
+        grContrDflt.setAmount(Double.parseDouble(s6RegularAmount.getEditText().getText().toString()));
+        grContrDflt.setEntryfee(Double.parseDouble(s5Entryfee.getEditText().getText().toString()));
+        grContrDflt.setCycleintervaltype(s6Regular.getSelectedItem().toString());
+        if (s6Dayweek.getVisibility() == View.VISIBLE){
+            grContrDflt.setDayofweek(s6Dayweek.getSelectedItem().toString());
+            grContrDflt.setDayofmonth("");
+        }else {
+            grContrDflt.setDayofweek("");
+            grContrDflt.setDayofmonth(s6Daymonth.getSelectedItem().toString());
+        }
 
         if (mResultPhotoFile != null) {
-
             uploadWithPhoto();
         } else {
 
             //no photo selected
 
+            //refs
+            DocumentReference GROUPREF = mFirestore.collection(GROUPSCOL).document(groupid);
+            DocumentReference GROUPDEFREF = mFirestore.collection(GROUPSCONTRIBUTIONDEFAULTCOL).document(groupid);
+            DocumentReference GROUPACCREF = mFirestore.collection(GROUPSACCOUNTCOL).document(groupid);
+            DocumentReference GROUPMEMBERSREF = mFirestore.collection(GROUPSMEMBERSCOL).document();
+
+            // Get a new write batch
+            WriteBatch batch = mFirestore.batch();
+            //upload the group
+            batch.set(GROUPREF, groupMap);
+            //upload group default
+            batch.set(GROUPDEFREF, grContrDflt);
+            //upload group member
+            batch.set(GROUPMEMBERSREF, groupsMembers, SetOptions.merge());
+            //upload group accounts
+            batch.set(GROUPACCREF, groupsAccount);
+
+            batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        progressDialog.dismiss();
+
+                    }else {
+
+                        progressDialog.setCancelable(true);
+                        progressDialog.setTitle("Error Occurred");
+                        progressDialog.setMessage(task.getException().getMessage());
+                        progressDialog.setCanceledOnTouchOutside(true);
+
+                    }
+                }
+            });
+
+
         }
 
-        chamaViewModel.setGroupsMediatorLiveData(groups);
     }
 
     private void uploadWithPhoto() {
