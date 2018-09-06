@@ -1,11 +1,13 @@
 package app.hacela.chamatablebanking.ui;
 
 import android.app.ProgressDialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -33,11 +35,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Arrays;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.datasource.GroupsMembers;
 import app.hacela.chamatablebanking.datasource.Users;
 import app.hacela.chamatablebanking.util.ImageProcessor;
 import app.hacela.chamatablebanking.viewmodel.MainViewModel;
@@ -46,6 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static app.hacela.chamatablebanking.util.Constants.GROUPSCOL;
 import static app.hacela.chamatablebanking.util.Constants.GROUPSMEMBERSCOL;
 import static app.hacela.chamatablebanking.util.Constants.USERCOL;
 
@@ -97,8 +102,13 @@ public class MainActivity extends AppCompatActivity {
         mFirestore = FirebaseFirestore.getInstance();
 
         // View model
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        MainViewModel.Factory factory = new MainViewModel.Factory(
+                this.getApplication(), auth, mFirestore);
 
+        mViewModel = ViewModelProviders.of(this, factory)
+                .get(MainViewModel.class);
+
+        //read db data
         mExpandingList = findViewById(R.id.expanding_list_main);
         createItems();
 
@@ -116,8 +126,11 @@ public class MainActivity extends AppCompatActivity {
                     //play with auth user id
 
                     firstTimeUser();
-                    setUpUserUI();
                     loadYourGroup();
+
+                    //observers
+                    userUIObserver();
+
                 }
             }
         });
@@ -452,9 +465,28 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG).show();
     }
 
-    private void setUpUserUI() {
+    private void userUIObserver() {
         userInfoUsername.setText(auth.getCurrentUser().getDisplayName());
         imageProcessor.setMyImage(userInfoImage, auth.getCurrentUser().getPhotoUrl().toString());
+
+        mViewModel.getGroupsMembersMediatorLiveData().observe(this, new Observer<GroupsMembers>() {
+            @Override
+            public void onChanged(@Nullable GroupsMembers groupsMembers) {
+                if (groupsMembers != null){
+                    userInfoRole.setText(groupsMembers.getUserrole());
+                    mFirestore.collection(GROUPSCOL).document(groupsMembers.getGroupid())
+                            .get(Source.DEFAULT)
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()){
+                                        userInfoGroup.setText(task.getResult().getString("groupname"));
+                                    }
+                                }
+                            });
+                }
+            }
+        });
     }
 
 }

@@ -25,12 +25,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/nunito_semibold"
-        android:text="TextView"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/user_info_img_notification"
         app:layout_constraintStart_toEndOf="@+id/user_info_image"
-        app:layout_constraintTop_toTopOf="@+id/user_info_image" />
+        app:layout_constraintTop_toTopOf="@+id/user_info_image"
+        tools:text="TextView" />
 
     <TextView
         android:id="@+id/user_info_role"
@@ -39,9 +39,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/nunito"
-        android:text="Admin: Chairperson"
         app:layout_constraintStart_toEndOf="@+id/user_info_image"
-        app:layout_constraintTop_toBottomOf="@+id/user_info_username" />
+        app:layout_constraintTop_toBottomOf="@+id/user_info_username"
+        tools:text="Admin: Chairperson" />
 
     <TextView
         android:id="@+id/user_info_group"
@@ -50,9 +50,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/nunito"
-        android:text="Mavuno Self Help Group"
         app:layout_constraintStart_toEndOf="@+id/user_info_image"
-        app:layout_constraintTop_toBottomOf="@+id/user_info_role" />
+        app:layout_constraintTop_toBottomOf="@+id/user_info_role"
+        tools:text="Mavuno Self Help Group" />
 
     <ImageButton
         android:id="@+id/user_info_img_notification"
