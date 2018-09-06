@@ -96,6 +96,23 @@ public class MainViewModel extends AndroidViewModel {
 
     private void workOnUsersMembers(){
 
+        groupsMembersMediatorLiveData.addSource(mUserMemberLiveData, new Observer<DocumentSnapshot>() {
+            @Override
+            public void onChanged(@Nullable final DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot != null){
+
+                    DefaultExecutorSupplier.getInstance().forBackgroundTasks()
+                            .submit(new Runnable() {
+                                @Override
+                                public void run() {
+                                    groupsMembersMediatorLiveData.postValue(documentSnapshot.toObject(GroupsMembers.class));
+                                }
+                            });
+                }else {
+                    groupsMembersMediatorLiveData.postValue(null);
+                }
+            }
+        });
     }
 
     public MediatorLiveData<Users> getUsersMediatorLiveData() {
