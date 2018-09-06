@@ -41,9 +41,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -51,7 +51,6 @@ import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.datasource.GroupsAccount;
 import app.hacela.chamatablebanking.datasource.GroupsContributionDefault;
 import app.hacela.chamatablebanking.datasource.GroupsMembers;
-import app.hacela.chamatablebanking.util.ImageProcessor;
 import app.hacela.chamatablebanking.viewmodel.CreateChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,7 +88,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
     private FirebaseStorage storageReference;
     private StorageReference mImageReference;
 
-    private ImageProcessor imageProcessor;
+    private Date mDate;
     private Uri mResultPhotoFile;
     private ProgressDialog progressDialog;
     private ByteArrayOutputStream mBaos = new ByteArrayOutputStream();
@@ -102,7 +101,6 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         setContentView(R.layout.activity_create_chama);
         ButterKnife.bind(this);
 
-        imageProcessor = new ImageProcessor(this);
         chamaViewModel = ViewModelProviders.of(this).get(CreateChamaViewModel.class);
 
 
@@ -424,6 +422,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
 
+                        mDate = myCalendar.getTime();
                         String myFormat = "MM/dd/yy"; //In which you need put here
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
 
@@ -495,6 +494,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         GroupsContributionDefault grContrDflt = new GroupsContributionDefault();
         grContrDflt.setAmount(Double.parseDouble(s6RegularAmount.getEditText().getText().toString()));
         grContrDflt.setEntryfee(Double.parseDouble(s5Entryfee.getEditText().getText().toString()));
+        grContrDflt.setStartdate(mDate);
         grContrDflt.setCycleintervaltype(s6Regular.getSelectedItem().toString());
         if (s6Dayweek.getVisibility() == View.VISIBLE) {
             grContrDflt.setDayofweek(s6Dayweek.getSelectedItem().toString());
@@ -540,11 +540,12 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
                     if (task.isSuccessful()) {
                         progressDialog.dismiss();
                         Toast.makeText(CreateChamaActivity.this, "Successful !", Toast.LENGTH_SHORT).show();
+                        finish();
 
                     } else {
 
                         progressDialog.setCancelable(true);
-                        progressDialog.setTitle("Error Occurred");
+                        progressDialog.setTitle(R.string.error_occured);
                         progressDialog.setMessage(task.getException().getMessage());
                         progressDialog.setCanceledOnTouchOutside(true);
 
@@ -576,7 +577,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
                     // Handle failures
                     progressDialog.setCancelable(true);
-                    progressDialog.setTitle("Error Occurred");
+                    progressDialog.setTitle(R.string.error_occured);
                     progressDialog.setMessage(task.getException().getMessage());
                     progressDialog.setCanceledOnTouchOutside(true);
 
@@ -601,11 +602,12 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
                                 progressDialog.dismiss();
                                 Toast.makeText(CreateChamaActivity.this, "Successful !", Toast.LENGTH_SHORT).show();
+                                finish();
 
                             } else {
 
                                 progressDialog.setCancelable(true);
-                                progressDialog.setTitle("Error Occurred");
+                                progressDialog.setTitle(R.string.error_occured);
                                 progressDialog.setMessage(task.getException().getMessage());
                                 progressDialog.setCanceledOnTouchOutside(true);
 
@@ -616,7 +618,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
                 }else {
                     progressDialog.setCancelable(true);
-                    progressDialog.setTitle("Error Occurred");
+                    progressDialog.setTitle(R.string.error_occured);
                     progressDialog.setMessage(task.getException().getMessage());
                     progressDialog.setCanceledOnTouchOutside(true);
                 }
@@ -633,7 +635,6 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
             if (data != null) {
 
                 Uri resultUri = data.getData();
-                File imagefile = new File(resultUri.getPath());
 
                 s3Image.setVisibility(View.VISIBLE);
                 mResultPhotoFile = resultUri;

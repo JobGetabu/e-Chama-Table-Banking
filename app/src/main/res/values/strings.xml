@@ -32,6 +32,7 @@
     <string name="regular_contribution_time">Regular Contribution Time</string>
     <string name="day_of_the_month">Day of the Month</string>
     <string name="day_of_the_week">Day of the Week</string>
+    <string name="error_occured">Error Occurred</string>
 
     <!-- Chama roles -->
     <string-array name="chamaroles">
