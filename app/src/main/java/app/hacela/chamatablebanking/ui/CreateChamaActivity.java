@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +38,7 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -478,7 +482,6 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         groupMap.put("groupname", s2Name.getEditText().getText().toString());
         groupMap.put("createdate", FieldValue.serverTimestamp());
         groupMap.put("createbyid", auth.getCurrentUser().getUid());
-        groupMap.put("photourl", "");
         groupMap.put("createbyname", auth.getCurrentUser().getDisplayName());
 
         //Group Account
@@ -525,15 +528,18 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
         if (mResultPhotoFile != null) {
 
-            uploadWithPhoto(groupid, batch);
+            uploadWithPhoto(groupid, groupMap, batch);
 
         } else {
+
+            groupMap.put("photourl", "");
 
             batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         progressDialog.dismiss();
+                        Toast.makeText(CreateChamaActivity.this, "Successful !", Toast.LENGTH_SHORT).show();
 
                     } else {
 
@@ -550,12 +556,72 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
 
     }
 
-    private void uploadWithPhoto(String groupid, WriteBatch batch) {
+    private void uploadWithPhoto(String groupid, final HashMap<String, Object> groupMap, final WriteBatch batch) {
 
         mImageReference = storageReference.getReference(groupid+"/image.jpg");
 
+        s3Image.setDrawingCacheEnabled(true);
+        s3Image.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) s3Image.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        byte[] data = baos.toByteArray();
+
+        final UploadTask uploadTask = mImageReference.putBytes(data);
+
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+
+                    // Handle failures
+                    progressDialog.setCancelable(true);
+                    progressDialog.setTitle("Error Occurred");
+                    progressDialog.setMessage(task.getException().getMessage());
+                    progressDialog.setCanceledOnTouchOutside(true);
+
+                    throw task.getException();
+                }
+
+                // Continue with the task to get the download URL
+                return mImageReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()){
+
+                    Uri downloadUri = task.getResult();
+                    groupMap.put("photourl", downloadUri.toString());
+
+                    batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+
+                                progressDialog.dismiss();
+                                Toast.makeText(CreateChamaActivity.this, "Successful !", Toast.LENGTH_SHORT).show();
+
+                            } else {
+
+                                progressDialog.setCancelable(true);
+                                progressDialog.setTitle("Error Occurred");
+                                progressDialog.setMessage(task.getException().getMessage());
+                                progressDialog.setCanceledOnTouchOutside(true);
+
+                            }
+                        }
+                    });
 
 
+                }else {
+                    progressDialog.setCancelable(true);
+                    progressDialog.setTitle("Error Occurred");
+                    progressDialog.setMessage(task.getException().getMessage());
+                    progressDialog.setCanceledOnTouchOutside(true);
+                }
+            }
+        });
     }
 
     @Override
