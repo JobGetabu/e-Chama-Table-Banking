@@ -129,3 +129,11 @@ _
 /app/src/main/res/menu/bottom_nav_admin_menu.xml,a\e\ae9386b0352f36b8c90686f9277c027e34357544
 Y
 )app/src/main/res/layout/activity_main.xml,7\6\76b07e40f24cce093536731477540f12e7da3cb6
+{
+Kapp/src/main/java/app/hacela/chamatablebanking/viewmodel/MainViewModel.java,7\f\7f9b763349815d920730236ad2eb7cb2ff5d1f18
+u
+Eapp/src/main/java/app/hacela/chamatablebanking/datasource/Groups.java,a\4\a411f1a487fd6ba0fdcc6be8392e6e782353f288
+Z
+*app/src/main/res/layout/step_four_role.xml,0\2\020a797808cd4fffc6e61c8387f2790ffd67b646
+^
+.app/src/main/res/layout/step_six_intervals.xml,9\d\9d8f62d7fc9742e9f4289a319412014df4b13412

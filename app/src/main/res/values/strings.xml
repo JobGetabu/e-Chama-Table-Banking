@@ -37,6 +37,14 @@
     <string name="not_in_agroup">You\'re not in a Group</string>
     <string name="chama_link_txt">Join using the link sent by your chama admin</string>
 
+    <!--App normal invitation-->
+    <string name="invitation_title">Join Chama table banking</string>
+    <string name="invitation_message">Manage and control all your chama activities from your phone</string>
+    <string name="invitation_deep_link">https://chamatablebanking.page.link/gr</string>
+    <string name="invitation_custom_image">https://user-images.githubusercontent.com/22516895/40451662-fe4f8628-5ee7-11e8-8277-befddbe23201.png</string>
+    <string name="invitation_cta">Join</string>
+
+
     <!-- Chama roles -->
     <string-array name="chamaroles">
         <item>Admin:ChairPerson</item>

@@ -203,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                 mGroupId = documentSnapshot.getString("groupid");
                                                 mUserRole = documentSnapshot.getString("userrole");
+                                                mViewModel.setGlobalGroupIdMediatorLiveData(mGroupId);
                                                 progressDialog.dismiss();
 
                                             }

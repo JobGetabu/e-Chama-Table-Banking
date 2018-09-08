@@ -44,6 +44,7 @@ public class MainViewModel extends AndroidViewModel {
     private FirebaseDocumentLiveData mUserMemberLiveData;
 
     //mediators
+    private MediatorLiveData<String> globalGroupIdMediatorLiveData = new MediatorLiveData<>();
     private MediatorLiveData<Users> usersMediatorLiveData = new MediatorLiveData<>();
     private MediatorLiveData<GroupsMembers> groupsMembersMediatorLiveData = new MediatorLiveData<>(); ;
 
@@ -121,6 +122,14 @@ public class MainViewModel extends AndroidViewModel {
 
     public MediatorLiveData<GroupsMembers> getGroupsMembersMediatorLiveData() {
         return groupsMembersMediatorLiveData;
+    }
+
+    public MediatorLiveData<String> getGlobalGroupIdMediatorLiveData() {
+        return globalGroupIdMediatorLiveData;
+    }
+
+    public void setGlobalGroupIdMediatorLiveData(String globalGroupIdLiveData) {
+        this.globalGroupIdMediatorLiveData.setValue(globalGroupIdLiveData);
     }
 
     /**
