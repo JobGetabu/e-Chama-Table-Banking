@@ -26,6 +26,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.viewmodel.MainViewModel;
 import butterknife.BindView;
@@ -116,7 +121,7 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                         case R.id.nav_invitemember:
 
                             progressDialog = new ProgressDialog(getContext());
-                            progressDialog.setCancelable(false);
+                            progressDialog.setCancelable(true);
                             progressDialog.show();
                             progressDialog.setMessage("Just a moment...");
                             sendToInviteScreen();
@@ -154,10 +159,11 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
 
                                 String link = "https://chamatablebanking.page.link/gr/?invitedto=" + grID;
                                 String link2 = "https://chamatablebanking.page.link/gr";
+                                String link3 = buildDeepLink();
 
                                 Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
                                         .setMessage("Join " + grName)
-                                        .setDeepLink(Uri.parse(link))
+                                        .setDeepLink(Uri.parse(link3))
                                         //.setCustomImage(Uri.parse(getString(R.string.invitation_custom_image)))
                                         .setCallToActionText(getString(R.string.invitation_cta))
                                         .build();
@@ -165,6 +171,9 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
 
 
                                 startActivityForResult(intent, REQUEST_INVITE);
+                                if (progressDialog != null) {
+                                    progressDialog.dismiss();
+                                }
                             }
                         }
                     });
@@ -185,17 +194,86 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
 
                 }
 
-                if (progressDialog != null && progressDialog.isShowing()) {
+                if (progressDialog != null) {
                     progressDialog.dismiss();
                 }
 
 
             } else {
 
-                if (progressDialog != null && progressDialog.isShowing()) {
+                if (progressDialog != null) {
                     progressDialog.dismiss();
                 }
             }
         }
     }
+
+    //create own dynamic link
+
+    public String buildDeepLink() {
+
+        String deepLink = "http://jobgetabu.me/e-Chama-Table-banking-Web";
+        boolean isAd = false;
+
+        // Get the unique appcode for this app.
+        String appCode = getContext().getString(R.string.app_code);
+
+        // Get this app's package name.
+        String packageName = getContext().getPackageName();
+        String queryParamters = "";
+        try {
+            queryParamters = generateQueryParameters();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        if (!TextUtils.isEmpty(queryParamters)) {
+            deepLink = deepLink + queryParamters;
+        }
+        // Build the link with all required parameters
+        Uri.Builder builder = new Uri.Builder()
+                .scheme("https")
+                .authority(appCode + ".app.goo.gl")
+                .path("/")
+                .appendQueryParameter("link", deepLink)
+                .appendQueryParameter("apn", packageName);
+
+        // If the deep link is used in an advertisement, this value must be set to 1.
+        if (isAd) {
+            builder.appendQueryParameter("ad", "1");
+        }
+
+        // Minimum version is optional.
+        /*
+        if (minVersion > 0) {
+            builder.appendQueryParameter("amv", Integer.toString(minVersion));
+        }
+
+        if (!TextUtils.isEmpty(androidLink)) {
+            builder.appendQueryParameter("al", androidLink);
+        }
+
+        if (!TextUtils.isEmpty(playStoreAppLink)) {
+            builder.appendQueryParameter("afl", playStoreAppLink);
+        }
+        */
+
+        // Return the completed deep link.
+        return builder.build().toString();
+    }
+
+    private String generateQueryParameters() throws UnsupportedEncodingException {
+        StringBuilder queryParameters = new StringBuilder();
+        //server purposes
+        queryParameters.append("?*code*");
+
+        Map<String,String> customParameters = new HashMap<>();
+        if (!customParameters.isEmpty()) {
+            for (Map.Entry<String, String> parameter : customParameters.entrySet()) {
+                queryParameters.append(String.format("&%1s=%2s", parameter.getKey(), parameter.getValue()));
+            }
+        }
+        return URLEncoder.encode(queryParameters.toString(), "UTF-8");
+    }
+
 }

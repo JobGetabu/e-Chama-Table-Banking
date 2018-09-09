@@ -95,24 +95,13 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(bar);
+        imageProcessor = new ImageProcessor(this);
 
 
         //firebase
         auth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
 
-        // View model
-        MainViewModel.Factory factory = new MainViewModel.Factory(
-                this.getApplication(), auth, mFirestore);
-
-        mViewModel = ViewModelProviders.of(this, factory)
-                .get(MainViewModel.class);
-
-        //read db data
-        mExpandingList = findViewById(R.id.expanding_list_main);
-        createItems();
-
-        imageProcessor = new ImageProcessor(this);
 
         auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
@@ -124,6 +113,18 @@ public class MainActivity extends AppCompatActivity {
                     creatingAuthIntent();
                 } else {
                     //play with auth user id
+
+
+                    // View model
+                    MainViewModel.Factory factory = new MainViewModel.Factory(
+                            MainActivity.this.getApplication(), auth, mFirestore);
+
+                    mViewModel = ViewModelProviders.of(MainActivity.this, factory)
+                            .get(MainViewModel.class);
+
+                    //read db data
+                    mExpandingList = findViewById(R.id.expanding_list_main);
+                    createItems();
 
                     firstTimeUser();
                     loadYourGroup();
@@ -164,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                                                 Snackbar.make(findViewById(android.R.id.content),
-                                                        R.string.chama_link_txt,Snackbar.LENGTH_INDEFINITE)
+                                                        R.string.chama_link_txt, Snackbar.LENGTH_INDEFINITE)
                                                         .setAction("Ok", new View.OnClickListener() {
                                                             @Override
                                                             public void onClick(View view) {
@@ -229,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                        }else {
+                        } else {
                             //handle errors
 
                             progressDialog.dismiss();
@@ -473,14 +474,14 @@ public class MainActivity extends AppCompatActivity {
         mViewModel.getGroupsMembersMediatorLiveData().observe(this, new Observer<GroupsMembers>() {
             @Override
             public void onChanged(@Nullable GroupsMembers groupsMembers) {
-                if (groupsMembers != null){
+                if (groupsMembers != null) {
                     userInfoRole.setText(groupsMembers.getUserrole());
                     mFirestore.collection(GROUPSCOL).document(groupsMembers.getGroupid())
                             .get(Source.DEFAULT)
                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         userInfoGroup.setText(task.getResult().getString("groupname"));
                                     }
                                 }
@@ -490,7 +491,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void loadUIPerRole(){
+    private void loadUIPerRole() {
 
     }
 
