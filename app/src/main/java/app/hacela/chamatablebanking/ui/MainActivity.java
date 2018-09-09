@@ -39,6 +39,7 @@ import com.google.firebase.firestore.Source;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.datasource.GroupsMembers;
@@ -338,10 +339,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createItems() {
-        addItem("Contribution", new String[]{"House", "Boat", "Candy", "Collection", "Sport", "Ball", "Head"}, R.color.pink, R.drawable.group_bg);
-        addItem("Loans", new String[]{"Dog", "Horse", "Boat"}, R.color.greenb, R.drawable.loan_bg);
-        addItem("Fines", new String[]{"Cat"}, R.color.greenb3, R.drawable.profit_bg);
-        addItem("Projects", new String[]{"Parrot", "Elephant", "Coffee"}, R.color.purpleb, R.drawable.proj_bg);
+        addItem("Contribution", new String[]{"Marian Njoro", "Man Solo", "Wairimu Tess", "Collins Omondi", "Job Getabu", "Leopord the", "Ule Mathe", "John timba", "Kaschana Mresh", "Babayoko Kizee"}, R.color.pink, R.drawable.group_bg);
+        addItem("Loans", new String[]{"Collins Omondi", "Job Getabu", "Man Solo"}, R.color.greenb, R.drawable.loan_bg);
+        addItem("Fines", new String[]{"Marian Njoro", "Job Getabu", "Leopord the", "Ule Mathe"}, R.color.greenb3, R.drawable.profit_bg);
+        addItem("Projects", new String[]{"Chicken farm", "Cow Farming", "Coffee plantation"}, R.color.purpleb, R.drawable.proj_bg);
 
     }
 
@@ -393,9 +394,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configureSubItem(final ExpandingItem item, final View view, String subTitle) {
+        Random random = new Random();
+        int a = random.nextInt(9);
+        int b = random.nextInt(10);
+        int c = random.nextInt(10);
+        int d = random.nextInt(10);
+
         ((TextView) view.findViewById(R.id.e_gs_details)).setText(subTitle);
-        ((TextView) view.findViewById(R.id.e_gs_date)).setText("12/08/2018");
-        ((TextView) view.findViewById(R.id.e_gs_money)).setText("+ Ksh 2,000");
+        ((TextView) view.findViewById(R.id.e_gs_date)).setText(c+"/08/2018");
+
+        String cash = "+ Ksh"+a+","+b+c+d;
+
+        ((TextView) view.findViewById(R.id.e_gs_money)).setText(cash);
 
        /* view.findViewById(R.id.remove_sub_item).setOnClickListener(new View.OnClickListener() {
             @Override
