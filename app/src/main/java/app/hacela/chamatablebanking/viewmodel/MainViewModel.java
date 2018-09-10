@@ -15,10 +15,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import app.hacela.chamatablebanking.appexecutor.DefaultExecutorSupplier;
+import app.hacela.chamatablebanking.datasource.Groups;
+import app.hacela.chamatablebanking.datasource.GroupsAccount;
 import app.hacela.chamatablebanking.datasource.GroupsMembers;
 import app.hacela.chamatablebanking.datasource.Users;
 import app.hacela.chamatablebanking.repository.FirebaseDocumentLiveData;
 
+import static app.hacela.chamatablebanking.util.Constants.GROUPSACCOUNTCOL;
+import static app.hacela.chamatablebanking.util.Constants.GROUPSCOL;
 import static app.hacela.chamatablebanking.util.Constants.GROUPSMEMBERSCOL;
 import static app.hacela.chamatablebanking.util.Constants.USERCOL;
 
@@ -42,11 +46,16 @@ public class MainViewModel extends AndroidViewModel {
     //live datas
     private FirebaseDocumentLiveData mUserLiveData;
     private FirebaseDocumentLiveData mUserMemberLiveData;
+    private FirebaseDocumentLiveData mGroupAccountLiveData;
+    private FirebaseDocumentLiveData mGroupsLiveData;
 
     //mediators
     private MediatorLiveData<String> globalGroupIdMediatorLiveData = new MediatorLiveData<>();
     private MediatorLiveData<Users> usersMediatorLiveData = new MediatorLiveData<>();
-    private MediatorLiveData<GroupsMembers> groupsMembersMediatorLiveData = new MediatorLiveData<>(); ;
+    private MediatorLiveData<GroupsMembers> groupsMembersMediatorLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<GroupsAccount> groupsAccountMediatorLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<Groups> groupsMediatorLiveData = new MediatorLiveData<>();
+
 
     public MainViewModel(@NonNull Application application,FirebaseAuth mAuth,FirebaseFirestore mFirestore) {
         super(application);
@@ -67,6 +76,7 @@ public class MainViewModel extends AndroidViewModel {
         // Set up the MediatorLiveData to convert DataSnapshot objects into POJO objects
         workOnUsersLiveData();
         workOnUsersMembers();
+        //workOnGroupAccount();
     }
 
     private void workOnUsersLiveData() {
@@ -115,6 +125,57 @@ public class MainViewModel extends AndroidViewModel {
             }
         });
     }
+
+    private void workOnGroupsAccount(String gID){
+        //init db refs
+        groupAccountRef = mFirestore.collection(GROUPSACCOUNTCOL).document(gID);
+        //init livedatas
+        mGroupAccountLiveData = new FirebaseDocumentLiveData(groupAccountRef);
+
+        groupsAccountMediatorLiveData.addSource(mGroupAccountLiveData, new Observer<DocumentSnapshot>() {
+            @Override
+            public void onChanged(@Nullable final DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot != null){
+                    DefaultExecutorSupplier.getInstance().forBackgroundTasks()
+                            .submit(new Runnable() {
+                                @Override
+                                public void run() {
+                                    groupsAccountMediatorLiveData.postValue(documentSnapshot.toObject(GroupsAccount.class));
+                                }
+                            });
+                }else {
+                    groupsAccountMediatorLiveData.postValue(null);
+                }
+            }
+        });
+    }
+
+    private void workOnGroups(String gID){
+        //init db refs
+        groupRef = mFirestore.collection(GROUPSCOL).document(gID);
+        //init livedatas
+        mGroupsLiveData = new FirebaseDocumentLiveData(groupRef);
+
+        groupsMediatorLiveData.addSource(mGroupsLiveData, new Observer<DocumentSnapshot>() {
+            @Override
+            public void onChanged(@Nullable final DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot != null){
+                    DefaultExecutorSupplier.getInstance().forBackgroundTasks()
+                            .submit(new Runnable() {
+                                @Override
+                                public void run() {
+                                    groupsMediatorLiveData.postValue(documentSnapshot.toObject(Groups.class));
+                                }
+                            });
+                }else {
+                    groupsMediatorLiveData.postValue(null);
+                }
+            }
+        });
+    }
+
+
+
 
     public MediatorLiveData<Users> getUsersMediatorLiveData() {
         return usersMediatorLiveData;
