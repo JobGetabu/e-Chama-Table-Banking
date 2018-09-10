@@ -163,7 +163,7 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
 
                                 Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
                                         .setMessage("Join " + grName)
-                                        .setDeepLink(Uri.parse(link3))
+                                        .setDeepLink(Uri.parse(link))
                                         //.setCustomImage(Uri.parse(getString(R.string.invitation_custom_image)))
                                         .setCallToActionText(getString(R.string.invitation_cta))
                                         .build();
