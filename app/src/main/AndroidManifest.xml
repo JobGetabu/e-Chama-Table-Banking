@@ -26,7 +26,9 @@
 
                 <data
                     android:scheme="http"
-                    android:host="jobgetabu.me" />
+                    android:host="jobgetabu.me"
+                    android:path="/e-Chama-Table-banking-Web"
+                    />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -36,10 +38,10 @@
 
                 <data
                     android:scheme="http"
-                    android:host="chamatablebanking.hacela.app" />
+                    android:host="chamatablebanking.page.link" />
                 <data
                     android:scheme="https"
-                    android:host="chamatablebanking.hacela.app" />
+                    android:host="chamatablebanking.page.link" />
             </intent-filter>
         </activity>
 

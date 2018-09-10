@@ -126,7 +126,7 @@ public class MainViewModel extends AndroidViewModel {
         });
     }
 
-    private void workOnGroupsAccount(String gID){
+    public void workOnGroupsAccount(String gID){
         //init db refs
         groupAccountRef = mFirestore.collection(GROUPSACCOUNTCOL).document(gID);
         //init livedatas
@@ -150,7 +150,7 @@ public class MainViewModel extends AndroidViewModel {
         });
     }
 
-    private void workOnGroups(String gID){
+    public void workOnGroups(String gID){
         //init db refs
         groupRef = mFirestore.collection(GROUPSCOL).document(gID);
         //init livedatas
@@ -191,6 +191,14 @@ public class MainViewModel extends AndroidViewModel {
 
     public void setGlobalGroupIdMediatorLiveData(String globalGroupIdLiveData) {
         this.globalGroupIdMediatorLiveData.setValue(globalGroupIdLiveData);
+    }
+
+    public MediatorLiveData<GroupsAccount> getGroupsAccountMediatorLiveData() {
+        return groupsAccountMediatorLiveData;
+    }
+
+    public MediatorLiveData<Groups> getGroupsMediatorLiveData() {
+        return groupsMediatorLiveData;
     }
 
     /**
