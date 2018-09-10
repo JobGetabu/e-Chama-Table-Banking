@@ -51,6 +51,8 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-firestore:4.1.0'
     //invites
     implementation 'com.google.firebase:firebase-invites:16.0.3'
+    //dynamic links
+    implementation 'com.google.firebase:firebase-dynamic-links:16.1.1'
 
     // ButterKnife (for code brevity)
     implementation 'com.jakewharton:butterknife:8.8.1'
