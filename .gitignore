@@ -11,3 +11,8 @@
 libs/
 src/androidTest/
 src/test/
+src/main/res/drawable-hdpi/
+src/main/res/drawable-mdpi/
+src/main/res/drawable-xhdpi/
+src/main/res/drawable-xxhdpi/
+src/main/res/drawable-xxxhdpi/
