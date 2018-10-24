@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "336382230863-utkv90jihfcj1nfoovoau9ilj4473umg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.hacela.chamatablebanking",
+            "certificate_hash": "12741ad11cd9d47c29ac2f35a90aa635004c7113"
+          }
+        },
+        {
           "client_id": "336382230863-dk25ki2t70opfefs2fbb2ofgjcrqo9af.apps.googleusercontent.com",
           "client_type": 3
         }
