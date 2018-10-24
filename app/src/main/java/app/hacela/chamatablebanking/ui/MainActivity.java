@@ -26,9 +26,6 @@ import android.widget.Toast;
 
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.ErrorCodes;
-import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,7 +40,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -133,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (user == null) {
                     // Sign in logic here.
-                    creatingAuthIntent();
+                    sendToLogin();
                 } else {
                     //play with auth user id
 
@@ -322,27 +318,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (user == null) {
                     // Sign in logic here.
-                    creatingAuthIntent();
+                    sendToLogin();
                 }
             }
         });
-    }
-
-    private void creatingAuthIntent() {
-
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setLogo(R.drawable.avatar_placeholder)
-                        .setTheme(R.style.AppTheme)
-                        .setIsSmartLockEnabled(false)
-                        .setAvailableProviders(Arrays.asList(
-                                new AuthUI.IdpConfig.GoogleBuilder().build(),
-                                new AuthUI.IdpConfig.EmailBuilder().build()))
-                        .build(),
-                RC_SIGN_IN);
-
-
     }
 
     @Override
@@ -463,41 +442,6 @@ public class MainActivity extends AppCompatActivity {
 
     interface OnItemCreated {
         void itemCreated(String title);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            // Successfully signed in
-            if (resultCode == RESULT_OK) {
-
-                Toast.makeText(this, "" + auth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
-                finish();
-                Intent intent = getIntent();
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-
-            } else {
-                // Sign in failed
-                if (response == null) {
-                    // User pressed back button
-                    showSnackbar(R.string.sign_in_cancelled);
-                    return;
-                }
-
-                if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
-                    showSnackbar(R.string.no_internet_connection);
-                    return;
-                }
-
-                showSnackbar(R.string.unknown_error);
-                Log.e(TAG, "Sign-in error: ", response.getError());
-            }
-        }
     }
 
     private void showSnackbar(int text) {
@@ -652,6 +596,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void sendToLogin(){
+        //TODO: Add login activity uncomment
+        /*Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+        */
     }
 
 }

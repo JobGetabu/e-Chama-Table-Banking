@@ -52,7 +52,8 @@
             android:name=".ui.CreateChamaActivity"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".onboarding.OnBoardingActivity"></activity>
+        <activity android:name=".onboarding.OnBoardingActivity" />
+        <activity android:name=".ui.NewChamaActivity"></activity>
     </application>
 
 </manifest>
