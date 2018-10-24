@@ -25,10 +25,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="jobgetabu.me"
                     android:path="/e-Chama-Table-banking-Web"
-                    />
+                    android:scheme="http" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -37,11 +36,11 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
-                    android:host="chamatablebanking.page.link" />
+                    android:host="chamatablebanking.page.link"
+                    android:scheme="http" />
                 <data
-                    android:scheme="https"
-                    android:host="chamatablebanking.page.link" />
+                    android:host="chamatablebanking.page.link"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 
@@ -53,6 +52,7 @@
             android:name=".ui.CreateChamaActivity"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".onboarding.OnBoardingActivity"></activity>
     </application>
 
 </manifest>
