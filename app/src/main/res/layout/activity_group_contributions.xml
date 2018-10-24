@@ -17,7 +17,4 @@
         tools:listitem="@layout/single_transaction">
 
     </android.support.v7.widget.RecyclerView>
-
-
-
 </android.support.constraint.ConstraintLayout>
