@@ -330,18 +330,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void creatingAuthIntent() {
 
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setLogo(R.drawable.avatar_placeholder)
-                        .setTheme(R.style.AppTheme)
-                        .setIsSmartLockEnabled(false)
-                        .setAvailableProviders(Arrays.asList(
-                                new AuthUI.IdpConfig.GoogleBuilder().build(),
-                                new AuthUI.IdpConfig.EmailBuilder().build()))
-                        .build(),
-                RC_SIGN_IN);
-
+        Intent login = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(login);
+        finish();
 
     }
 

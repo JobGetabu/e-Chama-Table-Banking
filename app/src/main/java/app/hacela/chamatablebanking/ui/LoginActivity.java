@@ -43,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton;
     @BindView(R.id.login_via_google_image)
     ImageView google_image;
+    @BindView(R.id.create_account)
+    TextView create_account;
 
     private static final String TAG = "login";
     public static final int RC_SIGN_IN = 1001;
@@ -69,6 +71,16 @@ public class LoginActivity extends AppCompatActivity {
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+        create_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signup = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(signup);
+
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

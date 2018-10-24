@@ -155,7 +155,7 @@
                 android:elevation="4dp"
                 android:focusable="true"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/create_account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5">
@@ -169,6 +169,16 @@
                     android:src="@drawable/fui_ic_googleg_color_24dp"
                     />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/create_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an Account yet?"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/login_via_google"/>
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
