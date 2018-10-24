@@ -1,6 +1,7 @@
 package app.hacela.chamatablebanking.onboarding;
 
 import android.graphics.Color;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -34,5 +35,9 @@ public class OnBoardingActivity extends AppCompatActivity {
         elements.add(scr3);
 
         PaperOnboardingFragment onBoardingFragment = PaperOnboardingFragment.newInstance(elements);
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, onBoardingFragment);
+        fragmentTransaction.commit();
     }
 }
