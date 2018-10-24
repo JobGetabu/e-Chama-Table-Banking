@@ -15,13 +15,13 @@ import app.hacela.chamatablebanking.R;
 import butterknife.BindView;
 
 public class LoginActivity extends AppCompatActivity {
-    @BindView(R.id.login_email)
+    @BindView(R.id.signup_email)
     TextInputLayout loginEmail;
-    @BindView(R.id.login_password)
+    @BindView(R.id.signup_password)
     TextInputLayout loginPassword;
     @BindView(R.id.forgotpass)
     TextView forgotpass;
-    @BindView(R.id.login_button)
+    @BindView(R.id.signup_button)
     Button loginButton;
     @BindView(R.id.login_via_google)
     LinearLayout loginViaGoogle;

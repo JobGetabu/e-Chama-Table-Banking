@@ -40,7 +40,7 @@
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/nunito_bold"
                 android:gravity="center"
-                android:text="Please Login Below"
+                android:text="Please SignUp Below"
                 android:textColor="#4c565f"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -90,6 +90,8 @@
                     android:inputType="textPassword" />
 
             </android.support.design.widget.TextInputLayout>
+
+
 
             <TextView
                 android:id="@+id/forgotpass"
