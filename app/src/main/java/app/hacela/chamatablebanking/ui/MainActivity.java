@@ -39,14 +39,17 @@ import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.datasource.Groups;
+import app.hacela.chamatablebanking.datasource.GroupsAccount;
 import app.hacela.chamatablebanking.datasource.GroupsMembers;
 import app.hacela.chamatablebanking.datasource.Users;
 import app.hacela.chamatablebanking.util.ImageProcessor;
@@ -80,6 +83,20 @@ public class MainActivity extends AppCompatActivity {
     CircleImageView userInfoImage;
     @BindView(R.id.user_info_img_notification)
     ImageButton userInfoImgNotification;
+    @BindView(R.id.admin_d_balance)
+    TextView adminDBalance;
+    @BindView(R.id.admin_d_num_members)
+    TextView adminDNumMembers;
+    @BindView(R.id.admin_d_account_status)
+    TextView adminDAccountStatus;
+    @BindView(R.id.admin_d_groupnum_loans)
+    TextView adminDGroupnumLoans;
+    @BindView(R.id.admin_d_days_left)
+    TextView adminDDaysLeft;
+    @BindView(R.id.admin_d_divident_balance)
+    TextView adminDDividentBalance;
+    @BindView(R.id.admin_d_num_projects)
+    TextView adminDNumProjects;
 
     //firebase
     private FirebaseAuth auth;
@@ -216,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
                                                 mUserRole = documentSnapshot.getString("userrole");
                                                 mViewModel.setGlobalGroupIdMediatorLiveData(mGroupId);
                                                 progressDialog.dismiss();
+
 
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
@@ -410,9 +428,9 @@ public class MainActivity extends AppCompatActivity {
         int d = random.nextInt(10);
 
         ((TextView) view.findViewById(R.id.e_gs_details)).setText(subTitle);
-        ((TextView) view.findViewById(R.id.e_gs_date)).setText(c+"/08/2018");
+        ((TextView) view.findViewById(R.id.e_gs_date)).setText(c + "/08/2018");
 
-        String cash = "+ Ksh"+a+","+b+c+d;
+        String cash = "+ Ksh" + a + "," + b + c + d;
 
         ((TextView) view.findViewById(R.id.e_gs_money)).setText(cash);
 
@@ -510,13 +528,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void groupIdObserver(){
+    private void groupIdObserver() {
         mViewModel.getGlobalGroupIdMediatorLiveData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                if (s != null && TextUtils.isEmpty(s)){
+                    Log.d(TAG, "onChanged: empty"+s);
+                if (s != null && TextUtils.isEmpty(s)) {
                     mViewModel.workOnGroups(s);
                     mViewModel.workOnGroupsAccount(s);
+
+                    Log.d(TAG, "onChanged: "+s);
 
                     //add groupaccount observer
                     groupsObserver();
@@ -528,16 +549,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void groupsAccountObserver() {
+
+        mViewModel.getGroupsAccountMediatorLiveData().observe(this, new Observer<GroupsAccount>() {
+            @Override
+            public void onChanged(@Nullable GroupsAccount groupsAccount) {
+                if (groupsAccount != null){
+
+                    adminDBalance.setText(mViewModel.formatMyMoney(groupsAccount.getAmount()));
+                    adminDDividentBalance.setText(mViewModel.formatMyMoney(groupsAccount.getDivident()));
+                    adminDAccountStatus.setText(mViewModel.formatMyMoney(groupsAccount.getAmount()));
+
+                }
+            }
+        });
+    }
+
+    private void calculateGroupMemberCount(String gId){
+
+                mFirestore.collection(GROUPSMEMBERSCOL)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                List<GroupsMembers> listMembers = task.getResult().toObjects(GroupsMembers.class);
+
+                                int count = listMembers.size();
+                                adminDNumMembers.setText(count);
+
+                            }
+                        });
+
     }
 
     private void groupsObserver() {
         mViewModel.getGroupsMediatorLiveData().observe(this, new Observer<Groups>() {
             @Override
             public void onChanged(@Nullable Groups groups) {
-                if(groups != null){
-                    
+                if (groups != null) {
+
                     //set up ui
-                    
+                    calculateGroupMemberCount(groups.getGroupid());
+
                 }
             }
         });
@@ -547,7 +599,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void handleAppGroupInvite(){
+    private void handleAppGroupInvite() {
 
         FirebaseDynamicLinks.getInstance()
                 .getDynamicLink(getIntent())
@@ -588,7 +640,7 @@ public class MainActivity extends AppCompatActivity {
                                 Snackbar.make(
                                         findViewById(android.R.id.content),
                                         referredGroupUid,
-                                        Snackbar.LENGTH_INDEFINITE).show();
+                                        Snackbar.LENGTH_LONG).show();
                             Toast.makeText(MainActivity.this
                                     , "" + referredGroupUid, Toast.LENGTH_LONG).show();
                         }

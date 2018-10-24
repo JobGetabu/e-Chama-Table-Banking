@@ -16,6 +16,14 @@ public class UsingTheThreadPoolSample {
                         // do some Main Thread work here.
                     }
                 });
+
+        DefaultExecutorSupplier.getInstance().forBackgroundTasks()
+                .submit(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
     }
 
 }

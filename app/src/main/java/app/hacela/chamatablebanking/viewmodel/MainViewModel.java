@@ -79,6 +79,10 @@ public class MainViewModel extends AndroidViewModel {
         //workOnGroupAccount();
     }
 
+    public String formatMyMoney(Double money){
+        return String.format("Ksh %,.2f", money);
+    }
+
     private void workOnUsersLiveData() {
 
         usersMediatorLiveData.addSource(mUserLiveData, new Observer<DocumentSnapshot>() {
