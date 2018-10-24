@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/content_decription"
                     android:padding="24dp"
-                    android:src="@drawable/fui_ic_googleg_color_24dp"
+                    app:srcCompat="@drawable/fui_ic_googleg_color_24dp"
                     />
             </LinearLayout>
 

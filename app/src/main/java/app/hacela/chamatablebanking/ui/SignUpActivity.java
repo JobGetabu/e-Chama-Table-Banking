@@ -75,7 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String email = signUpEmail.getEditText().getText().toString().trim();
                 String password = signUpPassword.getEditText().getText().toString().trim();
 
-                if (email.isEmpty() | password.isEmpty()){
+                if (email.isEmpty() || password.isEmpty()){
                     if (email.isEmpty()){
                         signUpEmail.getEditText().setError("Email is required");
                         signUpEmail.requestFocus();

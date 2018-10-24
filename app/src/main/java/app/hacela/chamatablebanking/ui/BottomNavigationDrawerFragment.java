@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -101,15 +100,8 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                         case R.id.nav_logout:
                             Toast.makeText(getContext(), "Signing you out", Toast.LENGTH_SHORT).show();
 
-                            AuthUI.getInstance()
-                                    .signOut(getContext())
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            // user is now signed out
-                                            auth.signOut();
+                            auth.signOut();
 
-                                        }
-                                    });
 
                             dismiss();
                             return true;
@@ -148,7 +140,6 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
         if (!TextUtils.isEmpty(grID)) {
 
 
-
             mFirestore.collection(GROUPSCOL).document(grID)
                     .get(Source.CACHE)
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -167,7 +158,6 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                                         //.setCustomImage(Uri.parse(getString(R.string.invitation_custom_image)))
                                         .setCallToActionText(getString(R.string.invitation_cta))
                                         .build();
-
 
 
                                 startActivityForResult(intent, REQUEST_INVITE);
@@ -267,7 +257,7 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
         //server purposes
         queryParameters.append("?*code*");
 
-        Map<String,String> customParameters = new HashMap<>();
+        Map<String, String> customParameters = new HashMap<>();
         if (!customParameters.isEmpty()) {
             for (Map.Entry<String, String> parameter : customParameters.entrySet()) {
                 queryParameters.append(String.format("&%1s=%2s", parameter.getKey(), parameter.getValue()));
