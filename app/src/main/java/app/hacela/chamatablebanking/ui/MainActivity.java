@@ -324,6 +324,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+<<<<<<< HEAD
+=======
+    private void creatingAuthIntent() {
+
+        Intent login = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(login);
+        finish();
+
+    }
+
+>>>>>>> workerAbedy
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //getMenuInflater().inflate(R.menu.bottom_nav_drawer_menu, menu);

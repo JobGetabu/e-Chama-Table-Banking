@@ -71,11 +71,16 @@ dependencies {
     //OnBoarding paper motion
     implementation 'com.ramotion.paperonboarding:paper-onboarding:1.1.1'
 
+<<<<<<< HEAD
     //architecture components
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.1"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+=======
+    //Google Sign in
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+>>>>>>> workerAbedy
 
 }
 
