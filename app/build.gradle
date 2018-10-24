@@ -73,6 +73,9 @@ dependencies {
     //OnBoarding paper motion
     implementation 'com.ramotion.paperonboarding:paper-onboarding:1.1.1'
 
+    //Google Sign in
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

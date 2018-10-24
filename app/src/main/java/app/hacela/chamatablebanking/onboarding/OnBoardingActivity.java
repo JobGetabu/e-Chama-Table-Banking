@@ -18,9 +18,6 @@ import butterknife.ButterKnife;
 
 public class OnBoardingActivity extends AppCompatActivity {
 
-    @BindView(R.id.fragment_container)
-    Fragment fragmentContainer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
