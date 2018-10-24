@@ -147,9 +147,5 @@ Uapp/src/main/java/app/hacela/chamatablebanking/appexecutor/PriorityThreadFactor
 Wapp/src/main/java/app/hacela/chamatablebanking/repository/FirebaseDocumentLiveData.java,a\e\ae1fd9e2b8199abcbcdfb49e79d8d1b943acb985
 ‡
 Wapp/src/main/java/app/hacela/chamatablebanking/appexecutor/DefaultExecutorSupplier.java,c\5\c50fe0833dc2aa561114ad3bb8c56d9cf8a63d87
-W
-'app/src/main/res/layout/chat_screen.xml,9\e\9e03a42987307b05ec287f87d994ac3f5b576c89
-\
-,app/src/main/res/drawable/chat_bubble_ii.xml,b\3\b3e528c83a1072514dce581f63de5cd6353d3fe3
-\
-,app/src/main/res/drawable/ic_chat_bubble.xml,1\1\1153025c0cbe6944bcf368271c4633ca62b716a8
+X
+(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
