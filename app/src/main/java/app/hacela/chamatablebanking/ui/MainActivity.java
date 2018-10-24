@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (user == null) {
                     // Sign in logic here.
-                    sendToLogin();
+                    creatingAuthIntent();
                 } else {
                     //play with auth user id
 
@@ -318,10 +318,19 @@ public class MainActivity extends AppCompatActivity {
 
                 if (user == null) {
                     // Sign in logic here.
-                    sendToLogin();
+                    creatingAuthIntent();
                 }
             }
         });
+    }
+
+
+    private void creatingAuthIntent() {
+
+        Intent login = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(login);
+        finish();
+
     }
 
     @Override
@@ -597,14 +606,4 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-    private void sendToLogin(){
-        //TODO: Add login activity uncomment
-        /*Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-        */
-    }
-
 }

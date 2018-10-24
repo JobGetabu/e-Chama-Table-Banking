@@ -55,7 +55,6 @@
     <string name="content_decription">Image Loading</string>
 
 
-
     <!-- Chama roles -->
     <string-array name="chamaroles">
         <item>Admin:ChairPerson</item>
