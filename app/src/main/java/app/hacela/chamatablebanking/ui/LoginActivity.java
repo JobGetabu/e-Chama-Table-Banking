@@ -3,6 +3,7 @@ package app.hacela.chamatablebanking.ui;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,13 +16,13 @@ import app.hacela.chamatablebanking.R;
 import butterknife.BindView;
 
 public class LoginActivity extends AppCompatActivity {
-    @BindView(R.id.signup_email)
+    @BindView(R.id.login_email)
     TextInputLayout loginEmail;
-    @BindView(R.id.signup_password)
+    @BindView(R.id.login_password)
     TextInputLayout loginPassword;
     @BindView(R.id.forgotpass)
     TextView forgotpass;
-    @BindView(R.id.signup_button)
+    @BindView(R.id.login_button)
     Button loginButton;
     @BindView(R.id.login_via_google)
     LinearLayout loginViaGoogle;
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final int RC_SIGN_IN = 1001;
 
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth userAuth;
     private FirebaseFirestore mFirestore;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -39,5 +40,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        userAuth = FirebaseAuth.getInstance();
+        String currentUserID = userAuth.getCurrentUser().getUid();
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 }
