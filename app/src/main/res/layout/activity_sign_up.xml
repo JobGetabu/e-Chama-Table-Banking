@@ -116,7 +116,7 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/sign_in_bg"
                 android:gravity="center"
                 android:padding="12dp"
                 android:text="@string/sign_in"
@@ -150,7 +150,6 @@
                 android:layout_marginStart="60dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:background="@color/yellow"
                 android:clickable="true"
                 android:elevation="4dp"
                 android:focusable="true"
@@ -166,6 +165,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/content_decription"
                     android:padding="24dp"
+                    android:background="@drawable/google_bg"
                     android:src="@drawable/fui_ic_googleg_color_24dp"
                     />
             </LinearLayout>
