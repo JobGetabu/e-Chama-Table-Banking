@@ -1,8 +1,10 @@
 package app.hacela.chamatablebanking.onboarding;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import com.ramotion.paperonboarding.PaperOnboardingFragment;
 import com.ramotion.paperonboarding.PaperOnboardingPage;
@@ -10,6 +12,7 @@ import com.ramotion.paperonboarding.PaperOnboardingPage;
 import java.util.ArrayList;
 
 import app.hacela.chamatablebanking.R;
+import butterknife.ButterKnife;
 
 public class OnBoardingActivity extends AppCompatActivity {
 
@@ -17,6 +20,7 @@ public class OnBoardingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_on_boarding);
+        ButterKnife.bind(this);
 
         PaperOnboardingPage scr1 = new PaperOnboardingPage("Hotels",
                 "All hotels and hostels are sorted by hospitality rating",
@@ -34,5 +38,10 @@ public class OnBoardingActivity extends AppCompatActivity {
         elements.add(scr3);
 
         PaperOnboardingFragment onBoardingFragment = PaperOnboardingFragment.newInstance(elements);
+
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, onBoardingFragment);
+        fragmentTransaction.commit();
     }
 }
