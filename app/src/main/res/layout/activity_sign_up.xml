@@ -154,9 +154,7 @@
 
                         />
                 </LinearLayout>
-
->>>>>>> Working on the Sign Up UI
-            </LinearLayout>
+</LinearLayout>
 
         </android.support.v7.widget.CardView>
 
