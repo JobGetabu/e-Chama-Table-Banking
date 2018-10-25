@@ -1,6 +1,0 @@
-
-zsquid:S1450+"WRemove the "groupRef" field and declare it as a local variable in the relevant methods.(´íîÀúÿÿÿÿ8‘Å±½Ü,
-@squid:S1068"")Remove this unused "mAuth" private field.(ªĞ”’
-|squid:S14502"^Remove the "mGroupsLiveData" field and declare it as a local variable in the relevant methods.(ÃÇ´ã8‘Å±½Ü,
-|squid:S1450,"^Remove the "groupAccountRef" field and declare it as a local variable in the relevant methods.(‚¯ 8‘Å±½Ü,
-‚squid:S14501"dRemove the "mGroupAccountLiveData" field and declare it as a local variable in the relevant methods.(×°º›8‘Å±½Ü,
