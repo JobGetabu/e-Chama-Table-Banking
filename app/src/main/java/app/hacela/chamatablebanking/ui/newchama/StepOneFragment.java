@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Calendar;
-
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.viewmodel.CreateChamaViewModel;
 import butterknife.BindView;
@@ -39,7 +37,7 @@ public class StepOneFragment extends Fragment {
     Unbinder unbinder;
 
     private CreateChamaViewModel model;
-    Calendar mcurrentTime = Calendar.getInstance();
+
 
     public StepOneFragment() {
         // Required empty public constructor
