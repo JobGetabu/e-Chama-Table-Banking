@@ -19,15 +19,18 @@ public class CreateChamaViewModel extends AndroidViewModel {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
 
-    private MediatorLiveData<Groups> groupsMediatorLiveData = new MediatorLiveData<>();
-    private MediatorLiveData<GroupsContributionDefault> groupsContributionDefaultMediatorLiveData = new MediatorLiveData<>();
-
+    private MediatorLiveData<Groups> groupsMediatorLiveData ;
+    private MediatorLiveData<GroupsContributionDefault> groupsContributionDefaultMediatorLiveData ;
+    private MediatorLiveData<Integer> currentStep;
 
     public static final String TAG = "AccountVM";
 
     public CreateChamaViewModel(@NonNull Application application) {
         super(application);
 
+        groupsMediatorLiveData = new MediatorLiveData<>();
+        groupsContributionDefaultMediatorLiveData = new MediatorLiveData<>();
+        currentStep = new MediatorLiveData<>();
     }
 
     public MediatorLiveData<Groups> getGroupsMediatorLiveData() {
@@ -44,6 +47,14 @@ public class CreateChamaViewModel extends AndroidViewModel {
 
     public void setGroupsContributionDefaultMediatorLiveData(GroupsContributionDefault groupsContributionDefaultLiveData) {
         this.groupsContributionDefaultMediatorLiveData.setValue(groupsContributionDefaultLiveData);
+    }
+
+    public MediatorLiveData<Integer> getCurrentStep() {
+        return currentStep;
+    }
+
+    public void setCurrentStep(Integer currentStep) {
+        this.currentStep.setValue(currentStep);
     }
 
     /**
