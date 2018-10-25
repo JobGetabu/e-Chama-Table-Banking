@@ -63,10 +63,6 @@
 
         <activity android:name=".ui.GroupContributionsActivity"></activity>
         <activity android:name=".ui.SingleContributionsActivity"></activity>
-
-        <activity android:name=".ui.GroupContributionsActivity" />
-        <activity android:name=".ui.SingleContributionsActivity"></activity>
-
     </application>
 
 </manifest>
