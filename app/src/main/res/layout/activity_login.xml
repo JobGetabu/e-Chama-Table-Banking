@@ -170,8 +170,6 @@
                     android:padding="24dp"
                     app:srcCompat="@drawable/fui_ic_googleg_color_24dp"
                     android:background="@drawable/google_bg"
-
-
                     />
             </LinearLayout>
 
