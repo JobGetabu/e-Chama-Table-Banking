@@ -156,6 +156,10 @@
                 </LinearLayout>
 
 >>>>>>> Working on the Sign Up UI
+=======
+                    android:background="@drawable/google_bg"
+                    />
+>>>>>>> ded246908d7601c70bc204f2d44eeb033fb95b2e
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
