@@ -88,6 +88,11 @@ dependencies {
     //Google Sign in
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
 
+<<<<<<< HEAD
+=======
+    //Ramotion
+    implementation 'com.ramotion.foldingcell:folding-cell:1.2.2'
+>>>>>>> 8091977c1bf1efed7bdc13b636b3da8533558330
 
 }
 
