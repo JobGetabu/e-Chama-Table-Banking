@@ -1,4 +1,4 @@
-package app.hacela.chamatablebanking.ui;
+package app.hacela.chamatablebanking.ui.newchama;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

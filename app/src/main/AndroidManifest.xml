@@ -55,7 +55,7 @@
         <activity android:name=".onboarding.OnBoardingActivity" />
 
 
-        <activity android:name=".ui.NewChamaActivity"></activity>
+        <activity android:name=".ui.newchama.NewChamaActivity"></activity>
 
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.SignUpActivity"></activity>

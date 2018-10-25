@@ -1,4 +1,4 @@
-package app.hacela.chamatablebanking.ui;
+package app.hacela.chamatablebanking.ui.newchama;
 
 
 import android.arch.lifecycle.ViewModelProviders;

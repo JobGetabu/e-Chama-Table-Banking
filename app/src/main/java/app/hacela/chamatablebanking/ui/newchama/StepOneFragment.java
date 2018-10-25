@@ -1,4 +1,4 @@
-package app.hacela.chamatablebanking.ui;
+package app.hacela.chamatablebanking.ui.newchama;
 
 
 import android.arch.lifecycle.ViewModelProviders;
@@ -23,13 +23,13 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StepUnitFragment extends Fragment {
+public class StepOneFragment extends Fragment {
 
 
-    @BindView(R.id.step_unit_unitname)
-    TextInputLayout stepUnitUnitname;
-    @BindView(R.id.step_unit_unitcode)
-    TextInputLayout stepUnitUnitcode;
+    @BindView(R.id.step_one_grname)
+    TextInputLayout stepgrname;
+    @BindView(R.id.step_one_grdesc)
+    TextInputLayout stepgrdesc;
 
     @BindView(R.id.step_unit_back)
     TextView stepUnitBack;
@@ -41,7 +41,7 @@ public class StepUnitFragment extends Fragment {
     private CreateChamaViewModel model;
     Calendar mcurrentTime = Calendar.getInstance();
 
-    public StepUnitFragment() {
+    public StepOneFragment() {
         // Required empty public constructor
     }
 
@@ -50,7 +50,7 @@ public class StepUnitFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_step_unit, container, false);
+        View view = inflater.inflate(R.layout.fragment_step_one, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -81,8 +81,8 @@ public class StepUnitFragment extends Fragment {
 
             model.setCurrentStep(2);
 
-            String unitname = stepUnitUnitname.getEditText().getText().toString();
-            String unitcode = stepUnitUnitcode.getEditText().getText().toString();
+            String grname = stepgrname.getEditText().getText().toString();
+            String grdesc = stepgrdesc.getEditText().getText().toString();
 
 
             /*model.getLecTeachTimeMediatorLiveData().getValue().setUnitname(unitname);
@@ -94,21 +94,21 @@ public class StepUnitFragment extends Fragment {
     private boolean validate() {
         boolean valid = true;
 
-        String unitname = stepUnitUnitname.getEditText().getText().toString();
-        String unitcode = stepUnitUnitcode.getEditText().getText().toString();
+        String grname = stepgrname.getEditText().getText().toString();
+        String grdesc = stepgrdesc.getEditText().getText().toString();
 
-        if (unitname.isEmpty()) {
-            stepUnitUnitname.setError("enter unit");
+        if (grname.isEmpty()) {
+            stepgrname.setError("enter name");
             valid = false;
         } else {
-            stepUnitUnitname.setError(null);
+            stepgrname.setError(null);
         }
 
-        if (unitcode.isEmpty()) {
-            stepUnitUnitcode.setError("enter unit code");
+        if (grdesc.isEmpty()) {
+            stepgrdesc.setError("enter description");
             valid = false;
         } else {
-            stepUnitUnitcode.setError(null);
+            stepgrdesc.setError(null);
         }
 
         return valid;
