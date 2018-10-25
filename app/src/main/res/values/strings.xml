@@ -54,6 +54,10 @@
     <string name="or">or</string>
     <string name="content_decription">Image Loading</string>
     <string name="sign_up">Sign Up</string>
+    <string name="next">next</string>
+    <string name="back">back</string>
+    <string name="step_one_description">Group Description</string>
+    <string name="step_one_name">Group name</string>
 
 
     <!-- Chama roles -->
