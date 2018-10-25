@@ -58,15 +58,13 @@
         <activity android:name=".ui.NewChamaActivity"></activity>
 
         <activity android:name=".ui.LoginActivity" />
-<<<<<<< HEAD
+
         <activity android:name=".ui.SignUpActivity"></activity>
 
 
-=======
-        <activity android:name=".ui.SignUpActivity" />
         <activity android:name=".ui.GroupContributionsActivity" />
         <activity android:name=".ui.SingleContributionsActivity"></activity>
->>>>>>> 8091977c1bf1efed7bdc13b636b3da8533558330
+
     </application>
 
 </manifest>
