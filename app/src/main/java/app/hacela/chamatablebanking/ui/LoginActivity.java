@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,10 @@ public class LoginActivity extends AppCompatActivity {
     ImageView google_image;
     @BindView(R.id.create_account)
     TextView create_account;
+    @BindView(R.id.background_dim_login)
+    View dim;
+    @BindView(R.id.progress_bar_login)
+    ProgressBar progressBar;
 
     private static final String TAG = "login";
     public static final int RC_SIGN_IN = 1001;
@@ -76,8 +81,12 @@ public class LoginActivity extends AppCompatActivity {
         create_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
                 Intent signup = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(signup);
+                dim.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
 
             }
         });
@@ -99,18 +108,26 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
                 else {
+                    dim.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
+
                     userAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()){
+                                        dim.setVisibility(View.GONE);
+                                        progressBar.setVisibility(View.GONE);
                                         sendUserToMainActivity();
                                     }
                                     else {
+                                        dim.setVisibility(View.GONE);
+                                        progressBar.setVisibility(View.GONE);
                                         Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
+
                 }
 
             }
@@ -120,8 +137,14 @@ public class LoginActivity extends AppCompatActivity {
         google_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
+
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
+
+                dim.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }
         });
 
