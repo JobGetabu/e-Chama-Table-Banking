@@ -105,11 +105,11 @@
 
     <!-- Step Titles -->
     <array name="addchama_steps">
-        <item>Create new chama</item>
-        <item>Chama name</item>
-        <item>Select your role</item>
-        <item>Entry Fee </item>
-        <item>Regular Contribution</item>
+        <item>Create</item>
+        <item>name</item>
+        <item>role</item>
+        <item>Fee </item>
+        <item>Regular</item>
         <item>Invite</item>
     </array>
 
@@ -129,5 +129,6 @@
     <string name="continue_text">Continue</string>
     <string name="invite_members">Invite Members</string>
     <string name="skip_and_invite_later">Skip and invite later</string>
+    <string name="you_all_set">You\'re all Set</string>
 
 </resources>

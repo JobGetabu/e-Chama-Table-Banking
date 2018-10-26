@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.newchama.StepOneFragment"
-    >
+    tools:context=".ui.newchama.StepOneFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/step_one_grname"
@@ -53,38 +47,36 @@
                     android:singleLine="false" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
-    </ScrollView>
 
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        android:gravity="bottom"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:layout_marginBottom="0dp"
         android:layout_marginTop="16dp"
-        >
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
-    <!-- request button -->
+        <!-- request button -->
         <TextView
             android:id="@+id/step_unit_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginBottom="0dp"
+            android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="bottom"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:text="@string/back"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            android:focusable="true"
-            android:clickable="true"
-            />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/step_unit_next"
@@ -92,18 +84,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="0dp"
+            android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="bottom"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:text="@string/next"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            android:focusable="true"
-            android:clickable="true"
-            />
+            android:textSize="20sp" />
     </LinearLayout>
-
 </RelativeLayout>
