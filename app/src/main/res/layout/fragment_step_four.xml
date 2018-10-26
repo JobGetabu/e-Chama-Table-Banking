@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="400dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Select the regular days which your investment group contributes "
+        android:textSize="18sp"
+
+        />
+
+    <Spinner
+        android:id="@+id/st_4_regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:entries="@array/meetingcyles"
+        android:hint="@string/regular_contribution_time"
+        android:minHeight="32dp"
+        android:minWidth="42dp"
+        android:textColorHint="#05ab9a" />
+
+    <Spinner
+        android:id="@+id/st_4_daymonth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:entries="@array/monthcyles"
+        android:hint="@string/day_of_the_month"
+        android:minHeight="32dp"
+        android:minWidth="42dp"
+        android:textColorHint="#05ab9a" />
+
+    <Spinner
+        android:id="@+id/st_4_dayweek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:entries="@array/weekcyles"
+        android:hint="@string/day_of_the_week"
+        android:minHeight="32dp"
+        android:minWidth="42dp"
+        android:textColorHint="#05ab9a" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="0dp">
+
+        <!-- request button -->
+        <TextView
+            android:id="@+id/st_4_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="bottom"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/back"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/st_4_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="bottom"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/next"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
