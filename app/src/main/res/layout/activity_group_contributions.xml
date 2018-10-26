@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.GroupContributionsActivity">
+    tools:context=".ui.GroupContributionsActivity"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-    <android.support.v7.widget.RecyclerView
+    <include layout="@layout/single_transaction"/>
+    <!--<android.support.v7.widget.RecyclerView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -15,5 +18,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.425"
         tools:listitem="@layout/single_transaction">
-    </android.support.v7.widget.RecyclerView>
+    </android.support.v7.widget.RecyclerView>-->
 </android.support.constraint.ConstraintLayout>
