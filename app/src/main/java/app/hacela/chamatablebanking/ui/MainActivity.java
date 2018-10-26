@@ -5,8 +5,10 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
@@ -58,6 +60,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static app.hacela.chamatablebanking.util.Constants.GROUPSCOL;
 import static app.hacela.chamatablebanking.util.Constants.GROUPSMEMBERSCOL;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ID_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_NAME_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.USERCOL;
 
 public class MainActivity extends AppCompatActivity {
@@ -106,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private String mGroupId;
     private String mUserRole;
     private ProgressDialog progressDialog;
+    private SharedPreferences.Editor sharedPreferencesEditor;
 
 
     @Override
@@ -122,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
 
+        sharedPreferencesEditor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 
         auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
@@ -237,6 +243,8 @@ public class MainActivity extends AppCompatActivity {
                                                 mGroupId = documentSnapshot.getString("groupid");
                                                 mUserRole = documentSnapshot.getString("userrole");
                                                 mViewModel.setGlobalGroupIdMediatorLiveData(mGroupId);
+                                                sharedPreferencesEditor.putString(GROUP_ID_PREFS,mGroupId);
+                                                sharedPreferencesEditor.apply();
                                                 progressDialog.dismiss();
 
 
@@ -482,6 +490,8 @@ public class MainActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
                                         userInfoGroup.setText(task.getResult().getString("groupname"));
+                                        sharedPreferencesEditor.putString(GROUP_NAME_PREFS,task.getResult().getString("groupname"));
+                                        sharedPreferencesEditor.apply();
                                     }
                                 }
                             });

@@ -1,10 +1,13 @@
 package app.hacela.chamatablebanking.ui;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -18,12 +21,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.appinvite.AppInviteInvitation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Source;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -39,6 +40,8 @@ import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_OK;
 import static app.hacela.chamatablebanking.util.Constants.GROUPSCOL;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ID_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_NAME_PREFS;
 
 /**
  * Created by Job on Monday : 9/3/2018.
@@ -58,6 +61,8 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
 
     private ProgressDialog progressDialog;
     private MainViewModel mViewModel;
+    private Activity mActivity;
+    private SharedPreferences mSharedPreferences;
 
     @Nullable
     @Override
@@ -77,13 +82,16 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
         auth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
 
+        mActivity = getActivity();
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+
         // View model
         MainViewModel.Factory factory = new MainViewModel.Factory(
-                getActivity().getApplication(), auth, mFirestore);
+                mActivity.getApplication(), auth, mFirestore);
 
         mViewModel = ViewModelProviders.of(getActivity(), factory)
                 .get(MainViewModel.class);
-
 
         navigationView.setNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
@@ -94,33 +102,37 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                     int id = item.getItemId();
-                    switch (id) {
-                        case R.id.nav_home:
-                            dismiss();
-                            return true;
-                        case R.id.nav_logout:
-                            Toast.makeText(getContext(), "Signing you out", Toast.LENGTH_SHORT).show();
 
-                            auth.signOut();
+                    if (isAdded() && mActivity != null) {
+
+                        switch (id) {
+                            case R.id.nav_home:
+                                dismiss();
+                                return true;
+                            case R.id.nav_logout:
+                                Toast.makeText(mActivity, "Signing you out", Toast.LENGTH_SHORT).show();
+
+                                auth.signOut();
 
 
-                            dismiss();
-                            return true;
-                        case R.id.nav_createnewgroup:
-                            //getActivity().startActivity(new Intent(getContext(), CreateChamaActivity.class));
-                            getActivity().startActivity(new Intent(getContext(), NewChamaActivity.class));
-                            dismiss();
-                            return true;
+                                dismiss();
+                                return true;
+                            case R.id.nav_createnewgroup:
+                                //getActivity().startActivity(new Intent(getContext(), CreateChamaActivity.class));
+                                mActivity.startActivity(new Intent(getContext(), NewChamaActivity.class));
+                                dismiss();
+                                return true;
 
-                        case R.id.nav_invitemember:
+                            case R.id.nav_invitemember:
 
-                            progressDialog = new ProgressDialog(getContext());
-                            progressDialog.setCancelable(true);
-                            progressDialog.show();
-                            progressDialog.setMessage("Just a moment...");
-                            sendToInviteScreen();
-                            dismiss();
-                            return true;
+                                progressDialog = new ProgressDialog(getContext());
+                                progressDialog.setCancelable(true);
+                                progressDialog.show();
+                                progressDialog.setMessage("Just a moment...");
+                                sendToInviteScreen();
+                                dismiss();
+                                return true;
+                        }
                     }
                     return false;
                 }
@@ -132,43 +144,41 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
         unbinder.unbind();
     }
 
-    //Todo extra email template setup
     //Manage and control all your chama activities from your phone  groupdisplayname
 
     private void sendToInviteScreen() {
 
-        final String grID = mViewModel.getGlobalGroupIdMediatorLiveData().getValue();
+        String grID = mSharedPreferences.getString(GROUP_ID_PREFS,"");
+        String grName = mSharedPreferences.getString(GROUP_NAME_PREFS,"");
+
+        String link = "https://chamatablebanking.page.link/gr/?invitedto=" + grID;
+        //String link2 = "https://chamatablebanking.page.link/gr";
+        //String link3 = buildDeepLink();
+
+        Intent intent = new AppInviteInvitation
+                .IntentBuilder(getString(R.string.invitation_title))
+                .setMessage("Join " + grName)
+                .setDeepLink(Uri.parse(link))
+                //.setCustomImage(Uri.parse(getString(R.string.invitation_custom_image)))
+                .setCallToActionText(getString(R.string.invitation_cta))
+                .build();
+
+        startActivityForResult(intent, REQUEST_INVITE);
+
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
 
         if (!TextUtils.isEmpty(grID)) {
 
-
             mFirestore.collection(GROUPSCOL).document(grID)
-                    .get(Source.CACHE)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                String grName = (task.getResult().getString("groupname"));
-
-                                String link = "https://chamatablebanking.page.link/gr/?invitedto=" + grID;
-                                String link2 = "https://chamatablebanking.page.link/gr";
-                                String link3 = buildDeepLink();
-
-                                Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
-                                        .setMessage("Join " + grName)
-                                        .setDeepLink(Uri.parse(link))
-                                        //.setCustomImage(Uri.parse(getString(R.string.invitation_custom_image)))
-                                        .setCallToActionText(getString(R.string.invitation_cta))
-                                        .build();
+                    .get().addOnSuccessListener(mActivity, new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
 
 
-                                startActivityForResult(intent, REQUEST_INVITE);
-                                if (progressDialog != null) {
-                                    progressDialog.dismiss();
-                                }
-                            }
-                        }
-                    });
+                }
+            });
         }
     }
 
@@ -208,10 +218,10 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
         boolean isAd = false;
 
         // Get the unique appcode for this app.
-        String appCode = getContext().getString(R.string.app_code);
+        String appCode = mActivity.getString(R.string.app_code);
 
         // Get this app's package name.
-        String packageName = getContext().getPackageName();
+        String packageName = mActivity.getPackageName();
         String queryParamters = "";
         try {
             queryParamters = generateQueryParameters();
