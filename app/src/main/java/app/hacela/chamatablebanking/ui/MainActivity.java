@@ -45,10 +45,10 @@ import java.util.Random;
 
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.appexecutor.DefaultExecutorSupplier;
-import app.hacela.chamatablebanking.datasource.Groups;
-import app.hacela.chamatablebanking.datasource.GroupsAccount;
-import app.hacela.chamatablebanking.datasource.GroupsMembers;
-import app.hacela.chamatablebanking.datasource.Users;
+import app.hacela.chamatablebanking.model.Groups;
+import app.hacela.chamatablebanking.model.GroupsAccount;
+import app.hacela.chamatablebanking.model.GroupsMembers;
+import app.hacela.chamatablebanking.model.Users;
 import app.hacela.chamatablebanking.util.ImageProcessor;
 import app.hacela.chamatablebanking.viewmodel.MainViewModel;
 import butterknife.BindView;

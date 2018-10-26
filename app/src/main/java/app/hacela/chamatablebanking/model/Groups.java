@@ -1,4 +1,4 @@
-package app.hacela.chamatablebanking.datasource;
+package app.hacela.chamatablebanking.model;
 
 import com.google.firebase.Timestamp;
 
