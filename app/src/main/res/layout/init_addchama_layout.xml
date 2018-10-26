@@ -57,6 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        android:focusable="true"
+        android:clickable="true"
         android:background="@color/colorPrimaryDark"
         android:gravity="bottom"
         android:paddingBottom="10dp"

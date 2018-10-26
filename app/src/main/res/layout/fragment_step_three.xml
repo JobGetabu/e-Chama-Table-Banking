@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.newchama.StepTwoFragment">
+    tools:context=".ui.newchama.StepThreeFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -71,7 +71,7 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Minimum Entry Fee"
+                android:hint="@string/minimum_entry_fee"
                 android:inputType="numberDecimal"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
@@ -83,7 +83,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="This is the minimum minregularcontribution of money, a new member is required to pay in order to join your investment group (Chama)"
+            android:text="@string/min_amount_text"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
