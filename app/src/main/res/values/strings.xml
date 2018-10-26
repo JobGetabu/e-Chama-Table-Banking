@@ -28,7 +28,7 @@
     <string name="chama_create_txt">Chama Table Banking helps you easily create, track and manage your chama finances</string>
     <string name="chama_name">Chama Name</string>
     <string name="minimum_entry_fee_ksh">Minimum Entry Fee (Ksh)</string>
-    <string name="regular_contribution_minimum_amount_ksh">Regular Contribution minimum amount (Ksh)</string>
+    <string name="regular_contribution_minimum_amount_ksh">Regular Contribution minimum minregularcontribution (Ksh)</string>
     <string name="regular_contribution_time">Regular Contribution Time</string>
     <string name="day_of_the_month">Day of the Month</string>
     <string name="day_of_the_week">Day of the Week</string>

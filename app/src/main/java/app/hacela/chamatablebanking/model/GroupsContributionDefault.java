@@ -1,60 +1,36 @@
 package app.hacela.chamatablebanking.model;
 
-import java.util.Date;
-
 /**
  * Created by Job on Wednesday : 9/5/2018.
  */
 public class GroupsContributionDefault {
 
-    private double amount;
-    private String penaltycondition;
-    private double penaltyamount;
+    private double minregularcontribution;
     private double entryfee;
     private String cycleintervaltype;
     private String dayofmonth;
     private String dayofweek;
     private int cycleperiod;
-    private Date startdate;
 
     public GroupsContributionDefault() {
     }
 
-    public GroupsContributionDefault(double amount, String penaltycondition, double penaltyamount, double entryfee,
-                                     String cycleintervaltype, String dayofmonth, String dayofweek, int cycleperiod, Date startdate) {
-        this.amount = amount;
-        this.penaltycondition = penaltycondition;
-        this.penaltyamount = penaltyamount;
+    public GroupsContributionDefault(double minregularcontribution, double entryfee, String cycleintervaltype, String dayofmonth, String dayofweek,
+                                     int cycleperiod) {
+        this.minregularcontribution = minregularcontribution;
         this.entryfee = entryfee;
         this.cycleintervaltype = cycleintervaltype;
         this.dayofmonth = dayofmonth;
         this.dayofweek = dayofweek;
         this.cycleperiod = cycleperiod;
-        this.startdate = startdate;
     }
 
-    public double getAmount() {
-        return amount;
+    public double getMinregularcontribution() {
+        return minregularcontribution;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public String getPenaltycondition() {
-        return penaltycondition;
-    }
-
-    public void setPenaltycondition(String penaltycondition) {
-        this.penaltycondition = penaltycondition;
-    }
-
-    public double getPenaltyamount() {
-        return penaltyamount;
-    }
-
-    public void setPenaltyamount(double penaltyamount) {
-        this.penaltyamount = penaltyamount;
+    public void setMinregularcontribution(double minregularcontribution) {
+        this.minregularcontribution = minregularcontribution;
     }
 
     public double getEntryfee() {
@@ -97,20 +73,10 @@ public class GroupsContributionDefault {
         this.cycleperiod = cycleperiod;
     }
 
-    public Date getStartdate() {
-        return startdate;
-    }
-
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
-    }
-
     @Override
     public String toString() {
         return "GroupsContributionDefault{" +
-                "amount=" + amount +
-                ", penaltycondition='" + penaltycondition + '\'' +
-                ", penaltyamount=" + penaltyamount +
+                "minregularcontribution=" + minregularcontribution +
                 ", entryfee=" + entryfee +
                 ", cycleintervaltype='" + cycleintervaltype + '\'' +
                 ", dayofmonth='" + dayofmonth + '\'' +
