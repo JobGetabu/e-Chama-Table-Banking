@@ -81,12 +81,10 @@ public class LoginActivity extends AppCompatActivity {
         create_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dim.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.VISIBLE);
+
                 Intent signup = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(signup);
-                dim.setVisibility(View.GONE);
-                progressBar.setVisibility(View.GONE);
+
 
             }
         });
