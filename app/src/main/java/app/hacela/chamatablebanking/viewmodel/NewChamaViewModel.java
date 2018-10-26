@@ -29,6 +29,8 @@ public class NewChamaViewModel extends ViewModel {
         mFirestore = FirebaseFirestore.getInstance();
 
         currentStep = new MediatorLiveData<>();
+        groupsMediatorLiveData = new MediatorLiveData<>();
+        groupsContributionDefaultMediatorLiveData = new MediatorLiveData<>();
     }
 
 
@@ -38,5 +40,17 @@ public class NewChamaViewModel extends ViewModel {
 
     public void setCurrentStep(Integer currentStep) {
         this.currentStep.setValue(currentStep);
+    }
+
+    public void setGroupsMediatorLiveData(Groups groupsLiveData) {
+        this.groupsMediatorLiveData.setValue(groupsLiveData);
+    }
+
+    public MediatorLiveData<GroupsContributionDefault> getGroupsContributionDefaultMediatorLiveData() {
+        return groupsContributionDefaultMediatorLiveData;
+    }
+
+    public void setGroupsContributionDefaultMediatorLiveData(GroupsContributionDefault groupsContributionDefaultLiveData) {
+        this.groupsContributionDefaultMediatorLiveData.setValue(groupsContributionDefaultLiveData);
     }
 }
