@@ -44,7 +44,7 @@
         android:text="@string/chama_create_txt"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/frg_init_btn"
+        app:layout_constraintBottom_toTopOf="@+id/st_0_next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
@@ -52,7 +52,7 @@
 
     <!-- request button -->
     <TextView
-        android:id="@+id/frg_init_btn"
+        android:id="@+id/st_0_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -61,7 +61,7 @@
         android:gravity="bottom"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="Continue"
+        android:text="@string/continue_text"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="20sp"
