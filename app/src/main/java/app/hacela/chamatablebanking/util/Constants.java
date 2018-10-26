@@ -13,4 +13,9 @@ public class Constants {
 
     public static final String ROLEADMIN = "Admin";
     public static final String ROLEMEMBER = "Member";
+
+    //shared prefs
+    public static final String GROUP_NAME_PREFS = "GROUP_NAME_PREFS";
+    public static final String GROUP_ID_PREFS = "GROUP_ID_PREFS";
+
 }
