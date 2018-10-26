@@ -12,17 +12,20 @@ public class Groups {
     private String createbyid;
     private String photourl;
     private String createbyname;
+    private String groupdescription;
 
     public Groups() {
     }
 
-    public Groups(String groupid, String groupname, Timestamp createdate, String createbyid, String photourl, String createbyname) {
+    public Groups(String groupid, String groupname, Timestamp createdate,
+                  String createbyid, String photourl, String createbyname, String groupdescription) {
         this.groupid = groupid;
         this.groupname = groupname;
         this.createdate = createdate;
         this.createbyid = createbyid;
         this.photourl = photourl;
         this.createbyname = createbyname;
+        this.groupdescription = groupdescription;
     }
 
     @Override
@@ -34,6 +37,7 @@ public class Groups {
                 ", createbyid='" + createbyid + '\'' +
                 ", photourl='" + photourl + '\'' +
                 ", createbyname='" + createbyname + '\'' +
+                ", groupdescription='" + groupdescription + '\'' +
                 '}';
     }
 
@@ -83,5 +87,13 @@ public class Groups {
 
     public void setCreatebyname(String createbyname) {
         this.createbyname = createbyname;
+    }
+
+    public String getGroupdescription() {
+        return groupdescription;
+    }
+
+    public void setGroupdescription(String groupdescription) {
+        this.groupdescription = groupdescription;
     }
 }
