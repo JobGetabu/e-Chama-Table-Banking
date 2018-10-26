@@ -103,6 +103,16 @@
         <item>Regular Meeting &amp; Contribution</item>
     </string-array>
 
+    <!-- Step Titles -->
+    <array name="addchama_steps">
+        <item>Create new chama</item>
+        <item>Chama name</item>
+        <item>Select your role</item>
+        <item>Entry Fee </item>
+        <item>Regular Contribution</item>
+        <item>Invite</item>
+    </array>
+
     <!-- Step subTitles -->
     <string-array name="steps_subtitles">
         <item>Follow steps to form a chama</item>
@@ -117,5 +127,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="invite_member_txt">Invite members of your chama using the special link provided below. Members will be able to download this app and join your chama using this link</string>
     <string name="continue_text">Continue</string>
+    <string name="invite_members">Invite Members</string>
+    <string name="skip_and_invite_later">Skip and invite later</string>
 
 </resources>

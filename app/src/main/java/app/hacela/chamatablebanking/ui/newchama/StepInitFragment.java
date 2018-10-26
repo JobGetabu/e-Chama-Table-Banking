@@ -22,7 +22,7 @@ import butterknife.Unbinder;
 public class StepInitFragment extends Fragment {
 
 
-    @BindView(R.id.frg_init_btn)
+    @BindView(R.id.st_0_next)
     TextView frgInitBtn;
     Unbinder unbinder;
 
@@ -55,7 +55,7 @@ public class StepInitFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.frg_init_btn)
+    @OnClick(R.id.st_0_next)
     public void onViewClicked() {
         model.setCurrentStep(1);
     }

@@ -65,6 +65,9 @@ dependencies {
     //expandindview
     implementation 'com.diegodobelo.expandingview:expanding-view:0.9.4'
 
+    //steps view
+    implementation 'com.shuhart.stepview:stepview:1.4.0'
+
     //vertical stepper
     implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
 
