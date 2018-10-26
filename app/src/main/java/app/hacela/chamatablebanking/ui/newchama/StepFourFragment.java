@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import app.hacela.chamatablebanking.R;
-import app.hacela.chamatablebanking.viewmodel.CreateChamaViewModel;
+import app.hacela.chamatablebanking.viewmodel.NewChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,7 +39,7 @@ public class StepFourFragment extends Fragment {
 
     Unbinder unbinder;
 
-    private CreateChamaViewModel model;
+    private NewChamaViewModel model;
 
     public StepFourFragment() {
         // Required empty public constructor
@@ -59,7 +59,7 @@ public class StepFourFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        model = ViewModelProviders.of(getActivity()).get(CreateChamaViewModel.class);
+        model = ViewModelProviders.of(getActivity()).get(NewChamaViewModel.class);
 
         onInit();
 
