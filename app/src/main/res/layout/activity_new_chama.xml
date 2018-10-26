@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:sv_animationType="All"
         app:sv_stepPadding="12dp"
-        app:sv_stepsNumber="5"
+        app:sv_stepsNumber="6"
 
         app:sv_background="@color/colorPrimary"
         app:sv_selectedTextColor="@android:color/white"
