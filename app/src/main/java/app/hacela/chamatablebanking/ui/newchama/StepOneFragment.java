@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.model.Groups;
+import app.hacela.chamatablebanking.model.GroupsContributionDefault;
+import app.hacela.chamatablebanking.model.GroupsMembers;
 import app.hacela.chamatablebanking.viewmodel.NewChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,9 +85,17 @@ public class StepOneFragment extends Fragment {
             String grname = stepgrname.getEditText().getText().toString();
             String grdesc = stepgrdesc.getEditText().getText().toString();
 
+            Groups group = new Groups();
+            GroupsMembers groupsMembers = new GroupsMembers();
+            GroupsContributionDefault groupsContributionDefault = new GroupsContributionDefault();
 
-            /*model.getLecTeachTimeMediatorLiveData().getValue().setUnitname(unitname);
-            model.getLecTeachTimeMediatorLiveData().getValue().setUnitcode(unitcode);*/
+
+            group.setGroupname(grname);
+            group.setGroupdescription(grdesc);
+
+            model.setGroupsMediatorLiveData(group);
+            model.setGroupsMembersMediatorLiveData(groupsMembers);
+            model.setGroupsContributionDefaultMediatorLiveData(groupsContributionDefault);
 
         }
     }
