@@ -6,6 +6,9 @@ import android.arch.lifecycle.ViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import app.hacela.chamatablebanking.model.Groups;
+import app.hacela.chamatablebanking.model.GroupsContributionDefault;
+
 /**
  * Created by Job on Friday : 10/26/2018.
  */
@@ -16,6 +19,8 @@ public class NewChamaViewModel extends ViewModel {
     private FirebaseFirestore mFirestore;
 
     private MediatorLiveData<Integer> currentStep;
+    private MediatorLiveData<Groups> groupsMediatorLiveData ;
+    private MediatorLiveData<GroupsContributionDefault> groupsContributionDefaultMediatorLiveData ;
 
     public NewChamaViewModel() {
 
