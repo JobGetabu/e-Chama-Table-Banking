@@ -28,7 +28,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:src="@drawable/hacela"
+                app:srcCompat="@drawable/hacela"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,12 +36,12 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="0dp"
-                android:layout_height="198dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="0dp"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintBottom_toTopOf="@id/login_forgotpass"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:padding="1dp">
+                    android:padding="8dp">
 
                     <TextView
                         android:id="@+id/login_head"
@@ -70,7 +70,6 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/login_email"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -93,8 +92,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:paddingBottom="23dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="30dp"
                         app:passwordToggleEnabled="true"
                         app:passwordToggleTint="@color/colorAccent">
 
@@ -104,7 +103,8 @@
                             android:drawableStart="@drawable/pass"
                             android:drawablePadding="12dp"
                             android:hint="@string/password"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword"
+                            app:backgroundTint="@null"/>
 
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
@@ -127,7 +127,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/cardView"
                 app:layout_constraintStart_toStartOf="@+id/cardView"
                 app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:srcCompat="@drawable/fui_ic_googleg_color_24dp" />
+                />
 
             <TextView
                 android:id="@+id/login_forgotpass"
@@ -183,35 +183,36 @@
                 android:text="Don't have an account yet?"
                 android:textColor="@color/white"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/login_via_google_image"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <View
+                android:id="@+id/background_dim_login"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#CC000000"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar_login"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
-
-        <View
-            android:id="@+id/background_dim_login"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="#CC000000"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar_login"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

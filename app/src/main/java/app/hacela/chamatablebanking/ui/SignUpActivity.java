@@ -86,7 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    userAuth.signInWithEmailAndPassword(email, password)
+                    userAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
