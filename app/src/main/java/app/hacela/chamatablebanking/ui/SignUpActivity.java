@@ -70,6 +70,48 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = signUpEmail.getEditText().getText().toString().trim();
+                String password = signUpPassword.getEditText().getText().toString().trim();
+
+                if (email.isEmpty() || password.isEmpty()){
+                    if (email.isEmpty()){
+                        signUpEmail.getEditText().setError("Email is required");
+                        signUpEmail.requestFocus();
+                    }
+                    if (password.isEmpty()){
+                        signUpPassword.getEditText().setError("Password is required");
+                        signUpPassword.requestFocus();
+                    }
+                }
+                else {
+                    userAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()){
+                                        sendUserToMainActivity();
+                                    }
+                                    else {
+                                        Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+            }
+        });
+
+        google_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {

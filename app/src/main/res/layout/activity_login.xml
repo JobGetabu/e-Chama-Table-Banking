@@ -77,7 +77,6 @@
                         android:layout_marginEnd="16dp"
                         app:errorEnabled="true"
                         app:hintTextAppearance="@style/MyAppearance">
-
                         <android.support.design.widget.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -86,12 +85,12 @@
                             android:drawablePadding="12dp"
                             android:hint="@string/email"
                             android:inputType="textEmailAddress"
-                            app:backgroundTint="@android:color/darker_gray"
-                            />
+                            app:backgroundTint="@android:color/darker_gray" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/login_password"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -102,7 +101,7 @@
                         app:passwordToggleTint="@android:color/black"
                         app:errorEnabled="true"
                         app:hintTextAppearance="@style/MyAppearance">
-
+                        app:passwordToggleTint="@color/colorAccent">
                         <android.support.design.widget.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -112,6 +111,12 @@
                             android:hint="@string/password"
                             android:inputType="textPassword"
                             app:backgroundTint="@android:color/darker_gray"/>
+=======
+                            android:drawablePadding="12dp"
+                            android:hint="@string/password"
+                            android:inputType="textPassword"
+                            app:backgroundTint="@null"/>
+>>>>>>> f45943ff61ac3abb9da9307c9d30f6849c47121b
 
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
