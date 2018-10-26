@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.ui.newchama.NewChamaActivity;
 import app.hacela.chamatablebanking.viewmodel.MainViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -106,7 +107,8 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                             dismiss();
                             return true;
                         case R.id.nav_createnewgroup:
-                            getActivity().startActivity(new Intent(getContext(), CreateChamaActivity.class));
+                            //getActivity().startActivity(new Intent(getContext(), CreateChamaActivity.class));
+                            getActivity().startActivity(new Intent(getContext(), NewChamaActivity.class));
                             dismiss();
                             return true;
 

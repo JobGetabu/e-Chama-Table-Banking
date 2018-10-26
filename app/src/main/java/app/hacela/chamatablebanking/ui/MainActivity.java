@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Random;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.appexecutor.DefaultExecutorSupplier;
 import app.hacela.chamatablebanking.datasource.Groups;
 import app.hacela.chamatablebanking.datasource.GroupsAccount;
 import app.hacela.chamatablebanking.datasource.GroupsMembers;
@@ -152,7 +153,15 @@ public class MainActivity extends AppCompatActivity {
 
                     //read db data
                     mExpandingList = findViewById(R.id.expanding_list_main);
-                    createItems();
+
+                    DefaultExecutorSupplier.getInstance()
+                            .forMainThreadTasks()
+                            .execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    createItems();
+                                }
+                            });
 
                     firstTimeUser();
                     loadYourGroup();
@@ -491,12 +500,12 @@ public class MainActivity extends AppCompatActivity {
         mViewModel.getGlobalGroupIdMediatorLiveData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                    Log.d(TAG, "onChanged: empty"+s);
+                Log.d(TAG, "onChanged: empty" + s);
                 if (s != null && TextUtils.isEmpty(s)) {
                     mViewModel.workOnGroups(s);
                     mViewModel.workOnGroupsAccount(s);
 
-                    Log.d(TAG, "onChanged: "+s);
+                    Log.d(TAG, "onChanged: " + s);
 
                     //add groupaccount observer
                     groupsObserver();
@@ -512,7 +521,7 @@ public class MainActivity extends AppCompatActivity {
         mViewModel.getGroupsAccountMediatorLiveData().observe(this, new Observer<GroupsAccount>() {
             @Override
             public void onChanged(@Nullable GroupsAccount groupsAccount) {
-                if (groupsAccount != null){
+                if (groupsAccount != null) {
 
                     adminDBalance.setText(mViewModel.formatMyMoney(groupsAccount.getAmount()));
                     adminDDividentBalance.setText(mViewModel.formatMyMoney(groupsAccount.getDivident()));
@@ -523,20 +532,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void calculateGroupMemberCount(String gId){
+    private void calculateGroupMemberCount(String gId) {
 
-                mFirestore.collection(GROUPSMEMBERSCOL)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                List<GroupsMembers> listMembers = task.getResult().toObjects(GroupsMembers.class);
+        mFirestore.collection(GROUPSMEMBERSCOL)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<GroupsMembers> listMembers = task.getResult().toObjects(GroupsMembers.class);
 
-                                int count = listMembers.size();
-                                adminDNumMembers.setText(count);
+                        int count = listMembers.size();
+                        adminDNumMembers.setText(count);
 
-                            }
-                        });
+                    }
+                });
 
     }
 
