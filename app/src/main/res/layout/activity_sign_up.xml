@@ -96,7 +96,6 @@
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-
             <Button
                 android:id="@+id/signup_button"
                 android:layout_width="0dp"
