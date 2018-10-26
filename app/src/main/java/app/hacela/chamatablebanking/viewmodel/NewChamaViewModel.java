@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import app.hacela.chamatablebanking.model.Groups;
 import app.hacela.chamatablebanking.model.GroupsContributionDefault;
+import app.hacela.chamatablebanking.model.GroupsMembers;
 
 /**
  * Created by Job on Friday : 10/26/2018.
@@ -21,6 +22,7 @@ public class NewChamaViewModel extends ViewModel {
     private MediatorLiveData<Integer> currentStep;
     private MediatorLiveData<Groups> groupsMediatorLiveData ;
     private MediatorLiveData<GroupsContributionDefault> groupsContributionDefaultMediatorLiveData ;
+    private MediatorLiveData<GroupsMembers> groupsMembersMediatorLiveData;
 
     public NewChamaViewModel() {
 
@@ -31,6 +33,7 @@ public class NewChamaViewModel extends ViewModel {
         currentStep = new MediatorLiveData<>();
         groupsMediatorLiveData = new MediatorLiveData<>();
         groupsContributionDefaultMediatorLiveData = new MediatorLiveData<>();
+        groupsMembersMediatorLiveData = new MediatorLiveData<>();
     }
 
 
@@ -46,6 +49,9 @@ public class NewChamaViewModel extends ViewModel {
         this.groupsMediatorLiveData.setValue(groupsLiveData);
     }
 
+    public MediatorLiveData<Groups> getGroupsMediatorLiveData() {
+        return groupsMediatorLiveData;
+    }
     public MediatorLiveData<GroupsContributionDefault> getGroupsContributionDefaultMediatorLiveData() {
         return groupsContributionDefaultMediatorLiveData;
     }
@@ -53,4 +59,15 @@ public class NewChamaViewModel extends ViewModel {
     public void setGroupsContributionDefaultMediatorLiveData(GroupsContributionDefault groupsContributionDefaultLiveData) {
         this.groupsContributionDefaultMediatorLiveData.setValue(groupsContributionDefaultLiveData);
     }
+
+    public MediatorLiveData<GroupsMembers> getGroupsMembersMediatorLiveData() {
+        return groupsMembersMediatorLiveData;
+    }
+
+    public void setGroupsMembersMediatorLiveData(GroupsMembers groupsMembers) {
+        this.groupsMembersMediatorLiveData.setValue(groupsMembers);
+    }
+
+
+
 }
