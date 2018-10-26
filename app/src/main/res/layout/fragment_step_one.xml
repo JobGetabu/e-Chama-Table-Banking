@@ -43,8 +43,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/step_one_description"
-                    android:inputType="textShortMessage"
-                    android:singleLine="false" />
+                    android:inputType="textLongMessage"
+                    />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 

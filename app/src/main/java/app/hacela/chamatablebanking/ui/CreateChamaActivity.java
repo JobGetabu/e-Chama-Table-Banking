@@ -493,7 +493,7 @@ public class CreateChamaActivity extends AppCompatActivity implements VerticalSt
         GroupsContributionDefault grContrDflt = new GroupsContributionDefault();
         grContrDflt.setMinregularcontribution(Double.parseDouble(s6RegularAmount.getEditText().getText().toString()));
         grContrDflt.setEntryfee(Double.parseDouble(s5Entryfee.getEditText().getText().toString()));
-        grContrDflt.setStartdate(mDate);
+        //grContrDflt.setStartdate(mDate);
         grContrDflt.setCycleintervaltype(s6Regular.getSelectedItem().toString());
         if (s6Dayweek.getVisibility() == View.VISIBLE) {
             grContrDflt.setDayofweek(s6Dayweek.getSelectedItem().toString());

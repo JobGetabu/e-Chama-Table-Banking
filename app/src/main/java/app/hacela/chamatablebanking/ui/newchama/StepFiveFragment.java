@@ -1,15 +1,22 @@
 package app.hacela.chamatablebanking.ui.newchama;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.model.Groups;
+import app.hacela.chamatablebanking.model.GroupsContributionDefault;
+import app.hacela.chamatablebanking.model.GroupsMembers;
+import app.hacela.chamatablebanking.viewmodel.NewChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,6 +34,9 @@ public class StepFiveFragment extends Fragment {
     TextView st5InviteskipBtn;
     Unbinder unbinder;
 
+    private NewChamaViewModel model;
+
+
     public StepFiveFragment() {
         // Required empty public constructor
     }
@@ -42,6 +52,15 @@ public class StepFiveFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        model = ViewModelProviders.of(getActivity()).get(NewChamaViewModel.class);
+
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -51,6 +70,12 @@ public class StepFiveFragment extends Fragment {
     public void onSt5InviteClicked() {
 
         //TODO: Create chama. Send to invite screen
+
+        Groups groups = model.getGroupsMediatorLiveData().getValue();
+        GroupsContributionDefault grContrDflt = model.getGroupsContributionDefaultMediatorLiveData().getValue();
+        GroupsMembers members = model.getGroupsMembersMediatorLiveData().getValue();
+
+        Toast.makeText(getContext(), ""+groups.toString()+grContrDflt.toString()+members.toString(), Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.st_5_inviteskip_btn)

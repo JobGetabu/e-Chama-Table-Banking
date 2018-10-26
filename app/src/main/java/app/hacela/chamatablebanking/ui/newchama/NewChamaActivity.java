@@ -13,7 +13,7 @@ import java.util.Arrays;
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.adapter.AddChamaPagerAdapter;
 import app.hacela.chamatablebanking.adapter.NoSwipePager;
-import app.hacela.chamatablebanking.viewmodel.CreateChamaViewModel;
+import app.hacela.chamatablebanking.viewmodel.NewChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,7 +25,7 @@ public class NewChamaActivity extends AppCompatActivity {
     NoSwipePager addChamaNoswipepager;
 
     private AddChamaPagerAdapter pagerAdapter;
-    private CreateChamaViewModel model;
+    private NewChamaViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class NewChamaActivity extends AppCompatActivity {
                 .steps(Arrays.asList(getResources().getStringArray(R.array.addchama_steps)))
                 .commit();
 
-        model = ViewModelProviders.of(this).get(CreateChamaViewModel.class);
+        model = ViewModelProviders.of(this).get(NewChamaViewModel.class);
 
         model.getCurrentStep().observe(this, new Observer<Integer>() {
             @Override
