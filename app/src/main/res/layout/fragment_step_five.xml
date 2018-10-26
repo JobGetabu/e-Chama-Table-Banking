@@ -23,7 +23,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="You're all Set"
+        android:text="@string/you_all_set"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -51,7 +51,7 @@
     <android.support.design.button.MaterialButton
         android:id="@+id/st_5_invite"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="145dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
