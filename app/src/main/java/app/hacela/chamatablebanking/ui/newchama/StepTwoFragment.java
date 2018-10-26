@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import app.hacela.chamatablebanking.R;
-import app.hacela.chamatablebanking.viewmodel.CreateChamaViewModel;
+import app.hacela.chamatablebanking.viewmodel.NewChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,7 +33,7 @@ public class StepTwoFragment extends Fragment {
     TextView st2Next;
     Unbinder unbinder;
 
-    private CreateChamaViewModel model;
+    private NewChamaViewModel model;
 
     public StepTwoFragment() {
         // Required empty public constructor
@@ -53,7 +53,7 @@ public class StepTwoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        model = ViewModelProviders.of(getActivity()).get(CreateChamaViewModel.class);
+        model = ViewModelProviders.of(getActivity()).get(NewChamaViewModel.class);
 
     }
 

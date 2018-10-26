@@ -9,8 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import app.hacela.chamatablebanking.R;
-import app.hacela.chamatablebanking.viewmodel.CreateChamaViewModel;
+import app.hacela.chamatablebanking.viewmodel.NewChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,7 +27,7 @@ public class StepInitFragment extends Fragment {
     TextView frgInitBtn;
     Unbinder unbinder;
 
-    private CreateChamaViewModel model;
+    private NewChamaViewModel model;
 
     public StepInitFragment() {
         // Required empty public constructor
@@ -46,7 +47,7 @@ public class StepInitFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        model = ViewModelProviders.of(getActivity()).get(CreateChamaViewModel.class);
+        model = ViewModelProviders.of(getActivity()).get(NewChamaViewModel.class);
     }
 
     @Override
