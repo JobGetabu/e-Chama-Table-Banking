@@ -74,20 +74,24 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp">
+                        android:layout_marginEnd="16dp"
+                        app:errorEnabled="true"
+                        app:hintTextAppearance="@style/MyAppearance">
 
                         <android.support.design.widget.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/user"
+                            android:textCursorDrawable="@null"
                             android:drawablePadding="12dp"
                             android:hint="@string/email"
-                            android:inputType="textEmailAddress" />
+                            android:inputType="textEmailAddress"
+                            app:backgroundTint="@android:color/darker_gray"
+                            />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/login_password"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -95,16 +99,19 @@
                         android:paddingBottom="23dp"
                         android:layout_marginEnd="16dp"
                         app:passwordToggleEnabled="true"
-                        app:passwordToggleTint="@color/colorAccent">
+                        app:passwordToggleTint="@android:color/black"
+                        app:errorEnabled="true"
+                        app:hintTextAppearance="@style/MyAppearance">
 
                         <android.support.design.widget.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/pass"
+                            android:textCursorDrawable="@null"
                             android:drawablePadding="12dp"
                             android:hint="@string/password"
                             android:inputType="textPassword"
-                            app:backgroundTint="@null"/>
+                            app:backgroundTint="@android:color/darker_gray"/>
 
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>

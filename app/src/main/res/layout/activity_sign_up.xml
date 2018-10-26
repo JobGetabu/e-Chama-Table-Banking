@@ -83,7 +83,8 @@
                             android:drawableStart="@drawable/user"
                             android:drawablePadding="12dp"
                             android:hint="@string/email"
-                            android:inputType="textEmailAddress" />
+                            android:inputType="textEmailAddress"
+                            app:backgroundTint="@android:color/darker_gray"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -104,7 +105,8 @@
                             android:drawableStart="@drawable/pass"
                             android:drawablePadding="12dp"
                             android:hint="@string/password"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword"
+                            app:backgroundTint="@android:color/darker_gray"/>
 
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
