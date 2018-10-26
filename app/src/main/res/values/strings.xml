@@ -115,5 +115,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="invite_member_txt">Invite members of your chama using the special link provided below. Members will be able to download this app and join your chama using this link</string>
+    <string name="continue_text">Continue</string>
 
 </resources>
