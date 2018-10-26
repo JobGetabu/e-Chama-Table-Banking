@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputLayout loginEmail;
     @BindView(R.id.login_password)
     TextInputLayout loginPassword;
-    @BindView(R.id.forgotpass)
+    @BindView(R.id.login_forgotpass)
     TextView forgotpass;
     @BindView(R.id.login_button)
     Button loginButton;
