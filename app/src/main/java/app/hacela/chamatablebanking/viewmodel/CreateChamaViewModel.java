@@ -23,7 +23,7 @@ public class CreateChamaViewModel extends AndroidViewModel {
     private MediatorLiveData<GroupsContributionDefault> groupsContributionDefaultMediatorLiveData ;
     private MediatorLiveData<Integer> currentStep;
 
-    public static final String TAG = "AccountVM";
+    public static final String TAG = "CreateChama";
 
     public CreateChamaViewModel(@NonNull Application application) {
         super(application);
