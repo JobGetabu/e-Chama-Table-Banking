@@ -8,8 +8,8 @@ import android.support.annotation.NonNull;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import app.hacela.chamatablebanking.datasource.Groups;
-import app.hacela.chamatablebanking.datasource.GroupsContributionDefault;
+import app.hacela.chamatablebanking.model.Groups;
+import app.hacela.chamatablebanking.model.GroupsContributionDefault;
 
 /**
  * Created by Job on Wednesday : 9/5/2018.

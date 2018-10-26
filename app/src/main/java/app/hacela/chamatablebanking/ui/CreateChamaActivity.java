@@ -47,9 +47,9 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import app.hacela.chamatablebanking.R;
-import app.hacela.chamatablebanking.datasource.GroupsAccount;
-import app.hacela.chamatablebanking.datasource.GroupsContributionDefault;
-import app.hacela.chamatablebanking.datasource.GroupsMembers;
+import app.hacela.chamatablebanking.model.GroupsAccount;
+import app.hacela.chamatablebanking.model.GroupsContributionDefault;
+import app.hacela.chamatablebanking.model.GroupsMembers;
 import app.hacela.chamatablebanking.viewmodel.CreateChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;

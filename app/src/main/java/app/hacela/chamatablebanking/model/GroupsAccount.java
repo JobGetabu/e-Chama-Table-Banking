@@ -1,4 +1,4 @@
-package app.hacela.chamatablebanking.datasource;
+package app.hacela.chamatablebanking.model;
 
 /**
  * Created by Job on Wednesday : 9/5/2018.
