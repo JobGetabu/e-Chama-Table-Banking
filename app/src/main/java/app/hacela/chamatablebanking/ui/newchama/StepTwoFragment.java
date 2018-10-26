@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.model.GroupsMembers;
 import app.hacela.chamatablebanking.viewmodel.NewChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,5 +72,10 @@ public class StepTwoFragment extends Fragment {
     @OnClick(R.id.st_2_next)
     public void onSt2NextClicked() {
         model.setCurrentStep(3);
+
+        GroupsMembers xx = model.getGroupsMembersMediatorLiveData().getValue();
+
+        xx.setUserrole("admin");
+        xx.setRoledescription(st2Role.getSelectedItem().toString());
     }
 }
