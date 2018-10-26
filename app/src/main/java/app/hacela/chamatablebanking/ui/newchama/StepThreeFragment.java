@@ -1,7 +1,9 @@
 package app.hacela.chamatablebanking.ui.newchama;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.viewmodel.CreateChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,7 +36,10 @@ public class StepThreeFragment extends Fragment {
     TextView st3Back;
     @BindView(R.id.st_3_next)
     TextView st3Next;
+
     Unbinder unbinder;
+
+    private CreateChamaViewModel model;
 
     public StepThreeFragment() {
         // Required empty public constructor
@@ -50,6 +56,14 @@ public class StepThreeFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        model = ViewModelProviders.of(getActivity()).get(CreateChamaViewModel.class);
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -61,9 +75,30 @@ public class StepThreeFragment extends Fragment {
 
     @OnClick(R.id.st_3_back)
     public void onSt3BackClicked() {
+        model.setCurrentStep(2);
     }
 
     @OnClick(R.id.st_3_next)
     public void onSt3NextClicked() {
+
+        if (validate()) {
+
+            model.setCurrentStep(4);
+        }
+    }
+
+    private boolean validate() {
+        boolean valid = true;
+
+        String minfee = st3Minfee.getEditText().getText().toString();
+
+        if (minfee.isEmpty()) {
+            st3Minfee.setError("enter min fee");
+            valid = false;
+        } else {
+            st3Minfee.setError(null);
+        }
+
+        return valid;
     }
 }

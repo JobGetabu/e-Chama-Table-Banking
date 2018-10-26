@@ -49,9 +49,13 @@ public class StepFiveFragment extends Fragment {
 
     @OnClick(R.id.st_5_invite)
     public void onSt5InviteClicked() {
+
+        //TODO: Create chama. Send to invite screen
     }
 
     @OnClick(R.id.st_5_inviteskip_btn)
     public void onSt5InviteskipBtnClicked() {
+
+        //TODO: Create chama. Send to home screen
     }
 }
