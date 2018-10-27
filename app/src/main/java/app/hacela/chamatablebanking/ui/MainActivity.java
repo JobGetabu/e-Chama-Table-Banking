@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
     TextView adminDNumProjects;
     @BindView(R.id.card_1)
     CardView card_members;
+    @BindView(R.id.card_3)
+    CardView card_loans;
 
     //firebase
     private FirebaseAuth auth;
@@ -615,5 +617,11 @@ public class MainActivity extends AppCompatActivity {
     public void onCardMemberClicked(){
         Intent seeContribs = new Intent(MainActivity.this, GroupContributionsActivity.class);
         startActivity(seeContribs);
+    }
+
+    @OnClick(R.id.card_3)
+    public void onCardLoansClicked(){
+        Intent seeLoans = new Intent(MainActivity.this, LoansActivity.class);
+        startActivity(seeLoans);
     }
 }

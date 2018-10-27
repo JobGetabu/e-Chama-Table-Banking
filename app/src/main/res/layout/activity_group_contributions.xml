@@ -14,6 +14,11 @@
        android:layout_height="wrap_content"
        android:layout_width="match_parent" />
 
+    <!--
+        *Comment the @single_transaction layout and
+        *uncomment the Recycler View to use it
+    -->
+
     <include
         layout="@layout/single_transaction"
         android:layout_width="0dp"
@@ -24,6 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/members_tool_bar" />
+
     <!--<android.support.v7.widget.RecyclerView
         android:layout_width="0dp"
         android:layout_height="0dp"
