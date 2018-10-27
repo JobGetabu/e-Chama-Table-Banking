@@ -8,8 +8,22 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
+   <include
+       layout="@layout/app_bar"
+       android:id="@+id/members_tool_bar"
+       android:layout_height="wrap_content"
+       android:layout_width="match_parent" />
 
-    <include layout="@layout/single_transaction"/>
+    <include
+        layout="@layout/single_transaction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/members_tool_bar" />
     <!--<android.support.v7.widget.RecyclerView
         android:layout_width="0dp"
         android:layout_height="0dp"
