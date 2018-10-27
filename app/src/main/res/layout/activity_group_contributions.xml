@@ -8,6 +8,7 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
+
     <include layout="@layout/single_transaction"/>
     <!--<android.support.v7.widget.RecyclerView
         android:layout_width="0dp"
