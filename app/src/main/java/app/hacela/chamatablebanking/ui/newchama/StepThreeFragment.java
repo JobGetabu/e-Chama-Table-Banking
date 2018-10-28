@@ -3,6 +3,8 @@ package app.hacela.chamatablebanking.ui.newchama;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -106,6 +108,12 @@ public class StepThreeFragment extends Fragment {
 
             if (mResultPhotoFile != null){
                 xx.setPhotourl("true");
+
+                //pass up image
+                st3Pic.setDrawingCacheEnabled(true);
+                st3Pic.buildDrawingCache();
+                Bitmap bitmap = ((BitmapDrawable) st3Pic.getDrawable()).getBitmap();
+                model.setBitmapMediatorLiveData(bitmap);
             }
 
             String minfee = st3Minfee.getEditText().getText().toString();

@@ -175,8 +175,6 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                     .get().addOnSuccessListener(mActivity, new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-
                 }
             });
         }

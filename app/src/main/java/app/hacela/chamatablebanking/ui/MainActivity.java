@@ -52,6 +52,7 @@ import app.hacela.chamatablebanking.model.Groups;
 import app.hacela.chamatablebanking.model.GroupsAccount;
 import app.hacela.chamatablebanking.model.GroupsMembers;
 import app.hacela.chamatablebanking.model.Users;
+import app.hacela.chamatablebanking.ui.newchama.NewChamaActivity;
 import app.hacela.chamatablebanking.util.ImageProcessor;
 import app.hacela.chamatablebanking.viewmodel.MainViewModel;
 import butterknife.BindView;
@@ -223,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                                         })
                                         .setPositiveButton("Create Group", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                                startActivity(new Intent(MainActivity.this, CreateChamaActivity.class));
+                                                startActivity(new Intent(MainActivity.this, NewChamaActivity.class));
                                                 dialog.dismiss();
                                             }
                                         })
