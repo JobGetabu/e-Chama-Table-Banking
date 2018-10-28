@@ -98,6 +98,16 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            sendUserToMainActivity();
+        }
+
+    }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -399,15 +409,5 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            sendUserToMainActivity();
-        }
-
     }
 }
