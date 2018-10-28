@@ -58,6 +58,7 @@ import static app.hacela.chamatablebanking.util.Constants.GROUPSCONTRIBUTIONDEFA
 import static app.hacela.chamatablebanking.util.Constants.GROUPSMEMBERSCOL;
 import static app.hacela.chamatablebanking.util.Constants.GROUP_ID_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.GROUP_NAME_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ROLE_PREFS;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -386,6 +387,7 @@ public class StepFiveFragment extends Fragment {
 
         sharedPreferencesEditor.putString(GROUP_ID_PREFS, grID);
         sharedPreferencesEditor.putString(GROUP_NAME_PREFS, grName);
+        sharedPreferencesEditor.putString(GROUP_ROLE_PREFS, "admin");
         sharedPreferencesEditor.apply();
     }
 

@@ -27,4 +27,6 @@
     <color name="green">#49CC56</color>
     <color name="white">#FFFFFF</color>
 
+    <color name="bg_trans">#c8000000</color>
+
 </resources>

@@ -42,6 +42,7 @@ import static android.app.Activity.RESULT_OK;
 import static app.hacela.chamatablebanking.util.Constants.GROUPSCOL;
 import static app.hacela.chamatablebanking.util.Constants.GROUP_ID_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.GROUP_NAME_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ROLE_PREFS;
 
 /**
  * Created by Job on Monday : 9/3/2018.
@@ -118,8 +119,13 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                                 dismiss();
                                 return true;
                             case R.id.nav_createnewgroup:
-                                //getActivity().startActivity(new Intent(getContext(), CreateChamaActivity.class));
-                                mActivity.startActivity(new Intent(getContext(), NewChamaActivity.class));
+                                if (preChamaExists()) {
+
+                                    mActivity.startActivity(new Intent(getContext(), ChamaExistsActivity.class));
+                                } else {
+
+                                    mActivity.startActivity(new Intent(getContext(), NewChamaActivity.class));
+                                }
                                 dismiss();
                                 return true;
 
@@ -148,8 +154,8 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
 
     private void sendToInviteScreen() {
 
-        String grID = mSharedPreferences.getString(GROUP_ID_PREFS,"");
-        String grName = mSharedPreferences.getString(GROUP_NAME_PREFS,"");
+        String grID = mSharedPreferences.getString(GROUP_ID_PREFS, "");
+        String grName = mSharedPreferences.getString(GROUP_NAME_PREFS, "");
 
         String link = "https://chamatablebanking.page.link/gr/?invitedto=" + grID;
         //String link2 = "https://chamatablebanking.page.link/gr";
@@ -274,6 +280,20 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
             }
         }
         return URLEncoder.encode(queryParameters.toString(), "UTF-8");
+    }
+
+    private boolean preChamaExists() {
+        String gid = mSharedPreferences.getString(GROUP_ID_PREFS, null);
+        String gname = mSharedPreferences.getString(GROUP_NAME_PREFS, null);
+        String role = mSharedPreferences.getString(GROUP_ROLE_PREFS, null);
+
+        if (gid != null && gname != null && role != null) {
+
+            if (role.equals("admin")) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
