@@ -7,6 +7,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import app.hacela.chamatablebanking.R;
 import butterknife.BindView;
@@ -42,6 +43,14 @@ public class ChamaExistsActivity extends AppCompatActivity {
 
     @OnClick(R.id.ce_delete)
     public void onCeDeleteClicked() {
+        //TODO: delete
+        //1. group photo
+        //2. set members as isMember = false
+        //3. undo PREFS
+        //4. show_notification to all possible members
+        //5. alert developer/support team via messaging
+
+        Toast.makeText(this, "Feature not implemented yet", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.ce_dismiss)
