@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(bar);
         imageProcessor = new ImageProcessor(this);
+        progressDialog = new ProgressDialog(this);
 
 
         //firebase
@@ -178,10 +179,10 @@ public class MainActivity extends AppCompatActivity {
     //global var groupid
     private void loadYourGroup() {
         //mGroupId;
-        progressDialog = new ProgressDialog(this);
+
         progressDialog.setCancelable(false);
-        progressDialog.show();
         progressDialog.setMessage(getString(R.string.dialog_loading_group));
+        progressDialog.show();
 
         mFirestore.collection(GROUPSMEMBERSCOL).document(auth.getCurrentUser().getUid())
                 .get()
@@ -243,9 +244,15 @@ public class MainActivity extends AppCompatActivity {
                                                 mGroupId = documentSnapshot.getString("groupid");
                                                 mUserRole = documentSnapshot.getString("userrole");
                                                 mViewModel.setGlobalGroupIdMediatorLiveData(mGroupId);
-                                                sharedPreferencesEditor.putString(GROUP_ID_PREFS,mGroupId);
+                                                sharedPreferencesEditor.putString(GROUP_ID_PREFS, mGroupId);
                                                 sharedPreferencesEditor.apply();
-                                                progressDialog.dismiss();
+
+                                                if (progressDialog != null && progressDialog.isShowing()) {
+                                                    if (MainActivity.this.isDestroyed()) {
+                                                        return;
+                                                    }
+                                                    progressDialog.dismiss();
+                                                }
 
 
                                             }
@@ -490,7 +497,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
                                         userInfoGroup.setText(task.getResult().getString("groupname"));
-                                        sharedPreferencesEditor.putString(GROUP_NAME_PREFS,task.getResult().getString("groupname"));
+                                        sharedPreferencesEditor.putString(GROUP_NAME_PREFS, task.getResult().getString("groupname"));
                                         sharedPreferencesEditor.apply();
                                     }
                                 }

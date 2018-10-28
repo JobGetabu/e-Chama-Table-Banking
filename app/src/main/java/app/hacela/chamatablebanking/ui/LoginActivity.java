@@ -157,8 +157,9 @@ public class LoginActivity extends AppCompatActivity {
     private void sendUserToMainActivity() {
         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
         Intent main = new Intent(LoginActivity.this, MainActivity.class);
-        main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        //main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(main);
+        finish();
     }
 
     @Override
