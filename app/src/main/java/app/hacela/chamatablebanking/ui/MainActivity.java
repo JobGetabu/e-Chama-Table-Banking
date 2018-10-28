@@ -14,6 +14,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -48,6 +49,7 @@ import app.hacela.chamatablebanking.datasource.Groups;
 import app.hacela.chamatablebanking.datasource.GroupsAccount;
 import app.hacela.chamatablebanking.datasource.GroupsMembers;
 import app.hacela.chamatablebanking.datasource.Users;
+import app.hacela.chamatablebanking.onboarding.OnBoardingActivity;
 import app.hacela.chamatablebanking.util.ImageProcessor;
 import app.hacela.chamatablebanking.viewmodel.MainViewModel;
 import butterknife.BindView;
@@ -93,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
     TextView adminDDividentBalance;
     @BindView(R.id.admin_d_num_projects)
     TextView adminDNumProjects;
+    @BindView(R.id.card_1)
+    CardView card_members;
+    @BindView(R.id.card_3)
+    CardView card_loans;
 
     //firebase
     private FirebaseAuth auth;
@@ -210,8 +216,8 @@ public class MainActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                                dialogInterface.dismiss();
-                                                finish();
+                                                Intent onBoard = new Intent(MainActivity.this, OnBoardingActivity.class);
+                                                startActivity(onBoard);
                                             }
                                         })
                                         .show();
@@ -605,5 +611,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @OnClick(R.id.card_1)
+    public void onCardMemberClicked(){
+        Intent seeContribs = new Intent(MainActivity.this, GroupContributionsActivity.class);
+        startActivity(seeContribs);
+    }
+
+    @OnClick(R.id.card_3)
+    public void onCardLoansClicked(){
+        Intent seeLoans = new Intent(MainActivity.this, LoansActivity.class);
+        startActivity(seeLoans);
     }
 }
