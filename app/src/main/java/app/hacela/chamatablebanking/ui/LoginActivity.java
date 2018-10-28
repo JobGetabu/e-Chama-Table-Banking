@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -234,8 +233,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendUserToMainActivity() {
-        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
         Intent main = new Intent(LoginActivity.this, MainActivity.class);
+        main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(main);
         finish();
     }
