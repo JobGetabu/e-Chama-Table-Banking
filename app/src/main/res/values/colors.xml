@@ -30,4 +30,9 @@
     <color name="bg_trans">#c8000000</color>
     <color name="bg_trans2">#96000000</color>
 
+    <color name="board1">#5889b6</color>
+    <color name="board2">#46aeb4</color>
+    <color name="board3">#466cb4</color>
+    <color name="board4">#7035ae</color>
+
 </resources>

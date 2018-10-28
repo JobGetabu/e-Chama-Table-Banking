@@ -146,11 +146,11 @@
 
     <!--onboarding texts-->
     <string name="board1">Hacela</string>
-    <string name="board1dsc">Hacela Chama Table Banking allows your investment group to manage its finance activities</string>
+    <string name="board1dsc">Hacela Chama Table Banking app allows your investment group to manage its finance activities</string>
     <string name="board2">Create and Invite</string>
-    <string name="board2dsc">Easily form a chama and invite members to download this app to join</string>
+    <string name="board2dsc">Easily form a chama and invite all members to download this app using your special link</string>
     <string name="board3">Safe</string>
-    <string name="board3dsc">No worries, All transaction are verified by group admin</string>
-    <string name="board4">Transact</string>
-    <string name="board4dsc">Do transaction, and get all reports in real time</string>
+    <string name="board3dsc">No worries, All transaction are verified by group administration. Same way you always do</string>
+    <string name="board4">Transaction</string>
+    <string name="board4dsc">Do transactions and get all the transactions you make in real time, view and track all your money</string>
 </resources>
