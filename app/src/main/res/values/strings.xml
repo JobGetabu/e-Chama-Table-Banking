@@ -140,5 +140,8 @@
     <string name="you_can_always_dissolve">You can always dissolve chama and form a new one, if you were testing out how hacela chama table banking works</string>
     <string name="no_have_an_account">Don\'t have an account yet?</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="you_offline">You\'re offline</string>
+    <string name="retry">Retry</string>
+    <string name="chooseEmailClient">Choose an your Email app</string>
 
 </resources>

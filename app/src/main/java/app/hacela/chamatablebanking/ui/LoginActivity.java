@@ -1,5 +1,6 @@
 package app.hacela.chamatablebanking.ui;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -95,17 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
-        create_account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent signup = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(signup);
-
-
-            }
-        });
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -126,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             final FirebaseUser user = mAuth.getCurrentUser();
-
                             final String device_token = FirebaseInstanceId.getInstance().getToken();
                             final String mCurrentUserid = mAuth.getCurrentUser().getUid();
 
@@ -146,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     updateTokenMap.put("devicetoken", device_token);
 
                                                     //update token only
-                                                    updateTokenOnly(mCurrentUserid, pDialog,updateTokenMap);
+                                                    updateTokenOnly(mCurrentUserid, pDialog, updateTokenMap);
 
                                                 } else {
                                                     Log.d(TAG, "No such document");
@@ -182,8 +171,8 @@ public class LoginActivity extends AppCompatActivity {
         // Set the value of 'Users'
         DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
 
-        String usern = mAuth.getCurrentUser().getDisplayName();
-        String pp = mAuth.getCurrentUser().getPhotoUrl().toString();
+        String usern = user.getDisplayName();
+        String pp = user.getPhotoUrl().toString();
 
         Users users = new Users(usern, device_token, pp);
         usersRef.set(users)
@@ -203,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateTokenOnly(String mCurrentUserid,
-                                 final SweetAlertDialog pDialog,Map<String, Object> updateTokenMap) {
+                                 final SweetAlertDialog pDialog, Map<String, Object> updateTokenMap) {
 
         // Set the value of 'Users'
         DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
@@ -254,63 +243,66 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_button)
     public void onLoginButtonClicked() {
-        if (!AppStatus.getInstance(getApplicationContext()).isOnline()) {
-
-            doSnack.showSnackbar("You're offline", "Retry", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onLoginButtonClicked();
-                }
-            });
-
-            return;
-        }
-
-        String email = loginEmail.getEditText().getText().toString();
-        String password = loginPassword.getEditText().getText().toString();
 
         if (validate()) {
 
-            final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-            pDialog.getProgressHelper().setBarColor(Color.parseColor("#FF4081"));
-            pDialog.setTitleText("Logging in...");
-            pDialog.setCancelable(false);
-            pDialog.show();
+            if (!AppStatus.getInstance(getApplicationContext()).isOnline()) {
 
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> authtask) {
-                            if (authtask.isSuccessful()) {
+                doSnack.showSnackbar(getString(R.string.you_offline), getString(R.string.retry), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onLoginForgotpassClicked();
+                    }
+                });
 
-                                //login successful
+                return;
+            }
 
-                                //update device token
-                                String devicetoken = FirebaseInstanceId.getInstance().getToken();
+            String email = loginEmail.getEditText().getText().toString();
+            String password = loginPassword.getEditText().getText().toString();
 
-                                Map<String, Object> updateTokenMap = new HashMap<>();
-                                updateTokenMap.put("devicetoken", devicetoken);
+            if (validate()) {
 
-                                String mCurrentUserid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor("#FF4081"));
+                pDialog.setTitleText("Logging in...");
+                pDialog.setCancelable(false);
+                pDialog.show();
 
-                                updateTokenOnly(mCurrentUserid, pDialog, updateTokenMap);
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> authtask) {
+                                if (authtask.isSuccessful()) {
+
+                                    //login successful
+
+                                    //update device token
+                                    String devicetoken = FirebaseInstanceId.getInstance().getToken();
+
+                                    Map<String, Object> updateTokenMap = new HashMap<>();
+                                    updateTokenMap.put("devicetoken", devicetoken);
+
+                                    String mCurrentUserid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                                    updateTokenOnly(mCurrentUserid, pDialog, updateTokenMap);
 
 
-                            } else {
-                                pDialog.dismiss();
-                                doSnack.UserAuthToastExceptions(authtask);
+                                } else {
+                                    pDialog.dismiss();
+                                    doSnack.UserAuthToastExceptions(authtask);
+                                }
                             }
-                        }
-                    });
+                        });
+            }
         }
-
     }
 
     @OnClick(R.id.login_forgotpass)
     public void onLoginForgotpassClicked() {
         if (!AppStatus.getInstance(getApplicationContext()).isOnline()) {
 
-            doSnack.showSnackbar("You're offline", "Retry", new View.OnClickListener() {
+            doSnack.showSnackbar(getString(R.string.you_offline), getString(R.string.retry), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onLoginForgotpassClicked();
@@ -319,14 +311,49 @@ public class LoginActivity extends AppCompatActivity {
 
             return;
         }
+
+        final String email = loginEmail.getEditText().getText().toString();
+        if (email.isEmpty() || !isEmailValid(email)) {
+            loginEmail.setError("enter valid email");
+            return;
+        } else {
+            loginEmail.setError(null);
+        }
+
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                            doSnack.showSnackbar("Email sent to " + email, "Check", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                                    intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                                    try {
+                                        //startActivity(intent);
+                                        startActivity(Intent.createChooser(intent, getString(R.string.chooseEmailClient)));
+                                    } catch (ActivityNotFoundException e) { }
+                                }
+                            });
+                        }else {
+                            doSnack.showShortSnackbar("You're not registered :(");
+                        }
+                    }
+                });
+
     }
 
     @OnClick(R.id.create_account)
     public void onCreateAccountClicked() {
+        startActivity(new Intent(this,SignUpActivity.class));
     }
 
     @OnClick(R.id.logo)
     public void onLogoClicked() {
+        doSnack.showShortSnackbar(getString(R.string.chama_create_txt));
     }
 
     @OnClick(R.id.login_via_google_image)
