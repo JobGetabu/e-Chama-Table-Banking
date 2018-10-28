@@ -144,4 +144,13 @@
     <string name="retry">Retry</string>
     <string name="chooseEmailClient">Choose your email app</string>
 
+    <!--onboarding texts-->
+    <string name="board1">Hacela</string>
+    <string name="board1dsc">Hacela Chama Table Banking allows your investment group to manage its finance activities</string>
+    <string name="board2">Create and Invite</string>
+    <string name="board2dsc">Easily form a chama and invite members to download this app to join</string>
+    <string name="board3">Safe</string>
+    <string name="board3dsc">No worries, All transaction are verified by group admin</string>
+    <string name="board4">Transact</string>
+    <string name="board4dsc">Do transaction, and get all reports in real time</string>
 </resources>

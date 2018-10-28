@@ -71,9 +71,6 @@ dependencies {
     //steps view
     implementation 'com.shuhart.stepview:stepview:1.4.0'
 
-    //vertical stepper
-    implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
-
     //OnBoarding paper motion
     implementation 'com.ramotion.paperonboarding:paper-onboarding:1.1.1'
 
