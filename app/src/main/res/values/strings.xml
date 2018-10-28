@@ -136,5 +136,7 @@
     <string name="min_amount_text">This is the minimum amount of money, a new member is required to pay in order to join your investment group (Chama)</string>
     <string name="close_delete_chama"><![CDATA[Close & Delete Chama]]></string>
     <string name="dismiss">Dismiss</string>
+    <string name="you_already_have_a_chama">You already have a Chama !</string>
+    <string name="you_can_always_dissolve">You can always dissolve chama and form a new one, if you were testing out how hacela chama table banking works</string>
 
 </resources>
