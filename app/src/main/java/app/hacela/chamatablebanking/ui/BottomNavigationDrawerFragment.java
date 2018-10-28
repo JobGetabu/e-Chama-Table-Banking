@@ -119,13 +119,10 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                                 dismiss();
                                 return true;
                             case R.id.nav_createnewgroup:
-                                if (preChamaExists()) {
 
-                                    mActivity.startActivity(new Intent(getContext(), ChamaExistsActivity.class));
-                                } else {
 
-                                    mActivity.startActivity(new Intent(getContext(), NewChamaActivity.class));
-                                }
+                                mActivity.startActivity(new Intent(getContext(), NewChamaActivity.class));
+
                                 dismiss();
                                 return true;
 

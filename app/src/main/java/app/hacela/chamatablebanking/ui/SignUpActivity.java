@@ -2,8 +2,10 @@ package app.hacela.chamatablebanking.ui;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.Snackbar;
@@ -34,6 +36,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Source;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
@@ -49,6 +52,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static app.hacela.chamatablebanking.util.Constants.GROUPSCOL;
+import static app.hacela.chamatablebanking.util.Constants.GROUPSMEMBERSCOL;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ID_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_NAME_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ROLE_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.USERCOL;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -76,6 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private DoSnack doSnack;
     private GoogleSignInClient mGoogleSignInClient;
+    private SharedPreferences.Editor sharedPreferencesEditor;
 
 
     @Override
@@ -89,6 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
         mFirestore = FirebaseFirestore.getInstance();
 
         doSnack = new DoSnack(this, SignUpActivity.this);
+        sharedPreferencesEditor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -181,10 +191,26 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void sendUserToNewChamaActivity() {
-        Toast.makeText(SignUpActivity.this, "Sign up Successful", Toast.LENGTH_SHORT).show();
-        Intent main = new Intent(SignUpActivity.this, NewChamaActivity.class);
-        main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(main);
+
+        mFirestore.collection(GROUPSMEMBERSCOL).document(mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull final Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+
+                            if (!document.exists()) {
+
+                                Intent main = new Intent(SignUpActivity.this, NewChamaActivity.class);
+                                main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(main);
+                            } else {
+                                sendUserToMainActivity();
+                            }
+                        }
+                    }
+                });
     }
 
     private void sendUserToMainActivity() {
@@ -259,7 +285,6 @@ public class SignUpActivity extends AppCompatActivity {
                                     //write to db
                                     writingToUsers(pDialog, devicetoken, user, mCurrentUserid);
 
-
                                 } else {
                                     pDialog.dismiss();
                                     doSnack.UserAuthToastExceptions(authtask);
@@ -325,6 +350,8 @@ public class SignUpActivity extends AppCompatActivity {
     private void updateTokenOnly(String mCurrentUserid,
                                  final SweetAlertDialog pDialog, Map<String, Object> updateTokenMap) {
 
+        loadYourGroup();
+
         // Set the value of 'Users'
         DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
 
@@ -386,10 +413,11 @@ public class SignUpActivity extends AppCompatActivity {
                                     try {
                                         //startActivity(intent);
                                         startActivity(Intent.createChooser(intent, getString(R.string.chooseEmailClient)));
-                                    } catch (ActivityNotFoundException e) { }
+                                    } catch (ActivityNotFoundException e) {
+                                    }
                                 }
                             });
-                        }else {
+                        } else {
                             doSnack.showShortSnackbar("You're not registered :(");
                         }
                     }
@@ -401,5 +429,52 @@ public class SignUpActivity extends AppCompatActivity {
     public void onSignupViaGoogleImageClicked() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void loadYourGroup() {
+
+        mFirestore.collection(GROUPSMEMBERSCOL).document(mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull final Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+
+                            if (document.exists()) {
+                                //chama exists
+                                mFirestore.collection(GROUPSMEMBERSCOL).document(mAuth.getCurrentUser().getUid())
+                                        .get()
+                                        .addOnSuccessListener(SignUpActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                String mGroupId = documentSnapshot.getString("groupid");
+                                                String mUserRole = documentSnapshot.getString("userrole");
+                                                findGroupName(mGroupId);
+
+                                                sharedPreferencesEditor.putString(GROUP_ID_PREFS, mGroupId);
+                                                sharedPreferencesEditor.putString(GROUP_ROLE_PREFS, mUserRole);
+                                                sharedPreferencesEditor.apply();
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void findGroupName(String mGroupId) {
+        mFirestore.collection(GROUPSCOL).document(mGroupId)
+                .get(Source.DEFAULT)
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            sharedPreferencesEditor.putString(GROUP_NAME_PREFS, task.getResult().getString("groupname"));
+                            sharedPreferencesEditor.apply();
+                        }
+                    }
+                });
     }
 }

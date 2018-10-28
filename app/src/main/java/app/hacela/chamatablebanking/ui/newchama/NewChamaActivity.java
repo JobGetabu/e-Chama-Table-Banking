@@ -2,7 +2,10 @@ package app.hacela.chamatablebanking.ui.newchama;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -13,9 +16,14 @@ import java.util.Arrays;
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.adapter.AddChamaPagerAdapter;
 import app.hacela.chamatablebanking.adapter.NoSwipePager;
+import app.hacela.chamatablebanking.ui.ChamaExistsActivity;
 import app.hacela.chamatablebanking.viewmodel.NewChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ID_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_NAME_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ROLE_PREFS;
 
 public class NewChamaActivity extends AppCompatActivity {
 
@@ -26,12 +34,26 @@ public class NewChamaActivity extends AppCompatActivity {
 
     private AddChamaPagerAdapter pagerAdapter;
     private NewChamaViewModel model;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_chama);
         ButterKnife.bind(this);
+
+        //see if has user
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (preChamaExists()) {
+            startActivity(new Intent(this, ChamaExistsActivity.class));
+            finish();
+            return;
+
+        } else {
+            // continue
+        }
 
         pagerAdapter = new AddChamaPagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragments(new StepInitFragment());
@@ -62,5 +84,19 @@ public class NewChamaActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean preChamaExists() {
+        String gid = mSharedPreferences.getString(GROUP_ID_PREFS, null);
+        String gname = mSharedPreferences.getString(GROUP_NAME_PREFS, null);
+        String role = mSharedPreferences.getString(GROUP_ROLE_PREFS, null);
+
+        if (gid != null && gname != null && role != null) {
+
+            if (role.equals("admin")) {
+                return true;
+            }
+        }
+        return false;
     }
 }

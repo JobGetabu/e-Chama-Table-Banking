@@ -142,6 +142,6 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="you_offline">You\'re offline</string>
     <string name="retry">Retry</string>
-    <string name="chooseEmailClient">Choose an your Email app</string>
+    <string name="chooseEmailClient">Choose your email app</string>
 
 </resources>

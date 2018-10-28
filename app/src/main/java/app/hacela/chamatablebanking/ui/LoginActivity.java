@@ -2,8 +2,10 @@ package app.hacela.chamatablebanking.ui;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.Snackbar;
@@ -33,6 +35,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Source;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
@@ -47,6 +50,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static app.hacela.chamatablebanking.util.Constants.GROUPSCOL;
+import static app.hacela.chamatablebanking.util.Constants.GROUPSMEMBERSCOL;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ID_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_NAME_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ROLE_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.USERCOL;
 
 public class LoginActivity extends AppCompatActivity {
@@ -73,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseFirestore mFirestore;
     private GoogleSignInClient mGoogleSignInClient;
     private DoSnack doSnack;
+    private SharedPreferences.Editor sharedPreferencesEditor;
 
 
     @Override
@@ -86,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         mFirestore = FirebaseFirestore.getInstance();
 
         doSnack = new DoSnack(this, LoginActivity.this);
+        sharedPreferencesEditor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -409,5 +419,52 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    private void loadYourGroup() {
+
+        mFirestore.collection(GROUPSMEMBERSCOL).document(mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull final Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+
+                            if (document.exists()) {
+                                //chama exists
+                                mFirestore.collection(GROUPSMEMBERSCOL).document(mAuth.getCurrentUser().getUid())
+                                        .get()
+                                        .addOnSuccessListener(LoginActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                String mGroupId = documentSnapshot.getString("groupid");
+                                                String mUserRole = documentSnapshot.getString("userrole");
+                                                findGroupName(mGroupId);
+
+                                                sharedPreferencesEditor.putString(GROUP_ID_PREFS, mGroupId);
+                                                sharedPreferencesEditor.putString(GROUP_ROLE_PREFS, mUserRole);
+                                                sharedPreferencesEditor.apply();
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void findGroupName(String mGroupId) {
+        mFirestore.collection(GROUPSCOL).document(mGroupId)
+                .get(Source.DEFAULT)
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            sharedPreferencesEditor.putString(GROUP_NAME_PREFS, task.getResult().getString("groupname"));
+                            sharedPreferencesEditor.apply();
+                        }
+                    }
+                });
     }
 }
