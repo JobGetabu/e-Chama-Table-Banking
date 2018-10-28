@@ -8,10 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
     <style name="MyAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/greenb</item>
     </style>
+
     <style name="Theme.Transparent" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/bg_trans</item>

@@ -47,7 +47,10 @@ import java.util.List;
 import java.util.Random;
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.appexecutor.DefaultExecutorSupplier;
+<<<<<<< HEAD
 import app.hacela.chamatablebanking.onboarding.OnBoardingActivity;
+=======
+>>>>>>> 5f4e3e098fcce2df510c65c75c7ffb03718c7a33
 import app.hacela.chamatablebanking.model.Groups;
 import app.hacela.chamatablebanking.model.GroupsAccount;
 import app.hacela.chamatablebanking.model.GroupsMembers;
