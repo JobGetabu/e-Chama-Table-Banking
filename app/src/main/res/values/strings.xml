@@ -138,5 +138,7 @@
     <string name="dismiss">Dismiss</string>
     <string name="you_already_have_a_chama">You already have a Chama !</string>
     <string name="you_can_always_dissolve">You can always dissolve chama and form a new one, if you were testing out how hacela chama table banking works</string>
+    <string name="no_have_an_account">Don\'t have an account yet?</string>
+    <string name="forgot_password">Forgot Password?</string>
 
 </resources>
