@@ -14,7 +14,7 @@
     <string name="creating_new_chama_group">Creating a new chama group</string>
     <string name="add_payment">Add Payment</string>
     <string name="invite_a_member">Invite a member</string>
-    <string name="regular_contribution">Regular Contribution</string>
+    <string name="regular_contribution">Regular Contribution(Ksh)</string>
     <string name="sample_date">12/08/2018</string>
     <string name="sample_cash">+ Ksh 5,000</string>
     <string name="contributions_due">Contributions Due</string>
@@ -132,7 +132,7 @@
     <string name="you_all_set">You\'re all Set</string>
     <string name="select_picture">Select picture</string>
     <string name="change_photo">Change Photo</string>
-    <string name="minimum_entry_fee">Minimum Entry Fee</string>
+    <string name="minimum_entry_fee">Minimum Entry Fee(Ksh)</string>
     <string name="min_amount_text">This is the minimum amount of money, a new member is required to pay in order to join your investment group (Chama)</string>
 
 </resources>

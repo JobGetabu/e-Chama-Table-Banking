@@ -2,6 +2,7 @@ package app.hacela.chamatablebanking.viewmodel;
 
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.graphics.Bitmap;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,6 +24,7 @@ public class NewChamaViewModel extends ViewModel {
     private MediatorLiveData<Groups> groupsMediatorLiveData ;
     private MediatorLiveData<GroupsContributionDefault> groupsContributionDefaultMediatorLiveData ;
     private MediatorLiveData<GroupsMembers> groupsMembersMediatorLiveData;
+    private MediatorLiveData<Bitmap> bitmapMediatorLiveData;
 
     public NewChamaViewModel() {
 
@@ -34,6 +36,7 @@ public class NewChamaViewModel extends ViewModel {
         groupsMediatorLiveData = new MediatorLiveData<>();
         groupsContributionDefaultMediatorLiveData = new MediatorLiveData<>();
         groupsMembersMediatorLiveData = new MediatorLiveData<>();
+        bitmapMediatorLiveData = new MediatorLiveData<>();
     }
 
 
@@ -68,6 +71,11 @@ public class NewChamaViewModel extends ViewModel {
         this.groupsMembersMediatorLiveData.setValue(groupsMembers);
     }
 
+    public MediatorLiveData<Bitmap> getBitmapMediatorLiveData() {
+        return bitmapMediatorLiveData;
+    }
 
-
+    public void setBitmapMediatorLiveData(Bitmap bitmap) {
+        this.bitmapMediatorLiveData.setValue(bitmap);
+    }
 }

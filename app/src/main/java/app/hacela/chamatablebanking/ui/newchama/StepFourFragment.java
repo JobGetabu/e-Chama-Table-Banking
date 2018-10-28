@@ -122,6 +122,7 @@ public class StepFourFragment extends Fragment {
             //group contribution default
             GroupsContributionDefault grContrDflt = model.getGroupsContributionDefaultMediatorLiveData().getValue();
             grContrDflt.setMinregularcontribution(Double.parseDouble(amount));
+            grContrDflt.setCycleintervaltype(st4Regular.getSelectedItem().toString());
 
             //TODO: Save this on the db
             String sel = st4Regular.getSelectedItem().toString();
