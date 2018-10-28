@@ -64,6 +64,7 @@ import static app.hacela.chamatablebanking.util.Constants.GROUPSCOL;
 import static app.hacela.chamatablebanking.util.Constants.GROUPSMEMBERSCOL;
 import static app.hacela.chamatablebanking.util.Constants.GROUP_ID_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.GROUP_NAME_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.GROUP_ROLE_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.USERCOL;
 
 public class MainActivity extends AppCompatActivity {
@@ -251,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
                                                 mUserRole = documentSnapshot.getString("userrole");
                                                 mViewModel.setGlobalGroupIdMediatorLiveData(mGroupId);
                                                 sharedPreferencesEditor.putString(GROUP_ID_PREFS, mGroupId);
+                                                sharedPreferencesEditor.putString(GROUP_ROLE_PREFS, mUserRole);
                                                 sharedPreferencesEditor.apply();
 
                                                 if (progressDialog != null && progressDialog.isShowing()) {

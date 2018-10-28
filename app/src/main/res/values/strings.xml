@@ -108,7 +108,7 @@
         <item>Create</item>
         <item>name</item>
         <item>role</item>
-        <item>Fee </item>
+        <item>Fee</item>
         <item>Regular</item>
         <item>Invite</item>
     </array>
@@ -134,5 +134,7 @@
     <string name="change_photo">Change Photo</string>
     <string name="minimum_entry_fee">Minimum Entry Fee(Ksh)</string>
     <string name="min_amount_text">This is the minimum amount of money, a new member is required to pay in order to join your investment group (Chama)</string>
+    <string name="close_delete_chama"><![CDATA[Close & Delete Chama]]></string>
+    <string name="dismiss">Dismiss</string>
 
 </resources>

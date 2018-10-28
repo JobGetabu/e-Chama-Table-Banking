@@ -17,5 +17,6 @@ public class Constants {
     //shared prefs
     public static final String GROUP_NAME_PREFS = "GROUP_NAME_PREFS";
     public static final String GROUP_ID_PREFS = "GROUP_ID_PREFS";
+    public static final String GROUP_ROLE_PREFS = "GROUP_ROLE_PREFS";
 
 }
