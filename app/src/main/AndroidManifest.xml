@@ -50,10 +50,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity
-            android:name=".ui.CreateChamaActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:screenOrientation="portrait" />
         <activity android:name=".onboarding.OnBoardingActivity" />
         <activity
             android:name=".ui.GroupContributionsActivity"
