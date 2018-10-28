@@ -16,6 +16,8 @@ import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.model.Groups;
 import app.hacela.chamatablebanking.model.GroupsContributionDefault;
 import app.hacela.chamatablebanking.model.GroupsMembers;
+import app.hacela.chamatablebanking.util.AppStatus;
+import app.hacela.chamatablebanking.util.DoSnack;
 import app.hacela.chamatablebanking.viewmodel.NewChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +35,8 @@ public class StepFiveFragment extends Fragment {
     @BindView(R.id.st_5_inviteskip_btn)
     TextView st5InviteskipBtn;
     Unbinder unbinder;
+
+    private DoSnack doSnack;
 
     private NewChamaViewModel model;
 
@@ -55,6 +59,7 @@ public class StepFiveFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        doSnack = new DoSnack(getContext(), getActivity());
         model = ViewModelProviders.of(getActivity()).get(NewChamaViewModel.class);
 
 
@@ -68,6 +73,18 @@ public class StepFiveFragment extends Fragment {
 
     @OnClick(R.id.st_5_invite)
     public void onSt5InviteClicked() {
+
+        if (!AppStatus.getInstance(getContext()).isOnline()) {
+
+            doSnack.showSnackbar("You're offline", "Retry", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onSt5InviteClicked();
+                }
+            });
+
+            return;
+        }
 
         //TODO: Create chama. Send to invite screen
 

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.util.AppStatus;
+import app.hacela.chamatablebanking.util.DoSnack;
 import app.hacela.chamatablebanking.viewmodel.NewChamaViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +30,7 @@ public class StepInitFragment extends Fragment {
     Unbinder unbinder;
 
     private NewChamaViewModel model;
+    private DoSnack doSnack;
 
     public StepInitFragment() {
         // Required empty public constructor
@@ -47,6 +50,7 @@ public class StepInitFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        doSnack = new DoSnack(getContext(), getActivity());
         model = ViewModelProviders.of(getActivity()).get(NewChamaViewModel.class);
     }
 
@@ -58,6 +62,17 @@ public class StepInitFragment extends Fragment {
 
     @OnClick(R.id.st_0_next)
     public void onViewClicked() {
+        if (!AppStatus.getInstance(getContext()).isOnline()) {
+
+            doSnack.showSnackbar("You're offline", "Retry", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onViewClicked();
+                }
+            });
+
+            return;
+        }
         model.setCurrentStep(1);
     }
 }
