@@ -62,6 +62,9 @@ dependencies {
     //circular imageview
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
+    //sweet alert dialogue
+    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
+
     //expandindview
     implementation 'com.diegodobelo.expandingview:expanding-view:0.9.4'
 
