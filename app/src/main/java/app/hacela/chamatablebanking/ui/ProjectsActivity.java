@@ -15,6 +15,7 @@ import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.adapter.DummyTest;
 import app.hacela.chamatablebanking.adapter.DummyTestAdapter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ProjectsActivity extends AppCompatActivity {
 
@@ -30,6 +31,7 @@ public class ProjectsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projects);
+        ButterKnife.bind(this);
 
         setSupportActionBar(projects_toolbar);
         getSupportActionBar().setTitle("Group Projects");
