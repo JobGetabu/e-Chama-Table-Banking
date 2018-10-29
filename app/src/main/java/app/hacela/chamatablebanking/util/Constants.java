@@ -20,7 +20,7 @@ public class Constants {
     public static final String GROUP_ROLE_PREFS = "GROUP_ROLE_PREFS";
     public static final String FIRST_INSTALL_PREFS = "FIRST_INSTALL_PREFS";
 
-    public static final String SETTINGS_LOGIN_PHONE_PREFS = "SETTINGS_LOGIN_PHONE_PREFS";
+    public static final String SETTINGS_LOGIN_PHONE_PREFS = "SETTINGS_LOGIN_PHONE_PREFS"; //default is true
     public static final String SETTINGS_NOTIFICATION_RING_PREFS = "SETTINGS_NOTIFICATION_RING_PREFS";
     public static final String SETTINGS_ADD_AUTH_EMAIL_PREFS = "SETTINGS_ADD_AUTH_EMAIL_PREFS";
 }

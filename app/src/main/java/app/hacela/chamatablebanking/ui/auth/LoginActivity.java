@@ -55,6 +55,7 @@ import static app.hacela.chamatablebanking.util.Constants.GROUPSMEMBERSCOL;
 import static app.hacela.chamatablebanking.util.Constants.GROUP_ID_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.GROUP_NAME_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.GROUP_ROLE_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.SETTINGS_LOGIN_PHONE_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.USERCOL;
 
 public class LoginActivity extends AppCompatActivity {
@@ -82,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private DoSnack doSnack;
     private SharedPreferences.Editor sharedPreferencesEditor;
+    private SharedPreferences mSharedPreferences;
 
 
     @Override
@@ -96,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
         doSnack = new DoSnack(this, LoginActivity.this);
         sharedPreferencesEditor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -114,6 +117,10 @@ public class LoginActivity extends AppCompatActivity {
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             sendUserToMainActivity();
+        }
+
+        if (checkPrefLogin()){
+            sendToPhoneAuth();
         }
 
     }
@@ -466,5 +473,19 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private boolean checkPrefLogin() {
+        if (mSharedPreferences.getBoolean(SETTINGS_LOGIN_PHONE_PREFS,true)){
+            return true;
+        }
+        return false;
+    }
+
+    private void sendToPhoneAuth(){
+        Intent pp = new Intent(LoginActivity.this, PhoneAuthActivity.class);
+        pp.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(pp);
+        finish();
     }
 }
