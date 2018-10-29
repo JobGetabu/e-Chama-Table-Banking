@@ -1,15 +1,10 @@
 package app.hacela.chamatablebanking.ui;
 
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +14,9 @@ import app.hacela.chamatablebanking.adapter.DummyTest;
 import app.hacela.chamatablebanking.adapter.DummyTestAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class GroupContributionsActivity extends AppCompatActivity {
-    @BindView(R.id.folding_cell)
-    FoldingCell fc;
+
     @BindView(R.id.members_tool_bar)
     Toolbar members_tool_bar;
     @BindView(R.id.member_recycler)
@@ -56,14 +49,20 @@ public class GroupContributionsActivity extends AppCompatActivity {
             dummyTests.add(dummyTest);
         }
 
-        adapter = new DummyTestAdapter(dummyTests, this);
+        adapter = new DummyTestAdapter(dummyTests, this, new DummyTestAdapter.foldingCellClick() {
+            @Override
+            public void onCellClick() {
+                //fc.toggle(false);
+            }
+        });
         member_recycler.setAdapter(adapter);
 
     }
 
 
-    @OnClick(R.id.folding_cell)
+    /*@OnClick(R.id.folding_cell)
     public void onFoldClicked(){
         fc.toggle(false);
-    }
+    }*/
+
 }

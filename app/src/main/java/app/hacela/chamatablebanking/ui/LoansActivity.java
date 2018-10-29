@@ -1,7 +1,7 @@
 package app.hacela.chamatablebanking.ui;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.ramotion.foldingcell.FoldingCell;
@@ -9,7 +9,6 @@ import com.ramotion.foldingcell.FoldingCell;
 import app.hacela.chamatablebanking.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class LoansActivity extends AppCompatActivity {
     @BindView(R.id.folding_cell)
@@ -28,8 +27,8 @@ public class LoansActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
-    @OnClick(R.id.folding_cell)
+   /* @OnClick(R.id.folding_cell)
     public void onFoldClicked(){
         fc.toggle(false);
-    }
+    }*/
 }
