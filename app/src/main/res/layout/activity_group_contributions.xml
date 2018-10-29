@@ -47,7 +47,11 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/single_transaction"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/member_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/single_transaction"/>
 
     </android.support.v4.widget.NestedScrollView>
 

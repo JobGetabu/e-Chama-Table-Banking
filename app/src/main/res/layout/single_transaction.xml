@@ -6,14 +6,16 @@
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:padding="5dp"
     >
 
     <android.support.design.card.MaterialCardView
         android:id="@+id/card_member"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
