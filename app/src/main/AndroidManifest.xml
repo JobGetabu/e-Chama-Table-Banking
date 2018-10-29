@@ -53,9 +53,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.GroupContributionsActivity"
-            android:parentActivityName=".ui.MainActivity" />
-        <activity
             android:name=".ui.LoansActivity"
             android:parentActivityName=".ui.MainActivity" />
         <activity android:name=".ui.newchama.NewChamaActivity" />
@@ -65,7 +62,8 @@
         <activity
             android:name=".ui.ChamaExistsActivity"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name=".ui.ProjectsActivity"></activity>
+        <activity android:name=".ui.ProjectsActivity" />
+        <activity android:name=".ui.MemberDetailsActivity"></activity>
     </application>
 
 </manifest>

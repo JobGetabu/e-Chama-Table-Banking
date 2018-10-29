@@ -1,12 +1,10 @@
 package app.hacela.chamatablebanking.ui;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,7 @@ import app.hacela.chamatablebanking.adapter.DummyTestAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GroupContributionsActivity extends AppCompatActivity {
+public class MemberDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.members_tool_bar)
     Toolbar members_tool_bar;
@@ -30,7 +28,7 @@ public class GroupContributionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_contributions);
+        setContentView(R.layout.activity_member_details);
         ButterKnife.bind(this);
 
         setSupportActionBar(members_tool_bar);
@@ -53,6 +51,5 @@ public class GroupContributionsActivity extends AppCompatActivity {
 
         adapter = new DummyTestAdapter(dummyTests, this);
         member_recycler.setAdapter(adapter);
-
     }
 }
