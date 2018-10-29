@@ -1,4 +1,4 @@
-package app.hacela.chamatablebanking.ui;
+package app.hacela.chamatablebanking.ui.auth;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -44,6 +44,7 @@ import java.util.Map;
 
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.model.Users;
+import app.hacela.chamatablebanking.ui.MainActivity;
 import app.hacela.chamatablebanking.ui.newchama.NewChamaActivity;
 import app.hacela.chamatablebanking.util.AppStatus;
 import app.hacela.chamatablebanking.util.DoSnack;

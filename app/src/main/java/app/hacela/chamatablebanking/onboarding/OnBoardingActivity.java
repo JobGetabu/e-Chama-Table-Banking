@@ -21,7 +21,7 @@ import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.ui.MainActivity;
 import app.hacela.chamatablebanking.util.DoSnack;
 
-import static app.hacela.chamatablebanking.util.Constants.FIRSTINSTALL_PREFS;
+import static app.hacela.chamatablebanking.util.Constants.FIRST_INSTALL_PREFS;
 
 public class OnBoardingActivity extends AppCompatActivity {
 
@@ -61,7 +61,7 @@ public class OnBoardingActivity extends AppCompatActivity {
                 finish();
 
 
-                sharedPreferencesEditor.putBoolean(FIRSTINSTALL_PREFS, true);
+                sharedPreferencesEditor.putBoolean(FIRST_INSTALL_PREFS, true);
                 sharedPreferencesEditor.apply();
             }
         });
@@ -87,7 +87,7 @@ public class OnBoardingActivity extends AppCompatActivity {
     }
 
     private void firstInstallCheck() {
-        if (msharedPreferences.getBoolean(FIRSTINSTALL_PREFS, false)) {
+        if (msharedPreferences.getBoolean(FIRST_INSTALL_PREFS, false)) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
