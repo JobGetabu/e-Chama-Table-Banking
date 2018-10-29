@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.ramotion.foldingcell.FoldingCell;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +55,4 @@ public class GroupContributionsActivity extends AppCompatActivity {
         member_recycler.setAdapter(adapter);
 
     }
-
-
-    /*@OnClick(R.id.folding_cell)
-    public void onFoldClicked(){
-        fc.toggle(false);
-    }*/
-
 }

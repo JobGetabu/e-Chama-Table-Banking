@@ -57,9 +57,13 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
         holder.phoneNo.setText(dummyTest.getPhone());
         holder.amountLast.setText(dummyTest.getAmount());
         holder.owingAmount.setText(dummyTest.getOwing());
+        holder.memberNameExpanded.setText(dummyTest.getName());
+        holder.phoneNoExpanded.setText(dummyTest.getPhone());
 
         Picasso.get().load("https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50")
                 .placeholder(R.drawable.avatar_placeholder).into(holder.memberImage);
+        Picasso.get().load("https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50")
+                .placeholder(R.drawable.avatar_placeholder).into(holder.memberImageExpanded);
     }
 
     @Override
@@ -69,8 +73,8 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public CircleImageView memberImage;
-        public TextView memberName, phoneNo, amountLast, owingAmount;
+        public CircleImageView memberImage, memberImageExpanded;
+        public TextView memberName, phoneNo, amountLast, owingAmount, memberNameExpanded, phoneNoExpanded;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -78,8 +82,11 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
             ButterKnife.bind(this,itemView);
 
             memberImage = itemView.findViewById(R.id.member_profile_pic);
+            memberImageExpanded = itemView.findViewById(R.id.member_profile_pic_expanded);
             memberName = itemView.findViewById(R.id.member_name);
+            memberNameExpanded = itemView.findViewById(R.id.member_name_expanded);
             phoneNo = itemView.findViewById(R.id.phone_number);
+            phoneNoExpanded = itemView.findViewById(R.id.member_phone_expanded);
             amountLast = itemView.findViewById(R.id.last_contribution);
             owingAmount = itemView.findViewById(R.id.amount_owing);
         }
