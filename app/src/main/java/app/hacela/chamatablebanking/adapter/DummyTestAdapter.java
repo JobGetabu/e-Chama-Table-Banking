@@ -21,12 +21,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.ViewHolder> {
     private List<DummyTest> dummyTests;
     private Context context;
-    private foldingCellClick cellClick;
 
-    public DummyTestAdapter(List<DummyTest> dummyTests, Context context,  foldingCellClick cellClick) {
+    public DummyTestAdapter(List<DummyTest> dummyTests, Context context) {
         this.dummyTests = dummyTests;
         this.context = context;
-        this.cellClick = cellClick;
+
     }
 
     @NonNull
@@ -47,7 +46,7 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
         });
 
 
-        return new ViewHolder(cell, cellClick);
+        return new ViewHolder(cell);
     }
 
     @Override
@@ -68,18 +67,15 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
         return dummyTests.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         public CircleImageView memberImage;
         public TextView memberName, phoneNo, amountLast, owingAmount;
-        private foldingCellClick cellClick;
 
-        public ViewHolder(@NonNull View itemView, foldingCellClick cellClick) {
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-
-            this.cellClick = cellClick;
-            this.itemView.setOnClickListener(this);
 
             memberImage = itemView.findViewById(R.id.member_profile_pic);
             memberName = itemView.findViewById(R.id.member_name);
@@ -87,17 +83,6 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
             amountLast = itemView.findViewById(R.id.last_contribution);
             owingAmount = itemView.findViewById(R.id.amount_owing);
         }
-
-        @Override
-        public void onClick(View view) {
-
-            this.cellClick.onCellClick(/*TODO: pass data etc*/);
-
-            notifyDataSetChanged();
-        }
     }
 
-    public interface foldingCellClick{
-        void onCellClick();
-    }
 }

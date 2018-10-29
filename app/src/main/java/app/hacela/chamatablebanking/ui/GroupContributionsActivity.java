@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.ramotion.foldingcell.FoldingCell;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,12 +51,7 @@ public class GroupContributionsActivity extends AppCompatActivity {
             dummyTests.add(dummyTest);
         }
 
-        adapter = new DummyTestAdapter(dummyTests, this, new DummyTestAdapter.foldingCellClick() {
-            @Override
-            public void onCellClick() {
-                //fc.toggle(false);
-            }
-        });
+        adapter = new DummyTestAdapter(dummyTests, this);
         member_recycler.setAdapter(adapter);
 
     }
