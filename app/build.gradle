@@ -84,6 +84,9 @@ dependencies {
     //phone-number authenticator
     implementation 'io.michaelrocks:libphonenumber-android:8.9.0'
 
+    //gif support
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.15'
+
     //architecture components
 
     // ViewModel and LiveData
