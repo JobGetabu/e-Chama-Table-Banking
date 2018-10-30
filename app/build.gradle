@@ -81,6 +81,9 @@ dependencies {
     //Google Sign in
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
 
+    //phone-number authenticator
+    implementation 'io.michaelrocks:libphonenumber-android:8.9.0'
+
     //architecture components
 
     // ViewModel and LiveData
