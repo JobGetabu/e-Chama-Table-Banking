@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:visibility="gone"
-    android:padding="20dp"
+    android:padding="2dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         app:cardCornerRadius="10dp"
-        app:cardUseCompatPadding="true"
         app:cardElevation="5dp">
 
         <LinearLayout
