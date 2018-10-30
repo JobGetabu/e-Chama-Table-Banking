@@ -63,8 +63,8 @@
             android:name=".ui.ChamaExistsActivity"
             android:theme="@style/Theme.Transparent" />
         <activity android:name=".ui.ProjectsActivity" />
-        <activity android:name=".ui.MemberDetailsActivity"></activity>
-        <activity android:name=".ui.auth.PhoneAuthActivity"></activity>
+        <activity android:name=".ui.MemberDetailsActivity"/>
+        <activity android:name=".ui.auth.PhoneAuthActivity"/>
 
     </application>
 
