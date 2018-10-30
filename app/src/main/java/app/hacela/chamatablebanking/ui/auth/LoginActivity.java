@@ -119,9 +119,9 @@ public class LoginActivity extends AppCompatActivity {
             sendUserToMainActivity();
         }
 
-        if (checkPrefLogin()){
+       /* if (checkPrefLogin()){
             sendToPhoneAuth();
-        }
+        }*/
 
     }
 
