@@ -127,6 +127,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="invite_member_txt">Invite members of your chama using the special link provided below. Members will be able to download this app and join your chama using this link</string>
     <string name="continue_text">Continue</string>
+    <string name="verify_text">Verify</string>
     <string name="invite_members">Invite Members</string>
     <string name="skip_and_invite_later">Skip and invite later</string>
     <string name="you_all_set">You\'re all Set</string>
@@ -158,4 +159,9 @@
     <string name="confirm">Confirm</string>
     <string name="continue_txt">Continue</string>
     <string name="enter_phonenumber">Enter Phonenumber</string>
+    <string name="resend_sms">Resend SMS</string>
+    <string name="enter_sms_code">Enter SMS Code</string>
+    <string name="status_code_sent">Sms Code Received</string>
+    <string name="status_verification_failed">Number verification failed</string>
+    <string name="instant_validation">Verification Success</string>
 </resources>
