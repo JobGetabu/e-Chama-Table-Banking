@@ -53,7 +53,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.LoansActivity"
+            android:name=".ui.loan.LoansActivity"
             android:parentActivityName=".ui.MainActivity" />
         <activity android:name=".ui.newchama.NewChamaActivity" />
         <activity android:name=".ui.auth.LoginActivity" />
