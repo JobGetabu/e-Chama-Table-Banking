@@ -221,6 +221,8 @@ public class LoginActivity extends AppCompatActivity {
     private void updateTokenOnly(String mCurrentUserid,
                                  final SweetAlertDialog pDialog, Map<String, Object> updateTokenMap) {
 
+        loadYourGroup();
+
         // Set the value of 'Users'
         DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
 

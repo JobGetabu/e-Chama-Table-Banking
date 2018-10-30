@@ -70,13 +70,13 @@ public class OnBoardingActivity extends AppCompatActivity {
     private ArrayList<PaperOnboardingPage> getDataForOnboarding() {
         // prepare data
         PaperOnboardingPage scr1 = new PaperOnboardingPage(getString(R.string.board1), getString(R.string.board1dsc),
-                Color.parseColor("#5889b6"), R.drawable.banks, R.drawable.key);
+                Color.parseColor("#5889b6"), R.drawable.finance_board, R.drawable.key);
         PaperOnboardingPage scr2 = new PaperOnboardingPage(getString(R.string.board2), getString(R.string.board2dsc),
-                Color.parseColor("#46aeb4"), R.drawable.banks, R.drawable.key);
+                Color.parseColor("#46aeb4"), R.drawable.banks, R.drawable.shopping_cart);
         PaperOnboardingPage scr3 = new PaperOnboardingPage(getString(R.string.board3), getString(R.string.board3dsc),
-                Color.parseColor("#7035ae"), R.drawable.banks, R.drawable.key);
+                Color.parseColor("#7035ae"), R.drawable.safe_board, R.drawable.key);
         PaperOnboardingPage scr4 = new PaperOnboardingPage(getString(R.string.board4), getString(R.string.board4dsc),
-                Color.parseColor("#466cb4"), R.drawable.banks, R.drawable.key);
+                Color.parseColor("#466cb4"), R.drawable.banks, R.drawable.wallet);
 
         ArrayList<PaperOnboardingPage> elements = new ArrayList<>();
         elements.add(scr1);
