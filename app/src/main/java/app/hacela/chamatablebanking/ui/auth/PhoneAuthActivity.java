@@ -31,6 +31,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthSettings;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -46,6 +47,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import app.hacela.chamatablebanking.BuildConfig;
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.model.Users;
 import app.hacela.chamatablebanking.ui.MainActivity;
@@ -135,6 +137,20 @@ public class PhoneAuthActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mPhoneNumberUtil = PhoneNumberUtil.createInstance(this);
+
+        //TESTING PURPOSES ONLY
+        if (BuildConfig.DEBUG) {
+
+            // The test phone number and code should be whitelisted in the console.
+            String phoneNumber = "+254711223344";
+            String smsCode = "123456";
+
+
+            FirebaseAuthSettings firebaseAuthSettings = mAuth.getFirebaseAuthSettings();
+
+            // Configure faking the auto-retrieval with the whitelisted numbers.
+            //firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber(phoneNumber, smsCode);
+        }
     }
 
     private boolean isValidMobile(String phone) {
@@ -170,6 +186,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
 
         phCode.setVisibility(View.VISIBLE);
         phResend.setVisibility(View.VISIBLE);
+
         signupHead.setText(R.string.enter_sms_code);
         phContinue.setText(R.string.verify_text);
 
@@ -220,7 +237,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
             if (validatePhone()) {
 
                 tweakUICodeIncoming();
-                doSnack.showShortSnackbar("SMS sent" + "to: " + mPhoneNum);
+                doSnack.showShortSnackbar("SMS sent" + " to : " + mPhoneNum);
                 startPhoneNumberVerification(mPhoneNum);
             }
         }
@@ -229,7 +246,11 @@ public class PhoneAuthActivity extends AppCompatActivity {
             if (validateCode()) {
 
                 String code = phCode.getEditText().getText().toString().trim();
-                verifyPhoneNumberWithCode(mVerificationId, code);
+
+                if (mVerificationId != null) {
+
+                    verifyPhoneNumberWithCode(mVerificationId, code);
+                }
             }
         }
 
@@ -272,7 +293,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
         } else {
             phNumber.setError(null);
             Log.d(TAG, "validatePhone: " + kenyaNumberProto.getCountryCode() + "" + kenyaNumberProto.getNationalNumber());
-            mPhoneNum = kenyaNumberProto.getCountryCode() + "" + kenyaNumberProto.getNationalNumber();
+            mPhoneNum = "+254" + kenyaNumberProto.getNationalNumber();
         }
 
 
@@ -370,7 +391,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
         DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
 
         String usern = user.getDisplayName();
-        String pp = user.getPhotoUrl().toString();
+        String pp = String.valueOf(user.getPhotoUrl().toString());
 
         Users users = new Users(usern, device_token, pp);
         usersRef.set(users)
@@ -523,13 +544,13 @@ public class PhoneAuthActivity extends AppCompatActivity {
                 // Invalid request
                 // [START_EXCLUDE]
                 //mPhoneNumberField.setError("Invalid phone number.");
-                doSnack.showSnackbar("Invalid phone number.");
+                doSnack.showSnackbar(getString(R.string.invalid_phone_num));
                 // [END_EXCLUDE]
             } else if (e instanceof FirebaseTooManyRequestsException) {
                 // The SMS quota for the project has been exceeded
                 // [START_EXCLUDE]
                 //Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.", Snackbar.LENGTH_SHORT).show();
-                doSnack.showSnackbar("Quota exceeded.");
+                doSnack.showSnackbar(getString(R.string.quota_exceeded));
                 // [END_EXCLUDE]
             }
 
@@ -602,9 +623,18 @@ public class PhoneAuthActivity extends AppCompatActivity {
                 this,               // Activity (for callback binding)
                 mCallbacks,         // OnVerificationStateChangedCallbacks
                 token);             // ForceResendingToken from callbacks
+
+        doSnack.showShortSnackbar("SMS Resent");
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+
+        final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#FF4081"));
+        pDialog.setTitleText("Logging in...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -615,7 +645,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
 
                             FirebaseUser user = task.getResult().getUser();
                             // [START_EXCLUDE]
-                            updateUI(STATE_SIGNIN_SUCCESS, user);
+                            updateUI(STATE_SIGNIN_SUCCESS, user, null, pDialog);
                             // [END_EXCLUDE]
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -629,7 +659,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
                             }
                             // [START_EXCLUDE silent]
                             // Update UI
-                            updateUI(STATE_SIGNIN_FAILED);
+                            updateUI(STATE_SIGNIN_FAILED, pDialog);
                             // [END_EXCLUDE]
                         }
                     }
@@ -649,26 +679,26 @@ public class PhoneAuthActivity extends AppCompatActivity {
     }
 
     private void updateUI(int uiState) {
-        updateUI(uiState, mAuth.getCurrentUser(), null);
+        updateUI(uiState, mAuth.getCurrentUser(), null, null);
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(int uiState, final SweetAlertDialog pDialog) {
+        updateUI(uiState, mAuth.getCurrentUser(), null, pDialog);
+    }
+
+    /*private void updateUI(FirebaseUser user) {
         if (user != null) {
             updateUI(STATE_SIGNIN_SUCCESS, user);
         } else {
             updateUI(STATE_INITIALIZED);
         }
-    }
-
-    private void updateUI(int uiState, FirebaseUser user) {
-        updateUI(uiState, user, null);
-    }
+    }*/
 
     private void updateUI(int uiState, PhoneAuthCredential cred) {
-        updateUI(uiState, null, cred);
+        updateUI(uiState, null, cred, null);
     }
 
-    private void updateUI(int uiState, FirebaseUser user, PhoneAuthCredential cred) {
+    private void updateUI(int uiState, FirebaseUser user, PhoneAuthCredential cred, final SweetAlertDialog pDialog) {
         switch (uiState) {
             case STATE_INITIALIZED:
                 // Initialized state, show only the phone number field and start button
@@ -678,7 +708,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
             case STATE_CODE_SENT:
                 // Code sent state, show the verification field, the
 
-                tweakUICodeIncoming();
+                //tweakUICodeIncoming();
                 doSnack.showShortSnackbar(getString(R.string.status_code_sent));
 
                 break;
@@ -715,7 +745,18 @@ public class PhoneAuthActivity extends AppCompatActivity {
                 break;
             case STATE_SIGNIN_FAILED:
                 // No-op, handled by sign-in check
-                // mDetailText.setText(R.string.status_sign_in_failed);
+
+                if (pDialog != null) {
+                    pDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                    pDialog.setTitle(getString(R.string.status_verification_failed));
+                    pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    });
+                }
+
                 tweakUISmsFailed();
                 doSnack.showSnackbar(R.string.status_verification_failed, R.string.retry, new View.OnClickListener() {
                     @Override
@@ -726,16 +767,23 @@ public class PhoneAuthActivity extends AppCompatActivity {
 
                 break;
             case STATE_SIGNIN_SUCCESS:
+                tweakUICodeIncoming();
                 // Np-op, handled by sign-in check
+                if (pDialog != null) {
+                    pDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                    pDialog.dismissWithAnimation();
+
+                }
                 sendUserToMainActivity();
                 break;
         }
+    }
 
-        if (user == null) {
-            // Signed out
-            tweakUIInit();
-        } else {
-            // Signed in
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (mAuth.getCurrentUser() != null) {
             sendUserToMainActivity();
         }
     }

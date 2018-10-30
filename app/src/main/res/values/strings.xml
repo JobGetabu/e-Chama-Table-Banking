@@ -164,4 +164,6 @@
     <string name="status_code_sent">Sms Code Received</string>
     <string name="status_verification_failed">Number verification failed</string>
     <string name="instant_validation">Verification Success</string>
+    <string name="invalid_phone_num">Invalid phone number.</string>
+    <string name="quota_exceeded">Quota exceeded.</string>
 </resources>

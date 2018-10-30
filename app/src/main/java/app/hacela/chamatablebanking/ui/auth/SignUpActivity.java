@@ -329,7 +329,7 @@ public class SignUpActivity extends AppCompatActivity {
         DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
 
         String usern = user.getDisplayName();
-        String pp = user.getPhotoUrl().toString();
+        String pp = String.valueOf(user.getPhotoUrl().toString());
 
         Users users = new Users(usern, device_token, pp);
         usersRef.set(users)

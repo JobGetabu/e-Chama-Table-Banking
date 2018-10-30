@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
                                 String device_token = FirebaseInstanceId.getInstance().getToken();
                                 String mCurrentUserid = auth.getCurrentUser().getUid();
 
-                                Users users = new Users(mCurrentUserid, device_token, auth.getCurrentUser().getPhotoUrl().toString());
+                                Users users = new Users(mCurrentUserid, device_token, String.valueOf(auth.getCurrentUser().getPhotoUrl()));
 
                                 mFirestore.collection(USERCOL).document(auth.getCurrentUser().getUid())
                                         .set(users);
@@ -495,7 +495,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void userUIObserver() {
         userInfoUsername.setText(auth.getCurrentUser().getDisplayName());
-        imageProcessor.setMyImage(userInfoImage, auth.getCurrentUser().getPhotoUrl().toString());
+        imageProcessor.setMyImage(userInfoImage, String.valueOf(auth.getCurrentUser().getPhotoUrl()));
 
         mViewModel.getGroupsMembersMediatorLiveData().observe(this, new Observer<GroupsMembers>() {
             @Override

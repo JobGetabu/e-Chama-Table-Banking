@@ -119,9 +119,9 @@ public class LoginActivity extends AppCompatActivity {
             sendUserToMainActivity();
         }
 
-       /* if (checkPrefLogin()){
+        if (checkPrefLogin()){
             sendToPhoneAuth();
-        }*/
+        }
 
     }
 
@@ -199,7 +199,7 @@ public class LoginActivity extends AppCompatActivity {
         DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
 
         String usern = user.getDisplayName();
-        String pp = user.getPhotoUrl().toString();
+        String pp =String.valueOf(user.getPhotoUrl());
 
         Users users = new Users(usern, device_token, pp);
         usersRef.set(users)
