@@ -65,7 +65,6 @@
         <activity android:name=".ui.ProjectsActivity" />
         <activity android:name=".ui.MemberDetailsActivity"/>
         <activity android:name=".ui.auth.PhoneAuthActivity"/>
-
     </application>
 
 </manifest>
