@@ -204,7 +204,12 @@ public class MainActivity extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
 
                             if (!document.exists()) {
-                                progressDialog.dismiss();
+                                if (progressDialog != null && progressDialog.isShowing()) {
+                                    if (MainActivity.this.isDestroyed()) {
+                                        return;
+                                    }
+                                    progressDialog.dismiss();
+                                }
 
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setCancelable(false)
@@ -274,7 +279,12 @@ public class MainActivity extends AppCompatActivity {
 
                                         //handle errors
 
-                                        progressDialog.dismiss();
+                                        if (progressDialog != null && progressDialog.isShowing()) {
+                                            if (MainActivity.this.isDestroyed()) {
+                                                return;
+                                            }
+                                            progressDialog.dismiss();
+                                        }
 
                                         new AlertDialog.Builder(MainActivity.this)
                                                 .setCancelable(false)
@@ -293,7 +303,12 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             //handle errors
 
-                            progressDialog.dismiss();
+                            if (progressDialog != null && progressDialog.isShowing()) {
+                                if (MainActivity.this.isDestroyed()) {
+                                    return;
+                                }
+                                progressDialog.dismiss();
+                            }
 
                             new AlertDialog.Builder(MainActivity.this)
                                     .setCancelable(false)

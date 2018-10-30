@@ -138,7 +138,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mPhoneNumberUtil = PhoneNumberUtil.createInstance(this);
 
-        //TESTING PURPOSES ONLY
+        //TODO: REMOVE: TESTING PURPOSES ONLY
         if (BuildConfig.DEBUG) {
 
             // The test phone number and code should be whitelisted in the console.
@@ -149,7 +149,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
             FirebaseAuthSettings firebaseAuthSettings = mAuth.getFirebaseAuthSettings();
 
             // Configure faking the auto-retrieval with the whitelisted numbers.
-            //firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber(phoneNumber, smsCode);
+            firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber(phoneNumber, smsCode);
         }
     }
 
