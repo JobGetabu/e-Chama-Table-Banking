@@ -154,6 +154,8 @@
     <string name="board3dsc">No worries, All transaction are verified by group administration. Same way you always do</string>
     <string name="board4">Transaction</string>
     <string name="board4dsc">Do transactions and get all the transactions you make in real time, view and track all your money</string>
+
+    <!--phone activity texts-->
     <string name="phone">Phone number</string>
     <string name="smscode">SMS CODE</string>
     <string name="confirm">Confirm</string>
@@ -166,4 +168,10 @@
     <string name="instant_validation">Verification Success</string>
     <string name="invalid_phone_num">Invalid phone number.</string>
     <string name="quota_exceeded">Quota exceeded.</string>
+
+    <string name="kes_0">KES 0/-</string>
+    <string name="loan14d">14 days @ 6%</string>
+    <string name="sample_loan_apply_text">Loan duration: 7 days @ 4% \n Amount: Ksh 6,000 \n Interest: Ksh 240 \n Processing Charge: Ksh 23 \n Repayment Amount: 6,263 \n Due Date: 10-Oct-2018</string>
+    <string name="apply_for_a_loan">Apply for a loan</string>
+    <string name="sign_u_out">Signing you out</string>
 </resources>

@@ -35,4 +35,7 @@
     <color name="board3">#466cb4</color>
     <color name="board4">#7035ae</color>
 
+    <color name="payGreen">#009688</color>
+    <color name="pay_bg">#E0E0E0</color>
+
 </resources>
