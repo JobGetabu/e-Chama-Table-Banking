@@ -62,8 +62,10 @@
         <activity
             android:name=".ui.ChamaExistsActivity"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name=".ui.ProjectsActivity" />
-        <activity android:name=".ui.MemberDetailsActivity"></activity>
+        <activity android:name=".ui.ProjectsActivity"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity android:name=".ui.MemberDetailsActivity"
+            android:parentActivityName=".ui.MainActivity" />
     </application>
 
 </manifest>

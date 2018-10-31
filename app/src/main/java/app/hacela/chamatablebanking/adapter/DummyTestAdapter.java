@@ -59,6 +59,10 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
         holder.phoneNoExpanded.setText(dummyTest.getPhone());
         holder.memberImage.setImageResource(dummyTest.getPhoto());
         holder.memberImageExpanded.setImageResource(dummyTest.getPhoto());
+        holder.phone_desc.setText(dummyTest.getPhone_desc());
+        holder.phone_desc_expanded.setText(dummyTest.getPhone_desc());
+        holder.contrib_desc.setText(dummyTest.getContribs_desc());
+        holder.amount_desc.setText(dummyTest.getAmount_desc());
 
     }
 
@@ -70,7 +74,7 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public CircleImageView memberImage, memberImageExpanded;
-        public TextView memberName, phoneNo, amountLast, owingAmount, memberNameExpanded, phoneNoExpanded;
+        public TextView memberName, phoneNo, phone_desc, phone_desc_expanded, amountLast, amount_desc, owingAmount, contrib_desc, memberNameExpanded, phoneNoExpanded;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -85,6 +89,10 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
             phoneNoExpanded = itemView.findViewById(R.id.member_phone_expanded);
             amountLast = itemView.findViewById(R.id.last_contribution);
             owingAmount = itemView.findViewById(R.id.amount_owing);
+            phone_desc = itemView.findViewById(R.id.phone_desc);
+            phone_desc_expanded = itemView.findViewById(R.id.phone_desc_expanded);
+            amount_desc = itemView.findViewById(R.id.totals_desc);
+            contrib_desc = itemView.findViewById(R.id.contrib_desc);
         }
     }
 

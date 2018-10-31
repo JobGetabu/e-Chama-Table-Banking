@@ -39,11 +39,11 @@ public class ProjectsActivity extends AppCompatActivity {
         projects_recycler.setHasFixedSize(true);
         projects_recycler.setLayoutManager(new LinearLayoutManager(this));
         dummyTests = new ArrayList<>();
-        dummyTests.add(new DummyTest("Job Getabu", "0700243243", "1500", "0", R.drawable.hacela));
-        dummyTests.add(new DummyTest("Abedy Ng'ang'a", "0711224354", "2000", "0", R.drawable.avatar_placeholder));
-        dummyTests.add(new DummyTest("Lawrence Maluki", "0703432321", "1200", "0", R.drawable.ic_receivecash));
-        dummyTests.add(new DummyTest("Mama Njambi", "0725654343", "1000", "0", R.drawable.ic_edit));
-        dummyTests.add(new DummyTest("Baba Milly", "0776543453", "1600", "0", R.drawable.avatar_placeholder));
+        dummyTests.add(new DummyTest("Chicken Farm", "20,000", "7,000", "Job    + 5,000\nAbedy  + 2,000", R.drawable.hacela, "Projects Worth", "Total Amount so far", "Contributions paid so far"));
+        dummyTests.add(new DummyTest("Old Game Mutukanio Farm", "15,000", "7,300", "Lawrence    + 5,000\nAbedy  + 2,300", R.drawable.hacela, "Projects Worth", "Total Amount so far", "Contributions paid so far"));
+        dummyTests.add(new DummyTest("Incubators hub", "10,000", "6,000", "Mama Jane    + 4,000\nAbedy  + 2,000", R.drawable.hacela, "Projects Worth", "Total Amount so far", "Contributions paid so far"));
+        dummyTests.add(new DummyTest("Children's Fund", "13,650", "7,000", "Job    + 5,000\nAbedy  + 2,000", R.drawable.hacela, "Projects Worth", "Total Amount so far", "Contributions paid so far"));
+        dummyTests.add(new DummyTest("Biogas Project", "9,000", "7,200", "Job    + 5,000\nAbedy  + 2,200", R.drawable.hacela, "Projects Worth", "Total Amount so far", "Contributions paid so far"));
 
         adapter = new DummyTestAdapter(dummyTests, this);
         projects_recycler.setAdapter(adapter);

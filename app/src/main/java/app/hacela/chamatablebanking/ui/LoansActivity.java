@@ -42,11 +42,11 @@ public class LoansActivity extends AppCompatActivity {
         loans_recycler.setHasFixedSize(true);
         loans_recycler.setLayoutManager(new LinearLayoutManager(this));
         dummyTests = new ArrayList<>();
-        dummyTests.add(new DummyTest("Job Getabu", "0700243243", "1500", "0", R.drawable.hacela));
-        dummyTests.add(new DummyTest("Abedy Ng'ang'a", "0711224354", "2000", "0", R.drawable.avatar_placeholder));
-        dummyTests.add(new DummyTest("Lawrence Maluki", "0703432321", "1200", "0", R.drawable.ic_receivecash));
-        dummyTests.add(new DummyTest("Mama Njambi", "0725654343", "1000", "0", R.drawable.ic_edit));
-        dummyTests.add(new DummyTest("Baba Milly", "0776543453", "1600", "0", R.drawable.avatar_placeholder));
+        dummyTests.add(new DummyTest("Job Getabu", "20,000", "12/2/2019", "200", R.drawable.avatar_placeholder, "Loans pending", "Day due", "Installments paid so far"));
+        dummyTests.add(new DummyTest("Abedy Ng'ang'a", "9,000", "12/2/2019", "500", R.drawable.avatar_placeholder, "Loans pending", "Day due", "Installments paid so far"));
+        dummyTests.add(new DummyTest("Lawrence Maluki", "5,000", "12/2/2019", "1,500", R.drawable.avatar_placeholder,"Loans pending", "Day due", "Installments paid so far"));
+        dummyTests.add(new DummyTest("Mama Njambi", "10,000", "12/2/2019", "700", R.drawable.avatar_placeholder, "Loans pending", "Day due", "Installments paid so far"));
+        dummyTests.add(new DummyTest("Baba Milly", "2,000", "12/2/2019", "2,000", R.drawable.avatar_placeholder, "Loans pending", "Day due", "Installments paid so far"));
 
         adapter = new DummyTestAdapter(dummyTests, this);
         loans_recycler.setAdapter(adapter);
