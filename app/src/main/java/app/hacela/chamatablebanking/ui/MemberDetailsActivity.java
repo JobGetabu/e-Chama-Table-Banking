@@ -37,17 +37,11 @@ public class MemberDetailsActivity extends AppCompatActivity {
         member_recycler.setHasFixedSize(true);
         member_recycler.setLayoutManager(new LinearLayoutManager(this));
         dummyTests = new ArrayList<>();
-
-        for (int i = 0; i <= 10; i++){
-            DummyTest dummyTest = new DummyTest(
-                    "Member" + i + 1,
-                    "070011223344",
-                    "1500",
-                    "500"
-            );
-
-            dummyTests.add(dummyTest);
-        }
+        dummyTests.add(new DummyTest("Job Getabu", "0700243243", "2,700", "12/3/2018    +700\n14/3/2018   +2,000", R.drawable.avatar_placeholder, "Phone Number", "Total Amount for the period", "Contributions list for the period"));
+        dummyTests.add(new DummyTest("Abedy Ng'ang'a", "0711224354", "2,000", "No records for now", R.drawable.avatar_placeholder, "Phone Number", "Total Amount for the period", "Contributions list for the period"));
+        dummyTests.add(new DummyTest("Lawrence Maluki", "0703432321", "1,200", "No records for now", R.drawable.avatar_placeholder, "Phone Number", "Total Amount for the period", "Contributions list for the period"));
+        dummyTests.add(new DummyTest("Mama Njambi", "0725654343", "1,000", "No records for now", R.drawable.avatar_placeholder, "Phone Number", "Total Amount for the period", "Contributions list for the period"));
+        dummyTests.add(new DummyTest("Baba Milly", "0776543453", "1,600", "No records for now", R.drawable.avatar_placeholder, "Phone Number", "Total Amount for the period", "Contributions list for the period"));
 
         adapter = new DummyTestAdapter(dummyTests, this);
         member_recycler.setAdapter(adapter);

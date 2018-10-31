@@ -705,4 +705,5 @@ public class MainActivity extends AppCompatActivity {
         Intent seeProjects = new Intent(MainActivity.this, ProjectsActivity.class);
         startActivity(seeProjects);
     }
+
 }
