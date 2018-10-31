@@ -5,19 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.ContributionRequestFragment">
+    tools:context=".ui.AddPaymentFragment">
 
     <LinearLayout
-        android:id="@+id/fcr_ll1"
+        android:id="@+id/fap_ll1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/pay_bg">
+        android:background="@color/pay_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Pay Contribution(min Ksh 1,000)"
+            android:text="Add Other Payment"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
@@ -25,122 +28,38 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/fcr_tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Member Details:"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fcr_ll1" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="012 Job Mzito"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/fcr_tv1"
-        app:layout_constraintTop_toBottomOf="@+id/fcr_ll1" />
-
-    <TextView
-        android:id="@+id/fcr_tv2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Chama:"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fcr_tv1" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Mavuno Self Help Group"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/fcr_tv2"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fap_et1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentStart="false"
-        android:layout_below="@+id/textView6pay"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12">
+        app:layout_constraintTop_toBottomOf="@+id/fap_ll1">
 
-
-        <LinearLayout
+        <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:hint="Payment Details"
+            android:inputType="text"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fap_et2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fap_et1">
 
-            <TextView
-                android:id="@+id/pay_textamount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:padding="16dp"
-                android:text="@string/kes_0"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                tools:text="KES 1,000/-" />
-
-            <ImageButton
-                android:id="@+id/pay_editImg"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical|center"
-                android:background="@android:color/transparent"
-                android:tint="@color/colorAccent"
-                app:srcCompat="@drawable/ic_pencil" />
-        </LinearLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/pay_amountinput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlineBox"
+        <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:hint="Amount"
-            android:inputType="number"
-            android:visibility="gone">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:singleLine="true" />
-        </android.support.design.widget.TextInputLayout>
-
-    </LinearLayout>
-
+            android:layout_height="match_parent"
+            android:hint="Enter Amount"
+            android:inputType="number"/>
+    </android.support.design.widget.TextInputLayout>
     <TextView
-        android:id="@+id/fcr_tv3"
+        android:id="@+id/fap_tv1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -152,19 +71,18 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/fap_et2"
         android:visibility="gone"
         tools:visibility="visible"
         />
-
     <HorizontalScrollView
-        android:id="@+id/fcr_hsv1"
+        android:id="@+id/fap_hsv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fcr_tv3"
+        app:layout_constraintTop_toBottomOf="@+id/fap_tv1"
         android:visibility="gone"
         tools:visibility="visible"
         >
@@ -242,9 +160,8 @@
 
         </android.support.design.chip.ChipGroup>
     </HorizontalScrollView>
-
     <android.support.design.button.MaterialButton
-        android:id="@+id/fcr_continue_btn"
+        android:id="@+id/fap_continue_btn"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -258,6 +175,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fcr_hsv1" />
+        app:layout_constraintTop_toBottomOf="@+id/fap_hsv1" />
+
 
 </android.support.constraint.ConstraintLayout>
