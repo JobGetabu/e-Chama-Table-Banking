@@ -174,4 +174,12 @@
     <string name="sample_loan_apply_text">Loan duration: 7 days @ 4% \n Amount: Ksh 6,000 \n Interest: Ksh 240 \n Processing Charge: Ksh 23 \n Repayment Amount: 6,263 \n Due Date: 10-Oct-2018</string>
     <string name="apply_for_a_loan">Apply for a loan</string>
     <string name="sign_u_out">Signing you out</string>
+    <string name="manage_your_password">Manage your password</string>
+    <string name="manage_account">Manage account</string>
+    <string name="sign_out">Sign out</string>
+    <string name="manage_your_account">Manage your account</string>
+    <string name="manage_your_members">Manage group members</string>
+    <string name="manage_transaction">Manage Transactions</string>
+    <string name="email_us">Email us</string>
+    <string name="manage_group">Manage Group</string>
 </resources>

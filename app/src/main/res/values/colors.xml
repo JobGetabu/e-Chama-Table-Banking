@@ -38,4 +38,8 @@
     <color name="payGreen">#009688</color>
     <color name="pay_bg">#E0E0E0</color>
 
+    <color name="darkbluish">#4b4bfd</color>
+    <color name="contentDividerLine">#e0e0e0</color>
+    <color name="greyish">#646464</color>
+
 </resources>

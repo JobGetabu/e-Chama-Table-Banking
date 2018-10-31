@@ -68,6 +68,8 @@
             android:parentActivityName=".ui.MainActivity" />
         <activity android:name=".ui.auth.PhoneAuthActivity"/>
         <activity android:name=".ui.settings.FeatureUnavailableActivity"/>
+        <activity android:name=".ui.settings.SettingsActivity"
+            android:parentActivityName=".ui.MainActivity" />
 </application>
 
 </manifest>

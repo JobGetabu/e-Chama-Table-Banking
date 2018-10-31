@@ -33,7 +33,7 @@ import java.util.Map;
 
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.ui.newchama.NewChamaActivity;
-import app.hacela.chamatablebanking.ui.settings.FeatureUnavailableActivity;
+import app.hacela.chamatablebanking.ui.settings.SettingsActivity;
 import app.hacela.chamatablebanking.viewmodel.MainViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -136,7 +136,7 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                                 return true;
 
                             case R.id.nav_settings:
-                                startActivity(new Intent(getContext(), FeatureUnavailableActivity.class));
+                                startActivity(new Intent(getContext(), SettingsActivity.class));
                                 dismiss();
                                 break;
                         }
