@@ -61,7 +61,7 @@
                 </LinearLayout>
 
                 <android.support.design.button.MaterialButton
-                    android:id="@+id/settings_password"
+                    android:id="@+id/settings_manage_account"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -305,7 +305,7 @@
 
 
                 <android.support.design.button.MaterialButton
-                    android:id="@+id/settings_manage_account"
+                    android:id="@+id/settings_manage_loan_types"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
