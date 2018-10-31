@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import app.hacela.chamatablebanking.R;
+import app.hacela.chamatablebanking.ui.AddExpensesFragment;
+import app.hacela.chamatablebanking.ui.AddPaymentFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,8 +33,15 @@ public class SettingsActivity extends AppCompatActivity {
     MaterialButton settingsHelp;
     @BindView(R.id.settings_faq)
     MaterialButton settingsFaq;
+    @BindView(R.id.settings_add_payments)
+    MaterialButton settingsAddPayments;
+    @BindView(R.id.settings_add_expenses)
+    MaterialButton settingsAddExpenses;
 
     private FirebaseAuth mAuth;
+
+    private AddPaymentFragment addPaymentFragment;
+    private AddExpensesFragment addExpensesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,9 @@ public class SettingsActivity extends AppCompatActivity {
         //firebase
         mAuth = FirebaseAuth.getInstance();
 
+        addPaymentFragment = new AddPaymentFragment();
+        addExpensesFragment = new AddExpensesFragment();
+
     }
 
     @OnClick(R.id.settings_manage_account)
@@ -61,6 +73,16 @@ public class SettingsActivity extends AppCompatActivity {
         mAuth.signOut();
 
         sendToLogin();
+    }
+
+    @OnClick(R.id.settings_add_payments)
+    public void onAddPaymentsClicked(){
+        addPaymentFragment.show(getSupportFragmentManager(), AddPaymentFragment.TAG);
+    }
+
+    @OnClick(R.id.settings_add_expenses)
+    public void onAddExpensesClicked(){
+        addExpensesFragment.show(getSupportFragmentManager(), AddExpensesFragment.TAG);
     }
 
     @OnClick(R.id.settings_password)

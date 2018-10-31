@@ -28,7 +28,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * A simple {@link Fragment} subclass.
  */
 public class AddPaymentFragment extends BottomSheetDialogFragment {
-    public static final String TAG = "ContriFragment";
+    public static final String TAG = "AddPayFragment";
 
     @BindView(R.id.fap_ll1)
     LinearLayout fapLl1;
@@ -79,7 +79,7 @@ public class AddPaymentFragment extends BottomSheetDialogFragment {
                             //processing dialogue
                             pDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
                             pDialog.setCancelable(false);
-                            pDialog.setContentText("Processing Contribution Request");
+                            pDialog.setContentText("Processing Payment Request");
                             pDialog.show();
                             timer();
                         }
@@ -127,11 +127,23 @@ public class AddPaymentFragment extends BottomSheetDialogFragment {
         boolean valid = true;
 
         String am = payTextamount.getEditText().getText().toString();
+        String det = payDetails.getEditText().getText().toString();
 
         if (am.isEmpty() || am.equals("0")) {
             payTextamount.setError("Amount is not valid");
 
 
+            payTextamount.setVisibility(View.VISIBLE);
+
+            valid = false;
+        } else {
+
+//            payTextamount.setVisibility(View.GONE);
+            payTextamount.setError(null);
+        }
+
+        if (det.isEmpty()) {
+            payTextamount.setError("Please provide some details");
             payTextamount.setVisibility(View.VISIBLE);
 
             valid = false;
