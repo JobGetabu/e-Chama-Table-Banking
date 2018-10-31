@@ -151,7 +151,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
 
     <HorizontalScrollView
         android:id="@+id/fcr_hsv1"
@@ -160,7 +163,10 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fcr_tv3">
+        app:layout_constraintTop_toBottomOf="@+id/fcr_tv3"
+        android:visibility="gone"
+        tools:visibility="visible"
+        >
 
         <android.support.design.chip.ChipGroup
             android:layout_width="match_parent"

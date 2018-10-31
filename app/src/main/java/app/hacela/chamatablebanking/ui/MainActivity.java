@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor sharedPreferencesEditor;
 
     private LoanRequestFragment loanRequestFragment;
+    private ContributionRequestFragment contributionRequestFragment;
 
 
     @Override
@@ -192,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
 
         //bottomsheet fragments
         loanRequestFragment = new LoanRequestFragment();
+        contributionRequestFragment = new ContributionRequestFragment();
     }
 
     //global var groupid
@@ -505,6 +507,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.main_fab)
     public void onFabViewClicked() {
+        contributionRequestFragment.show(getSupportFragmentManager(),ContributionRequestFragment.TAG);
     }
 
 
@@ -520,6 +523,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.usl_pay_cnt_card)
     public void onUslPayCntCardClicked() {
+        contributionRequestFragment.show(getSupportFragmentManager(),ContributionRequestFragment.TAG);
     }
     //endregion
 
