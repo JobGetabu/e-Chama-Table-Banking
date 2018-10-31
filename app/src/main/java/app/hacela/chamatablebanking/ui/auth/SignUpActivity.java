@@ -1,4 +1,4 @@
-package app.hacela.chamatablebanking.ui;
+package app.hacela.chamatablebanking.ui.auth;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -12,9 +12,11 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -42,6 +44,8 @@ import java.util.Map;
 
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.model.Users;
+import app.hacela.chamatablebanking.ui.MainActivity;
+import app.hacela.chamatablebanking.ui.newchama.NewChamaActivity;
 import app.hacela.chamatablebanking.util.AppStatus;
 import app.hacela.chamatablebanking.util.DoSnack;
 import butterknife.BindView;
@@ -56,44 +60,45 @@ import static app.hacela.chamatablebanking.util.Constants.GROUP_NAME_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.GROUP_ROLE_PREFS;
 import static app.hacela.chamatablebanking.util.Constants.USERCOL;
 
-public class LoginActivity extends AppCompatActivity {
-    @BindView(R.id.login_email)
-    TextInputLayout loginEmail;
-    @BindView(R.id.login_password)
-    TextInputLayout loginPassword;
-    @BindView(R.id.login_forgotpass)
+public class SignUpActivity extends AppCompatActivity {
+
+    @BindView(R.id.signup_email)
+    TextInputLayout signUpEmail;
+    @BindView(R.id.signup_password)
+    TextInputLayout signUpPassword;
+    @BindView(R.id.signup_forgotpass)
     MaterialButton forgotpass;
-    @BindView(R.id.login_button)
-    Button loginButton;
-    @BindView(R.id.login_via_google_image)
+    @BindView(R.id.signup_button)
+    Button signupButton;
+    @BindView(R.id.signup_via_google_image)
     ImageView google_image;
-    @BindView(R.id.create_account)
-    MaterialButton create_account;
-    @BindView(R.id.background_dim_login)
-    View dim;
 
     private static final String TAG = "login";
     public static final int RC_SIGN_IN = 1001;
+    @BindView(R.id.logo)
+    ImageView logo;
 
 
+    //firebase
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
-    private GoogleSignInClient mGoogleSignInClient;
+
     private DoSnack doSnack;
+    private GoogleSignInClient mGoogleSignInClient;
     private SharedPreferences.Editor sharedPreferencesEditor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
 
         //firebase
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
 
-        doSnack = new DoSnack(this, LoginActivity.this);
+        doSnack = new DoSnack(this, SignUpActivity.this);
         sharedPreferencesEditor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 
         // Configure Google Sign In
@@ -122,7 +127,8 @@ public class LoginActivity extends AppCompatActivity {
 
         final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#FF4081"));
-        pDialog.setTitleText("Logging in...");
+        pDialog.setTitleText("Registering you...");
+        pDialog.setTitleText("Just a moment...");
         pDialog.setCancelable(false);
         pDialog.show();
 
@@ -185,58 +191,34 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void writingToUsers(final SweetAlertDialog pDialog, String device_token, FirebaseUser user, String mCurrentUserid) {
+    private void sendUserToNewChamaActivity() {
 
-        // Set the value of 'Users'
-        DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
-
-        String usern = user.getDisplayName();
-        String pp = user.getPhotoUrl().toString();
-
-        Users users = new Users(usern, device_token, pp);
-        usersRef.set(users)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        mFirestore.collection(GROUPSMEMBERSCOL).document(mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        pDialog.dismissWithAnimation();
-                        sendUserToMainActivity();
+                    public void onComplete(@NonNull final Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+
+                            if (!document.exists()) {
+
+                                Intent main = new Intent(SignUpActivity.this, NewChamaActivity.class);
+                                main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(main);
+                            } else {
+                                sendUserToMainActivity();
+                            }
+                        }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                pDialog.dismiss();
-                doSnack.errorPrompt("Oops...", e.getMessage());
-            }
-        });
-    }
-
-    private void updateTokenOnly(String mCurrentUserid,
-                                 final SweetAlertDialog pDialog, Map<String, Object> updateTokenMap) {
-
-        // Set the value of 'Users'
-        DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
-
-        usersRef.set(updateTokenMap, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        pDialog.dismissWithAnimation();
-                        sendUserToMainActivity();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                pDialog.dismiss();
-                doSnack.errorPrompt("Oops...", e.getMessage());
-            }
-        });
+                });
     }
 
     private void sendUserToMainActivity() {
-        Intent main = new Intent(LoginActivity.this, MainActivity.class);
+        Toast.makeText(SignUpActivity.this, "Sign up Successful", Toast.LENGTH_SHORT).show();
+        Intent main = new Intent(SignUpActivity.this, MainActivity.class);
         main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(main);
-        finish();
     }
 
     @Override
@@ -257,11 +239,10 @@ public class LoginActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(android.R.id.content), "Google sign in failed", Snackbar.LENGTH_LONG).show();
             }
         }
-
     }
 
-    @OnClick(R.id.login_button)
-    public void onLoginButtonClicked() {
+    @OnClick(R.id.signup_button)
+    public void onSignupButtonClicked() {
 
         if (validate()) {
 
@@ -270,25 +251,26 @@ public class LoginActivity extends AppCompatActivity {
                 doSnack.showSnackbar(getString(R.string.you_offline), getString(R.string.retry), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        onLoginForgotpassClicked();
+                        onSignupButtonClicked();
                     }
                 });
 
                 return;
             }
 
-            String email = loginEmail.getEditText().getText().toString();
-            String password = loginPassword.getEditText().getText().toString();
+            String email = signUpEmail.getEditText().getText().toString();
+            String password = signUpPassword.getEditText().getText().toString();
 
             if (validate()) {
 
                 final SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
                 pDialog.getProgressHelper().setBarColor(Color.parseColor("#FF4081"));
-                pDialog.setTitleText("Logging in...");
+                pDialog.setTitleText("Registering you");
+                pDialog.setContentText("Just a moment...");
                 pDialog.setCancelable(false);
                 pDialog.show();
 
-                mAuth.signInWithEmailAndPassword(email, password)
+                mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> authtask) {
@@ -298,14 +280,11 @@ public class LoginActivity extends AppCompatActivity {
 
                                     //update device token
                                     String devicetoken = FirebaseInstanceId.getInstance().getToken();
-
-                                    Map<String, Object> updateTokenMap = new HashMap<>();
-                                    updateTokenMap.put("devicetoken", devicetoken);
-
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     String mCurrentUserid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                                    updateTokenOnly(mCurrentUserid, pDialog, updateTokenMap);
-
+                                    //write to db
+                                    writingToUsers(pDialog, devicetoken, user, mCurrentUserid);
 
                                 } else {
                                     pDialog.dismiss();
@@ -317,26 +296,107 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.login_forgotpass)
-    public void onLoginForgotpassClicked() {
+    private boolean validate() {
+        boolean valid = true;
+
+        String email = signUpEmail.getEditText().getText().toString();
+        String password = signUpPassword.getEditText().getText().toString();
+
+        if (email.isEmpty() || !isEmailValid(email)) {
+            signUpEmail.setError("enter valid email");
+            valid = false;
+        } else {
+            signUpEmail.setError(null);
+        }
+
+        if (password.isEmpty() || password.length() < 6) {
+            signUpPassword.setError("at least 6 characters");
+            valid = false;
+        } else {
+            signUpPassword.setError(null);
+        }
+
+        return valid;
+    }
+
+    private boolean isEmailValid(CharSequence email) {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void writingToUsers(final SweetAlertDialog pDialog, String device_token, FirebaseUser user, String mCurrentUserid) {
+
+        // Set the value of 'Users'
+        DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
+
+        String usern = user.getDisplayName();
+        String pp = String.valueOf(user.getPhotoUrl().toString());
+
+        Users users = new Users(usern, device_token, pp);
+        usersRef.set(users)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        pDialog.dismissWithAnimation();
+                        sendUserToNewChamaActivity();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pDialog.dismiss();
+                doSnack.errorPrompt("Oops...", e.getMessage());
+            }
+        });
+    }
+
+    private void updateTokenOnly(String mCurrentUserid,
+                                 final SweetAlertDialog pDialog, Map<String, Object> updateTokenMap) {
+
+        loadYourGroup();
+
+        // Set the value of 'Users'
+        DocumentReference usersRef = mFirestore.collection(USERCOL).document(mCurrentUserid);
+
+        usersRef.set(updateTokenMap, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        pDialog.dismissWithAnimation();
+                        sendUserToMainActivity();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pDialog.dismiss();
+                doSnack.errorPrompt("Oops...", e.getMessage());
+            }
+        });
+    }
+
+    @OnClick(R.id.logo)
+    public void onLogoClicked() {
+        doSnack.showShortSnackbar(getString(R.string.chama_create_txt));
+    }
+
+    @OnClick(R.id.signup_forgotpass)
+    public void onSignupForgotpassClicked() {
         if (!AppStatus.getInstance(getApplicationContext()).isOnline()) {
 
             doSnack.showSnackbar(getString(R.string.you_offline), getString(R.string.retry), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onLoginForgotpassClicked();
+                    onSignupForgotpassClicked();
                 }
             });
 
             return;
         }
 
-        final String email = loginEmail.getEditText().getText().toString();
+        final String email = signUpEmail.getEditText().getText().toString();
         if (email.isEmpty() || !isEmailValid(email)) {
-            loginEmail.setError("enter valid email");
+            signUpEmail.setError("enter valid email");
             return;
         } else {
-            loginEmail.setError(null);
+            signUpEmail.setError(null);
         }
 
         mAuth.sendPasswordResetEmail(email)
@@ -354,10 +414,11 @@ public class LoginActivity extends AppCompatActivity {
                                     try {
                                         //startActivity(intent);
                                         startActivity(Intent.createChooser(intent, getString(R.string.chooseEmailClient)));
-                                    } catch (ActivityNotFoundException e) { }
+                                    } catch (ActivityNotFoundException e) {
+                                    }
                                 }
                             });
-                        }else {
+                        } else {
                             doSnack.showShortSnackbar("You're not registered :(");
                         }
                     }
@@ -365,59 +426,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.create_account)
-    public void onCreateAccountClicked() {
-        startActivity(new Intent(this,SignUpActivity.class));
-    }
-
-    @OnClick(R.id.logo)
-    public void onLogoClicked() {
-        doSnack.showShortSnackbar(getString(R.string.chama_create_txt));
-    }
-
-    @OnClick(R.id.login_via_google_image)
-    public void onLoginViaGoogleImageClicked() {
-        if (!AppStatus.getInstance(getApplicationContext()).isOnline()) {
-
-            doSnack.showSnackbar("You're offline", "Retry", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onLoginViaGoogleImageClicked();
-                }
-            });
-
-            return;
-        }
-
+    @OnClick(R.id.signup_via_google_image)
+    public void onSignupViaGoogleImageClicked() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    private boolean isEmailValid(CharSequence email) {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-
-    private boolean validate() {
-        boolean valid = true;
-
-        String email = loginEmail.getEditText().getText().toString();
-        String password = loginPassword.getEditText().getText().toString();
-
-        if (email.isEmpty() || !isEmailValid(email)) {
-            loginEmail.setError("enter valid email");
-            valid = false;
-        } else {
-            loginEmail.setError(null);
-        }
-
-        if (password.isEmpty() || password.length() < 6) {
-            loginPassword.setError("at least 6 characters");
-            valid = false;
-        } else {
-            loginPassword.setError(null);
-        }
-
-        return valid;
     }
 
     private void loadYourGroup() {
@@ -434,7 +446,7 @@ public class LoginActivity extends AppCompatActivity {
                                 //chama exists
                                 mFirestore.collection(GROUPSMEMBERSCOL).document(mAuth.getCurrentUser().getUid())
                                         .get()
-                                        .addOnSuccessListener(LoginActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+                                        .addOnSuccessListener(SignUpActivity.this, new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
 

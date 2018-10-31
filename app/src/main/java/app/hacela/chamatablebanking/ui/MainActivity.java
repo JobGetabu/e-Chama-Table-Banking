@@ -53,6 +53,9 @@ import app.hacela.chamatablebanking.model.GroupsAccount;
 import app.hacela.chamatablebanking.model.GroupsMembers;
 import app.hacela.chamatablebanking.model.Users;
 import app.hacela.chamatablebanking.onboarding.OnBoardingActivity;
+import app.hacela.chamatablebanking.ui.auth.LoginActivity;
+import app.hacela.chamatablebanking.ui.loan.LoanRequestFragment;
+import app.hacela.chamatablebanking.ui.loan.LoansActivity;
 import app.hacela.chamatablebanking.ui.newchama.NewChamaActivity;
 import app.hacela.chamatablebanking.util.ImageProcessor;
 import app.hacela.chamatablebanking.viewmodel.MainViewModel;
@@ -122,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private SharedPreferences.Editor sharedPreferencesEditor;
 
+    private LoanRequestFragment loanRequestFragment;
+    private ContributionRequestFragment contributionRequestFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,6 +190,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //bottomsheet fragments
+        loanRequestFragment = new LoanRequestFragment();
+        contributionRequestFragment = new ContributionRequestFragment();
     }
 
     //global var groupid
@@ -203,7 +213,12 @@ public class MainActivity extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
 
                             if (!document.exists()) {
-                                progressDialog.dismiss();
+                                if (progressDialog != null && progressDialog.isShowing()) {
+                                    if (MainActivity.this.isDestroyed()) {
+                                        return;
+                                    }
+                                    progressDialog.dismiss();
+                                }
 
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setCancelable(false)
@@ -273,7 +288,12 @@ public class MainActivity extends AppCompatActivity {
 
                                         //handle errors
 
-                                        progressDialog.dismiss();
+                                        if (progressDialog != null && progressDialog.isShowing()) {
+                                            if (MainActivity.this.isDestroyed()) {
+                                                return;
+                                            }
+                                            progressDialog.dismiss();
+                                        }
 
                                         new AlertDialog.Builder(MainActivity.this)
                                                 .setCancelable(false)
@@ -292,7 +312,12 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             //handle errors
 
-                            progressDialog.dismiss();
+                            if (progressDialog != null && progressDialog.isShowing()) {
+                                if (MainActivity.this.isDestroyed()) {
+                                    return;
+                                }
+                                progressDialog.dismiss();
+                            }
 
                             new AlertDialog.Builder(MainActivity.this)
                                     .setCancelable(false)
@@ -328,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
                                 String device_token = FirebaseInstanceId.getInstance().getToken();
                                 String mCurrentUserid = auth.getCurrentUser().getUid();
 
-                                Users users = new Users(mCurrentUserid, device_token, auth.getCurrentUser().getPhotoUrl().toString());
+                                Users users = new Users(mCurrentUserid, device_token, String.valueOf(auth.getCurrentUser().getPhotoUrl()));
 
                                 mFirestore.collection(USERCOL).document(auth.getCurrentUser().getUid())
                                         .set(users);
@@ -482,7 +507,26 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.main_fab)
     public void onFabViewClicked() {
+        contributionRequestFragment.show(getSupportFragmentManager(),ContributionRequestFragment.TAG);
     }
+
+
+    //region CommonActions apply-loan, contribution, fine
+    @OnClick(R.id.usl_apply_loan_card)
+    public void onUslApplyLoanCardClicked() {
+        loanRequestFragment.show(getSupportFragmentManager(), LoanRequestFragment.TAG);
+    }
+
+    @OnClick(R.id.usl_pay_fine_card)
+    public void onUslPayFineCardClicked() {
+    }
+
+    @OnClick(R.id.usl_pay_cnt_card)
+    public void onUslPayCntCardClicked() {
+        contributionRequestFragment.show(getSupportFragmentManager(),ContributionRequestFragment.TAG);
+    }
+    //endregion
+
 
     interface OnItemCreated {
         void itemCreated(String title);
@@ -494,7 +538,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void userUIObserver() {
         userInfoUsername.setText(auth.getCurrentUser().getDisplayName());
-        imageProcessor.setMyImage(userInfoImage, auth.getCurrentUser().getPhotoUrl().toString());
+        imageProcessor.setMyImage(userInfoImage, String.valueOf(auth.getCurrentUser().getPhotoUrl()));
 
         mViewModel.getGroupsMembersMediatorLiveData().observe(this, new Observer<GroupsMembers>() {
             @Override
@@ -645,19 +689,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.card_1)
-    public void onCardMemberClicked(){
+    public void onCardMemberClicked() {
         Intent seeMembers = new Intent(MainActivity.this, MemberDetailsActivity.class);
         startActivity(seeMembers);
     }
 
     @OnClick(R.id.card_3)
-    public void onCardLoansClicked(){
+    public void onCardLoansClicked() {
         Intent seeLoans = new Intent(MainActivity.this, LoansActivity.class);
         startActivity(seeLoans);
     }
 
     @OnClick(R.id.card_6)
-    public void onCardProjectsClicked(){
+    public void onCardProjectsClicked() {
         Intent seeProjects = new Intent(MainActivity.this, ProjectsActivity.class);
         startActivity(seeProjects);
     }

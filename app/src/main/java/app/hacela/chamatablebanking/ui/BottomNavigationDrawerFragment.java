@@ -33,6 +33,7 @@ import java.util.Map;
 
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.ui.newchama.NewChamaActivity;
+import app.hacela.chamatablebanking.ui.settings.FeatureUnavailableActivity;
 import app.hacela.chamatablebanking.viewmodel.MainViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -111,7 +112,7 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                                 dismiss();
                                 return true;
                             case R.id.nav_logout:
-                                Toast.makeText(mActivity, "Signing you out", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mActivity, R.string.sign_u_out, Toast.LENGTH_SHORT).show();
 
                                 auth.signOut();
 
@@ -119,8 +120,6 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                                 dismiss();
                                 return true;
                             case R.id.nav_createnewgroup:
-
-
                                 mActivity.startActivity(new Intent(getContext(), NewChamaActivity.class));
 
                                 dismiss();
@@ -135,6 +134,11 @@ public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment {
                                 sendToInviteScreen();
                                 dismiss();
                                 return true;
+
+                            case R.id.nav_settings:
+                                startActivity(new Intent(getContext(), FeatureUnavailableActivity.class));
+                                dismiss();
+                                break;
                         }
                     }
                     return false;

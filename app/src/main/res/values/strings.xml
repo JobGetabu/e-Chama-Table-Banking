@@ -127,6 +127,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="invite_member_txt">Invite members of your chama using the special link provided below. Members will be able to download this app and join your chama using this link</string>
     <string name="continue_text">Continue</string>
+    <string name="verify_text">Verify</string>
     <string name="invite_members">Invite Members</string>
     <string name="skip_and_invite_later">Skip and invite later</string>
     <string name="you_all_set">You\'re all Set</string>
@@ -153,4 +154,24 @@
     <string name="board3dsc">No worries, All transaction are verified by group administration. Same way you always do</string>
     <string name="board4">Transaction</string>
     <string name="board4dsc">Do transactions and get all the transactions you make in real time, view and track all your money</string>
+
+    <!--phone activity texts-->
+    <string name="phone">Phone number</string>
+    <string name="smscode">SMS CODE</string>
+    <string name="confirm">Confirm</string>
+    <string name="continue_txt">Continue</string>
+    <string name="enter_phonenumber">Enter Phonenumber</string>
+    <string name="resend_sms">Resend SMS</string>
+    <string name="enter_sms_code">Enter SMS Code</string>
+    <string name="status_code_sent">Sms Code Received</string>
+    <string name="status_verification_failed">Number verification failed</string>
+    <string name="instant_validation">Verification Success</string>
+    <string name="invalid_phone_num">Invalid phone number.</string>
+    <string name="quota_exceeded">Quota exceeded.</string>
+
+    <string name="kes_0">KES 0/-</string>
+    <string name="loan14d">14 days @ 6%</string>
+    <string name="sample_loan_apply_text">Loan duration: 7 days @ 4% \n Amount: Ksh 6,000 \n Interest: Ksh 240 \n Processing Charge: Ksh 23 \n Repayment Amount: 6,263 \n Due Date: 10-Oct-2018</string>
+    <string name="apply_for_a_loan">Apply for a loan</string>
+    <string name="sign_u_out">Signing you out</string>
 </resources>
