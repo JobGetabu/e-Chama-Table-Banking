@@ -37,17 +37,11 @@ public class MemberDetailsActivity extends AppCompatActivity {
         member_recycler.setHasFixedSize(true);
         member_recycler.setLayoutManager(new LinearLayoutManager(this));
         dummyTests = new ArrayList<>();
-
-        for (int i = 0; i <= 10; i++){
-            DummyTest dummyTest = new DummyTest(
-                    "Member" + i + 1,
-                    "070011223344",
-                    "1500",
-                    "500"
-            );
-
-            dummyTests.add(dummyTest);
-        }
+        dummyTests.add(new DummyTest("Job Getabu", "0700243243", "1500", "No records for now", R.drawable.hacela));
+        dummyTests.add(new DummyTest("Abedy Ng'ang'a", "0711224354", "2000", "0", R.drawable.avatar_placeholder));
+        dummyTests.add(new DummyTest("Lawrence Maluki", "0703432321", "1200", "0", R.drawable.ic_receivecash));
+        dummyTests.add(new DummyTest("Mama Njambi", "0725654343", "1000", "0", R.drawable.ic_edit));
+        dummyTests.add(new DummyTest("Baba Milly", "0776543453", "1600", "0", R.drawable.avatar_placeholder));
 
         adapter = new DummyTestAdapter(dummyTests, this);
         member_recycler.setAdapter(adapter);

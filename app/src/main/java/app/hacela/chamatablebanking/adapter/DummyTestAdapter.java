@@ -31,8 +31,6 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.single_transaction, parent, false);
 
         LayoutInflater vi = LayoutInflater.from(context);
         final FoldingCell cell = (FoldingCell) vi.inflate(R.layout.single_transaction, parent, false);
@@ -59,11 +57,9 @@ public class DummyTestAdapter extends RecyclerView.Adapter<DummyTestAdapter.View
         holder.owingAmount.setText(dummyTest.getOwing());
         holder.memberNameExpanded.setText(dummyTest.getName());
         holder.phoneNoExpanded.setText(dummyTest.getPhone());
+        holder.memberImage.setImageResource(dummyTest.getPhoto());
+        holder.memberImageExpanded.setImageResource(dummyTest.getPhoto());
 
-        Picasso.get().load("https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50")
-                .placeholder(R.drawable.avatar_placeholder).into(holder.memberImage);
-        Picasso.get().load("https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50")
-                .placeholder(R.drawable.avatar_placeholder).into(holder.memberImageExpanded);
     }
 
     @Override
