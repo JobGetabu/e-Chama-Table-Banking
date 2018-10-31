@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.ui.AddExpensesFragment;
 import app.hacela.chamatablebanking.ui.AddPaymentFragment;
+import app.hacela.chamatablebanking.ui.LoanTypesFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,8 +24,8 @@ public class SettingsActivity extends AppCompatActivity {
     MaterialButton settingsManageAccount;
     @BindView(R.id.settings_logout)
     MaterialButton settingsLogout;
-    @BindView(R.id.settings_password)
-    MaterialButton settingsPassword;
+   /* @BindView(R.id.settings_password)
+    MaterialButton settingsPassword;*/
     @BindView(R.id.settings_manage_classes)
     MaterialButton settingsManageClasses;
     @BindView(R.id.settings_current)
@@ -37,11 +38,14 @@ public class SettingsActivity extends AppCompatActivity {
     MaterialButton settingsAddPayments;
     @BindView(R.id.settings_add_expenses)
     MaterialButton settingsAddExpenses;
+    @BindView(R.id.settings_loan_types)
+    MaterialButton settingsLoanTypes;
 
     private FirebaseAuth mAuth;
 
     private AddPaymentFragment addPaymentFragment;
     private AddExpensesFragment addExpensesFragment;
+    private LoanTypesFragment loanTypesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         addPaymentFragment = new AddPaymentFragment();
         addExpensesFragment = new AddExpensesFragment();
+        loanTypesFragment = new LoanTypesFragment();
 
     }
 
@@ -75,6 +80,11 @@ public class SettingsActivity extends AppCompatActivity {
         sendToLogin();
     }
 
+    @OnClick(R.id.settings_loan_types)
+    public void onAddLoanTypesClicked(){
+        loanTypesFragment.show(getSupportFragmentManager(), LoanTypesFragment.TAG);
+    }
+
     @OnClick(R.id.settings_add_payments)
     public void onAddPaymentsClicked(){
         addPaymentFragment.show(getSupportFragmentManager(), AddPaymentFragment.TAG);
@@ -85,10 +95,10 @@ public class SettingsActivity extends AppCompatActivity {
         addExpensesFragment.show(getSupportFragmentManager(), AddExpensesFragment.TAG);
     }
 
-    @OnClick(R.id.settings_password)
+    /*@OnClick(R.id.settings_password)
     public void onPasswordClicked() {
         //Intent intent = new Intent(SettingsActivity.this, PasscodeActivity.class);startActivity(intent);
-    }
+    }*/
 
     private void sendToLogin() {
 

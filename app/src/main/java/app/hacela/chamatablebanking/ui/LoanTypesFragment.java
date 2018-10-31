@@ -26,6 +26,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * A simple {@link Fragment} subclass.
  */
 public class LoanTypesFragment extends BottomSheetDialogFragment {
+
+    public static final String TAG = "LoanTypeFragment";
     @BindView(R.id.flt_ll1)
     LinearLayout fltLl1;
     @BindView(R.id.flt_et2)
