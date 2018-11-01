@@ -62,14 +62,18 @@
         <activity
             android:name=".ui.ChamaExistsActivity"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name=".ui.ProjectsActivity"
+        <activity
+            android:name=".ui.ProjectsActivity"
             android:parentActivityName=".ui.MainActivity" />
-        <activity android:name=".ui.MemberDetailsActivity"
+        <activity
+            android:name=".ui.MemberDetailsActivity"
             android:parentActivityName=".ui.MainActivity" />
-        <activity android:name=".ui.auth.PhoneAuthActivity"/>
-        <activity android:name=".ui.settings.FeatureUnavailableActivity"/>
-        <activity android:name=".ui.settings.SettingsActivity"
+        <activity android:name=".ui.auth.PhoneAuthActivity" />
+        <activity android:name=".ui.settings.FeatureUnavailableActivity" />
+        <activity
+            android:name=".ui.settings.SettingsActivity"
             android:parentActivityName=".ui.MainActivity" />
-</application>
+        <activity android:name=".ui.ManageAccountActivity"></activity>
+    </application>
 
 </manifest>
