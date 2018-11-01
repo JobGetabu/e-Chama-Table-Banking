@@ -182,4 +182,5 @@
     <string name="manage_transaction">Manage Transactions</string>
     <string name="email_us">Email us</string>
     <string name="manage_group">Manage Group</string>
+    <string name="save">Save</string>
 </resources>

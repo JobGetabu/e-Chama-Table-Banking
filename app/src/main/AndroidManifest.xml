@@ -73,7 +73,8 @@
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:parentActivityName=".ui.MainActivity" />
-        <activity android:name=".ui.ManageAccountActivity"></activity>
+        <activity android:name=".ui.ManageAccountActivity"
+            android:parentActivityName=".ui.settings.SettingsActivity"/>
     </application>
 
 </manifest>

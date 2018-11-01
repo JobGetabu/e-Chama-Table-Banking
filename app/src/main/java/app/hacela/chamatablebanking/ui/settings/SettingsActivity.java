@@ -1,5 +1,6 @@
 package app.hacela.chamatablebanking.ui.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.ui.AddExpensesFragment;
 import app.hacela.chamatablebanking.ui.AddPaymentFragment;
 import app.hacela.chamatablebanking.ui.LoanTypesFragment;
+import app.hacela.chamatablebanking.ui.ManageAccountActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -70,13 +72,13 @@ public class SettingsActivity extends AppCompatActivity {
 
     @OnClick(R.id.settings_manage_account)
     public void onSettingsManageAccountClicked() {
-
+        Intent manageAccount = new Intent(SettingsActivity.this, ManageAccountActivity.class);
+        startActivity(manageAccount);
     }
 
     @OnClick(R.id.settings_logout)
     public void onSettingsLogoutClicked() {
         mAuth.signOut();
-
         sendToLogin();
     }
 
