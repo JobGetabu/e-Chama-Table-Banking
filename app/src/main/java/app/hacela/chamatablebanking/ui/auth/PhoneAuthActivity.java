@@ -1,5 +1,6 @@
 package app.hacela.chamatablebanking.ui.auth;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -72,6 +73,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
 
     private static final String TAG = "phone";
     public static final int RC_SIGN_IN = 1001;
+    private static final int PERMISSION_REQUEST_CODE = 1;
 
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
 
@@ -108,6 +110,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
     private boolean mVerificationInProgress = false;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
+    private String wantPermission = Manifest.permission.READ_PHONE_STATE;
 
 
     @Override
