@@ -23,6 +23,5 @@ public class ManageAccountActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Manage Account");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
     }
 }
