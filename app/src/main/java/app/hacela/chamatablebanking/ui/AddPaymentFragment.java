@@ -64,7 +64,7 @@ public class AddPaymentFragment extends BottomSheetDialogFragment {
     }
 
     @OnClick(R.id.fap_continue_btn)
-    public void onFcrContinueBtnClicked() {
+    public void onFapContinueBtnClicked() {
 
         if (validateOnPay()){
 
