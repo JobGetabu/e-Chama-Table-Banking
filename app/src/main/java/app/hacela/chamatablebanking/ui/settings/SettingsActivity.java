@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import app.hacela.chamatablebanking.R;
 import app.hacela.chamatablebanking.ui.AddExpensesFragment;
 import app.hacela.chamatablebanking.ui.AddPaymentFragment;
+import app.hacela.chamatablebanking.ui.AddProjectFragment;
 import app.hacela.chamatablebanking.ui.LoanTypesFragment;
 import app.hacela.chamatablebanking.ui.ManageAccountActivity;
 import butterknife.BindView;
@@ -42,12 +43,16 @@ public class SettingsActivity extends AppCompatActivity {
     MaterialButton settingsAddExpenses;
     @BindView(R.id.settings_loan_types)
     MaterialButton settingsLoanTypes;
+    @BindView(R.id.settings_add_project)
+    MaterialButton settingsAddProject;
+
 
     private FirebaseAuth mAuth;
 
     private AddPaymentFragment addPaymentFragment;
     private AddExpensesFragment addExpensesFragment;
     private LoanTypesFragment loanTypesFragment;
+    private AddProjectFragment addProjectFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
         addPaymentFragment = new AddPaymentFragment();
         addExpensesFragment = new AddExpensesFragment();
         loanTypesFragment = new LoanTypesFragment();
+        addProjectFragment = new AddProjectFragment();
 
     }
 
@@ -80,6 +86,11 @@ public class SettingsActivity extends AppCompatActivity {
     public void onSettingsLogoutClicked() {
         mAuth.signOut();
         sendToLogin();
+    }
+
+    @OnClick(R.id.settings_add_project)
+   public void onAddProjectClicked() {
+        addProjectFragment.show(getSupportFragmentManager(), AddProjectFragment.TAG);
     }
 
     @OnClick(R.id.settings_loan_types)

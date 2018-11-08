@@ -25,7 +25,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * A simple {@link Fragment} subclass.
  */
 public class AddProjectFragment extends BottomSheetDialogFragment {
-    public static final String TAG = "AddPayFragment";
+    public static final String TAG = "AddProjectFragment";
 
     @BindView(R.id.fapr_ll1)
     LinearLayout faprLl1;
