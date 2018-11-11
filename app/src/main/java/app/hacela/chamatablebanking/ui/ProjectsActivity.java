@@ -1,12 +1,11 @@
 package app.hacela.chamatablebanking.ui;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-
-import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +15,7 @@ import app.hacela.chamatablebanking.adapter.DummyTest;
 import app.hacela.chamatablebanking.adapter.DummyTestAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ProjectsActivity extends AppCompatActivity {
 
@@ -23,15 +23,21 @@ public class ProjectsActivity extends AppCompatActivity {
     Toolbar projects_toolbar;
     @BindView(R.id.projects_recycler)
     RecyclerView projects_recycler;
+    @BindView(R.id.pr_add)
+    FloatingActionButton prAdd;
 
     private RecyclerView.Adapter adapter;
     private List<DummyTest> dummyTests;
+
+    private AddProjectFragment addProjectFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projects);
         ButterKnife.bind(this);
+
+        addProjectFragment = new AddProjectFragment();
 
         setSupportActionBar(projects_toolbar);
         getSupportActionBar().setTitle("Group Projects");
@@ -47,5 +53,10 @@ public class ProjectsActivity extends AppCompatActivity {
 
         adapter = new DummyTestAdapter(dummyTests, this);
         projects_recycler.setAdapter(adapter);
+    }
+
+    @OnClick(R.id.pr_add)
+    public void onFabClicked() {
+        addProjectFragment.show(getSupportFragmentManager(), AddProjectFragment.TAG);
     }
 }
