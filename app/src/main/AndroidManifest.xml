@@ -76,6 +76,7 @@
         <activity
             android:name=".ui.ManageAccountActivity"
             android:parentActivityName=".ui.settings.SettingsActivity" />
+        <activity android:name=".ui.chat.GroupChatActivity"></activity>
     </application>
 
 </manifest>
